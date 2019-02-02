@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Wall
+  - Killbox
+  - Platforms
+  - Weapon
+  - Light
+  - CameraPath
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Background
+  - BackgroundText
+  - Platform
+  - Wall
+  - Player
+  - WeaponIgnore
+  - Particles
+  - Weapon
+  - Minimap
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background -6
+    uniqueID: 1487869413
+    locked: 0
+  - name: Background -5
+    uniqueID: 1440115027
+    locked: 0
+  - name: Background -4
+    uniqueID: 1140047293
+    locked: 0
+  - name: Background -3
+    uniqueID: 3761535133
+    locked: 0
+  - name: Background -2
+    uniqueID: 1251764957
+    locked: 0
+  - name: Background -1
+    uniqueID: 2538221143
+    locked: 0
+  - name: Background
+    uniqueID: 44986055
+    locked: 0
+  - name: BackgroundText
+    uniqueID: 1507982773
+    locked: 0
+  - name: Platforms
+    uniqueID: 2854856695
+    locked: 0
+  - name: Walls
+    uniqueID: 1688969435
+    locked: 0
+  - name: Player
+    uniqueID: 3239398397
+    locked: 0
+  - name: Foreground
+    uniqueID: 1995665677
+    locked: 0
