@@ -35,6 +35,7 @@ public class GameControl : MonoBehaviour
     public Transform killboxes;
     public float flamethrowerDamage = 33f;
     public float avalancheDamage = 50f;
+    public bool fight = false;
     
     private string previousText;
     private float cameraShaking;
@@ -71,6 +72,10 @@ public class GameControl : MonoBehaviour
 
     void Update()
     {
+        if (gameOver)
+        {
+            controlsDisabled = true;
+        }
         beginGame();
         if (reachedTop)
         {
@@ -168,18 +173,6 @@ public class GameControl : MonoBehaviour
         foreach (GameObject plat in platforms)
         {
             plat.SetActive(false);
-        }
-    }
-
-    public void adjustCamera()
-    {
-        if (aboveScreen)
-        {
-            cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y + adjustSpeed * cameraSpeed * Time.deltaTime, cam.transform.position.z);
-        }
-        else
-        {
-            cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y + cameraSpeed * Time.deltaTime, cam.transform.position.z);
         }
     }
 

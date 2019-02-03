@@ -10,7 +10,7 @@ public class CameraShake : MonoBehaviour
     public float shakeAmount;
     public float decreaseFactor;
 
-    Vector3 originalPos;
+    Vector2 originalPos;
 
     void OnEnable()
     {
@@ -22,12 +22,13 @@ public class CameraShake : MonoBehaviour
     {
         if (shakeDuration > 0)
         {
-            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            camTransform.localPosition = originalPos + Random.insideUnitCircle * shakeAmount;
             shakeDuration -= Time.deltaTime * decreaseFactor;
         }
         else
         {
             gameObject.SetActive(false);
+            camTransform.localPosition = originalPos;
         }
     }
 }

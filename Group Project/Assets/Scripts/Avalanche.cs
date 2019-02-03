@@ -5,6 +5,7 @@ using UnityEngine;
 public class Avalanche : MonoBehaviour
 {
     public ParticleSystem snow;
+    public GameObject shaker;
 
     private bool played = false;
 
@@ -21,10 +22,14 @@ public class Avalanche : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!played)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            snow.Play();
-            played = true;
+            if (!played)
+            {
+                snow.Play();
+                played = true;
+                shaker.SetActive(true);
+            }
         }
     }
 }

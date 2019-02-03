@@ -26,6 +26,9 @@ public class stickman : MonoBehaviour
     public int initialHealth = 100;
     public Canvas playerCanvas;
     public Slider healthBar;
+    public GameObject minimapIcon;
+    public GameObject trail;
+    public GameObject glow;
 
     private bool lastControls;
     private int wallJumpNum = 0;
@@ -111,7 +114,7 @@ public class stickman : MonoBehaviour
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
         //if the game is over, run game over logic
-        if (GameControl.instance.gameOver)
+        if (GameControl.instance.fight)
         {
             gameEnd();
         }
@@ -314,6 +317,8 @@ public class stickman : MonoBehaviour
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
                 Transform dropped = dropObject();
+                minimapIcon.SetActive(false);
+                glow.SetActive(false);
                 if (dropped != null)
                 {
                     dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
@@ -327,7 +332,9 @@ public class stickman : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = false;
                 equip.SetActive(true);
+                trail.SetActive(false);
                 transform.position = new Vector3(platforms[ind].transform.position.x, platforms[ind].transform.position.y + 3, transform.position.z);
+                trail.SetActive(true);
                 rb2d.velocity = Vector2.zero;
                 respawnTimer = initialRespawnTimer;
                 dead = false;
@@ -336,16 +343,22 @@ public class stickman : MonoBehaviour
                 healthBar.gameObject.SetActive(true);
                 health = initialHealth;
                 healthBar.value = health;
+                minimapIcon.SetActive(true);
+                glow.SetActive(true);
             }
         }
         else
         {
-            GameControl.instance.gameOver = true;
+            GameControl.instance.fight = true;
         }
     }
 
     private void checkPickup()
     {
+        if (controlsDisabled)
+        {
+            return;
+        }
         if (Input.GetButtonDown(eAxis) || hit)
         {
             Transform dropped = null;
@@ -409,6 +422,10 @@ public class stickman : MonoBehaviour
 
     private void checkThrow()
     {
+        if (controlsDisabled)
+        {
+            return;
+        }
         if (Input.GetButtonDown(tAxis))
         {
             Transform dropped = null;
@@ -497,17 +514,17 @@ public class stickman : MonoBehaviour
         if (Input.GetButtonDown(jAxis) && !ableToJump)
         {
             float h = Input.GetAxis(hAxis);
-            float scale = 1;
+            float scale = 2;
             if (walls.x < 1)
             {
-                if (h > 0)
+                /*if (h > 0)
                 {
                     scale = 2;
                 }
                 if (h < 0)
                 {
                     scale = 0.5f;
-                }
+                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -515,14 +532,14 @@ public class stickman : MonoBehaviour
             }
             if (walls.y < 1)
             {
-                if (h < 0)
+                /*if (h < 0)
                 {
                     scale = 2;
                 }
                 if (h > 0)
                 {
                     scale = 0.5f;
-                }
+                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(-wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -535,6 +552,9 @@ public class stickman : MonoBehaviour
     {
         if (dead)
         {
+            GameControl.instance.gameOver = true;
+            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
+            otherPlayer.rb2d.velocity = Vector2.zero;
             rb2d.velocity = Vector2.zero;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
@@ -561,7 +581,7 @@ public class stickman : MonoBehaviour
                     GameControl.instance.restartButton.Select();
                     ended = true;
                 }
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
             }
         }
     }
@@ -588,7 +608,7 @@ public class stickman : MonoBehaviour
 
     private void fireWeapon()
     {
-        if (dead)
+        if (dead || controlsDisabled)
         {
             return;
         }

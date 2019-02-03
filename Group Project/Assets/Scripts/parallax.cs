@@ -8,22 +8,25 @@ public class parallax : MonoBehaviour
     public float speed;
 
     private float offset;
+    private float startingX;
     private float startingY;
     private float startingZ;
 
     private void Start()
     {
         offset = transform.position.y - cam.transform.position.y;
+        startingX = transform.position.x;
         startingY = transform.position.y;
         startingZ = 0;
     }
 
     private void LateUpdate()
     {
-        transform.position = new Vector3(transform.position.x, cam.transform.position.y * speed, startingZ);
-        if (transform.position.y < startingY)
+        float xScale = 1.5f;
+        if(speed == 1)
         {
-            transform.position = new Vector3(transform.position.x, startingY, startingZ);
+            xScale = 1;
         }
+        transform.position = new Vector3(cam.transform.position.x * speed * xScale, cam.transform.position.y * speed, startingZ);
     }
 }
