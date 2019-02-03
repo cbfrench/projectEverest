@@ -15086,6 +15086,9 @@ MonoBehaviour:
   killboxes: {fileID: 1295744084}
   flamethrowerDamage: 33
   avalancheDamage: 100
+  fight: 0
+  platformSprite: {fileID: 21300000, guid: e406e658a1dddb44b9386962778073f8, type: 3}
+  wallSprite: {fileID: 21300000, guid: 58b6d8b61232b704fbbfaff0024be9d9, type: 3}
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0

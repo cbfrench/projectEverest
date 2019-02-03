@@ -36,6 +36,8 @@ public class GameControl : MonoBehaviour
     public float flamethrowerDamage = 33f;
     public float avalancheDamage = 50f;
     public bool fight = false;
+    public Sprite platformSprite;
+    public Sprite wallSprite;
     
     private string previousText;
     private float cameraShaking;
@@ -56,6 +58,8 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        stopParticles();
+        changeSprites();
     }
 
     private void Start()
@@ -292,6 +296,30 @@ public class GameControl : MonoBehaviour
         {
             right.SetActive(true);
             left.SetActive(true);
+        }
+    }
+
+    public void stopParticles()
+    {
+        GameObject[] particles = GameObject.FindGameObjectsWithTag("Particles");
+        for(int i = 0; i < particles.Length; i++)
+        {
+            ParticleSystem ps = particles[i].GetComponent<ParticleSystem>();
+            ps.Stop();
+        }
+    }
+
+    public void changeSprites()
+    {
+        GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
+        for(int i = 0; i < platforms.Length; i++)
+        {
+            platforms[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = platformSprite;
+        }
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+        for(int i = 0; i < walls.Length; i++)
+        {
+            walls[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = wallSprite;
         }
     }
 }

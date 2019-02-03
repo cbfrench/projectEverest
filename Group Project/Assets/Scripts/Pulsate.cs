@@ -8,6 +8,13 @@ public class Pulsate : MonoBehaviour
     public Text t;
     public float speed;
 
+    private Quaternion fixedRotation;
+
+    private void Awake()
+    {
+        fixedRotation = transform.rotation;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +25,10 @@ public class Pulsate : MonoBehaviour
     void Update()
     {
         t.color = new Color32(255, 255, 255, (byte)Mathf.Floor(Mathf.PingPong(Time.time * speed, 255)));
+    }
+
+    private void LateUpdate()
+    {
+        transform.rotation = fixedRotation;
     }
 }

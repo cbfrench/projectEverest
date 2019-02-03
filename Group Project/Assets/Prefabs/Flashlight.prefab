@@ -179,7 +179,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Equip
+  m_Text: Flashlight
 --- !u!114 &7906084258447093127
 MonoBehaviour:
   m_ObjectHideFlags: 0

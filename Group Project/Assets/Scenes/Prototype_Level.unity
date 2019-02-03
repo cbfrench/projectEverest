@@ -7546,6 +7546,8 @@ MonoBehaviour:
   flamethrowerDamage: 33
   avalancheDamage: 50
   fight: 0
+  platformSprite: {fileID: 21300000, guid: cfad8548f9f1c0543a97e7601f36d23a, type: 3}
+  wallSprite: {fileID: 21300000, guid: 1c19927c2a7f2694382b36f9d5bc54ef, type: 3}
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0
@@ -8392,6 +8394,11 @@ PrefabInstance:
     - target: {fileID: 1315452000995654189, guid: d07fc8f12f9c65540af2a52953795461,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1315452001155790999, guid: d07fc8f12f9c65540af2a52953795461,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
