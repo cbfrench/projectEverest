@@ -11710,7 +11710,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -14561,7 +14561,7 @@ MonoBehaviour:
   fightPlatform: {fileID: 210534416}
   cameraSpeed: 2
   adjustSpeed: 10
-  cameraOffsetX: 25
+  cameraOffsetX: 20
   cameraOffsetY: 7.5
   player1: {fileID: 294091955}
   player2: {fileID: 569032557}
@@ -14581,6 +14581,8 @@ MonoBehaviour:
   restartButton: {fileID: 1699926999}
   maxPlayerSpeed: 45
   killboxes: {fileID: 1295744084}
+  flamethrowerDamage: 33
+  avalancheDamage: 20
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0
@@ -16474,7 +16476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -17851,7 +17853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -20538,6 +20540,14 @@ PrefabInstance:
       propertyPath: camTransform
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 894503876, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 894503876, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
 --- !u!4 &7865224813656439145 stripped
@@ -20628,5 +20638,13 @@ PrefabInstance:
       propertyPath: camTransform
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 1263712114, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263712114, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}

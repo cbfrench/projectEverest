@@ -33,6 +33,8 @@ public class GameControl : MonoBehaviour
     public Button restartButton;
     public float maxPlayerSpeed;
     public Transform killboxes;
+    public float flamethrowerDamage = 33f;
+    public float avalancheDamage = 50f;
     
     private string previousText;
     private float cameraShaking;

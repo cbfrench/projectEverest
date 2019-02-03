@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,9 @@ public class stickman : MonoBehaviour
     public bool firing = false;
     public float throwSpeed;
     public bool hit = false;
+    public int initialHealth = 100;
+    public Canvas playerCanvas;
+    public Slider healthBar;
 
     private bool lastControls;
     private int wallJumpNum = 0;
@@ -35,6 +39,13 @@ public class stickman : MonoBehaviour
     private string eAxis;
     private string fAxis;
     private string vAxis;
+    private string tAxis;
+    private float health;
+    private bool damaged = false;
+    private GameObject particleParent;
+    private GameObject weaponFired;
+    private GameObject environmentalDamage;
+    private float gameEndDelay = 3f;
 
     private bool DEBUG = false;
 
@@ -50,6 +61,7 @@ public class stickman : MonoBehaviour
                 jAxis = "Jump";
                 fAxis = "Fire1";
                 eAxis = "Fire2";
+                tAxis = "Fire3";
             }
             return;
         }
@@ -60,6 +72,7 @@ public class stickman : MonoBehaviour
             eAxis = "Equip_P1";
             fAxis = "Fire_P1";
             vAxis = "Vertical_P1";
+            tAxis = "Throw_P1";
         }
         else
         {
@@ -68,6 +81,7 @@ public class stickman : MonoBehaviour
             eAxis = "Equip_P2";
             fAxis = "Fire_P2";
             vAxis = "Vertical_P2";
+            tAxis = "Throw_P2";
         }
     }
 
@@ -75,6 +89,7 @@ public class stickman : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
+        health = initialHealth;
     }
 
     private void Update()
@@ -85,10 +100,14 @@ public class stickman : MonoBehaviour
         movePlayer();
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
+        //checks if the player is throwing a weapon
+        checkThrow();
         //checks if the player is attempting to jump off of the wall
         wallJump();
         //checks if the player is attempting to use their weapon
         fireWeapon();
+        //checks to see if player is taking damage
+        checkDamage();
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
         //if the game is over, run game over logic
@@ -108,6 +127,7 @@ public class stickman : MonoBehaviour
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, GameControl.instance.maxPlayerSpeed);
         }
+        playerCanvas.transform.localScale = transform.localScale;
         respawn();
     }
 
@@ -194,7 +214,7 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = collision;
-            if(collision.GetComponent<Rigidbody2D>().velocity.magnitude > 1)
+            if(collision.GetComponent<Rigidbody2D>().velocity.magnitude > 20)
             {
                 //weapon was thrown/dropped from high up
                 hit = true;
@@ -202,11 +222,7 @@ public class stickman : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Killbox"))
         {
-            dead = true;
-            controlsDisabled = true;
-            rb2d.velocity = Vector2.zero;
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            equip.SetActive(false);
+            die();
         }
     }
 
@@ -223,6 +239,29 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = null;
+        }
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        damaged = true;
+        if (other.gameObject.name == "Avalanche")
+        {
+            environmentalDamage = other.gameObject;
+            particleParent = environmentalDamage;
+            weaponFired = null;
+        }
+        else
+        {
+            try
+            {
+                particleParent = other.transform.parent.transform.parent.transform.parent.transform.parent.gameObject;
+                weaponFired = other.transform.parent.transform.parent.gameObject;
+            }
+            catch(NullReferenceException e)
+            {
+
+            }
         }
     }
 
@@ -271,6 +310,14 @@ public class stickman : MonoBehaviour
                 GameControl.instance.statusText.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                healthBar.gameObject.SetActive(false);
+                Transform dropped = dropObject();
+                if (dropped != null)
+                {
+                    dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                }
             }
             if (respawnTimer <= 0)
             {
@@ -278,6 +325,7 @@ public class stickman : MonoBehaviour
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
                 GameControl.instance.statusText.text = "";
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
                 equip.SetActive(true);
                 transform.position = new Vector3(platforms[ind].transform.position.x, platforms[ind].transform.position.y + 3, transform.position.z);
                 rb2d.velocity = Vector2.zero;
@@ -285,6 +333,9 @@ public class stickman : MonoBehaviour
                 dead = false;
                 controlsDisabled = false;
                 firing = false;
+                healthBar.gameObject.SetActive(true);
+                health = initialHealth;
+                healthBar.value = health;
             }
         }
         else
@@ -300,32 +351,11 @@ public class stickman : MonoBehaviour
             Transform dropped = null;
             if(equip.transform.childCount == 1)
             {
-                //drop
-                dropped = equip.transform.GetChild(0);
-                dropped.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                dropped.gameObject.transform.eulerAngles = Vector3.zero;
-                float s = -1;
-                if (transform.localScale.x == 1)
-                {
-                    s = 1;
-                }
-                dropped.gameObject.transform.localScale = new Vector3(s, dropped.gameObject.transform.localScale.y, dropped.gameObject.transform.localScale.z);
-                dropped.parent = GameControl.instance.pickups.transform;
-                dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-                if (dropped.name.Contains("Flashlight"))
-                {
-                    dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-                    dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-                    dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
-                }
-                if (dropped.name.Contains("Flamethrower") || dropped.name.Contains("Squirt Gun"))
-                {
-                    dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
-                }
+                dropped = dropObject();
                 //throw
                 float h = Input.GetAxis(hAxis);
                 float v = Input.GetAxis(vAxis);
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(sign(h) * throwSpeed, 10);
+                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(-5 * transform.localScale.x, 20);
             }
             if (item != null && item.transform != dropped)
             {
@@ -344,6 +374,50 @@ public class stickman : MonoBehaviour
                 }
             }
             hit = false;
+        }
+    }
+
+    private Transform dropObject()
+    {
+        //drop
+        if (equip.transform.childCount == 0) {
+            return null;
+        }
+        Transform dropped = equip.transform.GetChild(0);
+        dropped.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        dropped.gameObject.transform.eulerAngles = Vector3.zero;
+        float s = -1;
+        if (transform.localScale.x == 1)
+        {
+            s = 1;
+        }
+        dropped.gameObject.transform.localScale = new Vector3(s, dropped.gameObject.transform.localScale.y, dropped.gameObject.transform.localScale.z);
+        dropped.parent = GameControl.instance.pickups.transform;
+        dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        if (dropped.name.Contains("Flashlight"))
+        {
+            dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
+        }
+        if (dropped.name.Contains("Flamethrower") || dropped.name.Contains("Squirt Gun"))
+        {
+            dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
+        }
+        return dropped;
+    }
+
+    private void checkThrow()
+    {
+        if (Input.GetButtonDown(tAxis))
+        {
+            Transform dropped = null;
+            if (equip.transform.childCount == 1)
+            {
+                dropped = dropObject();
+                //throw
+                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * transform.localScale.x, 10);
+            }
         }
     }
 
@@ -461,17 +535,34 @@ public class stickman : MonoBehaviour
     {
         if (dead)
         {
-            string color = getWinner();
-            GameControl.instance.statusText.text = color + " wins!";
-            GameControl.instance.controlsDisabled = true;
-            GameControl.instance.quitButton.gameObject.SetActive(true);
-            GameControl.instance.restartButton.gameObject.SetActive(true);
-            if (!ended)
+            rb2d.velocity = Vector2.zero;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
+            healthBar.gameObject.SetActive(false);
+            Transform dropped = dropObject();
+            if (dropped != null)
             {
-                GameControl.instance.restartButton.Select();
-                ended = true;
+                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
             }
-            Time.timeScale = 0;
+            if (gameEndDelay > 0)
+            {
+                GameControl.instance.statusText.text = "Game!";
+                gameEndDelay -= Time.deltaTime;
+            }
+            else
+            {
+                string color = getWinner();
+                GameControl.instance.statusText.text = color + " wins!";
+                GameControl.instance.controlsDisabled = true;
+                GameControl.instance.quitButton.gameObject.SetActive(true);
+                GameControl.instance.restartButton.gameObject.SetActive(true);
+                if (!ended)
+                {
+                    GameControl.instance.restartButton.Select();
+                    ended = true;
+                }
+                Time.timeScale = 0;
+            }
         }
     }
 
@@ -564,5 +655,47 @@ public class stickman : MonoBehaviour
                 ps.Stop();
             }
         }
+    }
+
+    private void checkDamage()
+    {
+        if(particleParent == null || particleParent.name == gameObject.name)
+        {
+            return;
+        }
+        if (particleParent != environmentalDamage)
+        {
+            if (damaged)
+            {
+                health -= GameControl.instance.flamethrowerDamage * Time.deltaTime;
+                healthBar.value = health;
+                damaged = false;
+                if (health <= 0)
+                {
+                    dead = true;
+                }
+            }
+        }
+        else
+        {
+            if (damaged)
+            {
+                health -= GameControl.instance.avalancheDamage * Time.deltaTime;
+                healthBar.value = health;
+                damaged = false;
+                if (health <= 0)
+                {
+                    dead = true;
+                }
+            }
+        }
+    }
+
+    private void die()
+    {
+        dead = true;
+        controlsDisabled = true;
+        rb2d.velocity = Vector2.zero;
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

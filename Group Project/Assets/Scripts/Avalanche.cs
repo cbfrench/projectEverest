@@ -6,6 +6,8 @@ public class Avalanche : MonoBehaviour
 {
     public ParticleSystem snow;
 
+    private bool played = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,10 @@ public class Avalanche : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        snow.Play();
+        if (!played)
+        {
+            snow.Play();
+            played = true;
+        }
     }
 }

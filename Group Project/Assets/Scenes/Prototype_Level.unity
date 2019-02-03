@@ -8632,6 +8632,7 @@ MonoBehaviour:
   restartButton: {fileID: 1699926999}
   maxPlayerSpeed: 45
   killboxes: {fileID: 1591068218}
+  flamethrowerDamage: 33
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0
@@ -11478,6 +11479,14 @@ PrefabInstance:
       propertyPath: camTransform
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 894503876, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 894503876, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: decb92e0b2df1984f845d59855acfd5b, type: 3}
 --- !u!1001 &6510439427955138428
@@ -11706,5 +11715,13 @@ PrefabInstance:
       propertyPath: camTransform
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 1263712114, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263712114, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
