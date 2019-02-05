@@ -49,6 +49,7 @@ public class stickman : MonoBehaviour
     private GameObject weaponFired;
     private GameObject environmentalDamage;
     private float gameEndDelay = 3f;
+    private Animator anim;
 
     private bool DEBUG = false;
 
@@ -93,6 +94,7 @@ public class stickman : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
+        anim = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -131,6 +133,8 @@ public class stickman : MonoBehaviour
             rb2d.velocity = new Vector2(rb2d.velocity.x, GameControl.instance.maxPlayerSpeed);
         }
         playerCanvas.transform.localScale = transform.localScale;
+        float h = Input.GetAxis(hAxis);
+        anim.SetBool("Running", Mathf.Abs(h) > 0 && ableToJump);
         respawn();
     }
 
@@ -305,12 +309,17 @@ public class stickman : MonoBehaviour
 
     public void respawn()
     {
+        Text t = GameControl.instance.p2Text;
         if (!GameControl.instance.ableToDie)
         {
             if (dead && !GameControl.instance.paused)
             {
                 string color = getColor();
-                GameControl.instance.statusText.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
+                if (playerNum == 1)
+                {
+                    t = GameControl.instance.p1Text;
+                }
+                t.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -328,7 +337,7 @@ public class stickman : MonoBehaviour
             {
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
-                GameControl.instance.statusText.text = "";
+                t.text = "";
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = false;
                 equip.SetActive(true);
@@ -410,10 +419,9 @@ public class stickman : MonoBehaviour
         if (dropped.name.Contains("Flashlight"))
         {
             dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
             dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
         }
-        if (dropped.name.Contains("Flamethrower") || dropped.name.Contains("Squirt Gun"))
+        else
         {
             dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
         }
@@ -517,14 +525,6 @@ public class stickman : MonoBehaviour
             float scale = 2;
             if (walls.x < 1)
             {
-                /*if (h > 0)
-                {
-                    scale = 2;
-                }
-                if (h < 0)
-                {
-                    scale = 0.5f;
-                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -532,14 +532,6 @@ public class stickman : MonoBehaviour
             }
             if (walls.y < 1)
             {
-                /*if (h < 0)
-                {
-                    scale = 2;
-                }
-                if (h > 0)
-                {
-                    scale = 0.5f;
-                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(-wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -560,6 +552,7 @@ public class stickman : MonoBehaviour
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
             Transform dropped = dropObject();
+            GameControl.instance.topText.gameObject.SetActive(false);
             if (dropped != null)
             {
                 dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
@@ -581,7 +574,6 @@ public class stickman : MonoBehaviour
                     GameControl.instance.restartButton.Select();
                     ended = true;
                 }
-                //Time.timeScale = 0;
             }
         }
     }
@@ -615,7 +607,10 @@ public class stickman : MonoBehaviour
         if (Input.GetButtonDown(fAxis))
         {
             firing = true;
-            singleFire = true;
+            if (equip.transform.GetChild(0).name.Contains("Flashlight"))
+            {
+                singleFire = true;
+            }
         }
         if (Input.GetButtonUp(fAxis))
         {

@@ -9,6 +9,8 @@ public class GameControl : MonoBehaviour
     public static GameControl instance;
     public float scaleDelay;
     public Text statusText;
+    public Text p1Text;
+    public Text p2Text;
     
     public GameObject fightPlatform;
     public float cameraSpeed;
@@ -58,13 +60,15 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        stopParticles();
+        //stopParticles();
         changeSprites();
     }
 
     private void Start()
     {
         statusText.text = "";
+        p1Text.text = "";
+        p2Text.text = "";
         bottomText.gameObject.SetActive(false);
         topText.gameObject.SetActive(false);
         generateWaypoints();
@@ -83,7 +87,10 @@ public class GameControl : MonoBehaviour
         beginGame();
         if (reachedTop)
         {
-            topText.gameObject.SetActive(true);
+            if (!gameOver)
+            {
+                topText.gameObject.SetActive(true);
+            }
             if (player1.gameObject.GetComponent<SpriteRenderer>().enabled && player2.gameObject.GetComponent<SpriteRenderer>().enabled)
             {
                 ableToDie = true;
