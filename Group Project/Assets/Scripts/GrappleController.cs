@@ -13,7 +13,8 @@ public class GrappleController : MonoBehaviour
     public LineRenderer line;       // Line renderer for texture of grapple
 
     //private Rigidbody2D rb2d;       // Player's rigid body 2D
-    private GameObject player;      // Player holding object
+    private GameObject player;        // Player holding object
+    private PickupController pickup;  // Pickup controller for this object
 
     DistanceJoint2D joint;          // Distance join 2D used for the grapple
     Vector3 targetPosition;         // Position player is aiming for. 
@@ -22,6 +23,7 @@ public class GrappleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pickup = GetComponent<PickupController>();  // Get pickup controller
         joint = GetComponent<DistanceJoint2D>();    // Get the distance join
         joint.enabled = false;  // Disable the joint at start
         line.enabled = false;   // Disable the line renderer
@@ -31,7 +33,7 @@ public class GrappleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isEquiped)   // Check if equiped by a player
+        if (pickup.isEquipped)   // Check if equiped by a player
         {
             if (joint.distance > minDistance)    // Restract if not at minimum distance
             {
@@ -43,13 +45,16 @@ public class GrappleController : MonoBehaviour
                 line.enabled = false;   // Disable the line renderer
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire_P1"))
             {
+                // Get target position for grapple
                 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetPosition.z = 0;
 
+                // Raycast to get target position
                 hit = Physics2D.Raycast(transform.position, targetPosition - transform.position, maxDistance, mask);
 
+                // Check for raycasting hit
                 if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
                 {
                     if (joint.enabled == false)
@@ -77,30 +82,18 @@ public class GrappleController : MonoBehaviour
 
             //line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetButtonDown("Fire_P1"))
             {
                 line.SetPosition(0, transform.position);
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetButtonUp("Fire_P1"))
             {
                 joint.enabled = false;
                 line.enabled = false;
             }
         }
         
-    }
-
-
-    // Sets isEquipped value. Used by other scripts
-    void SetEquipped(bool val)
-    {
-        isEquiped = val;
-    }
-
-    void SetPlayer(GameObject thePlayer)
-    {
-        player = thePlayer;
     }
 }
 

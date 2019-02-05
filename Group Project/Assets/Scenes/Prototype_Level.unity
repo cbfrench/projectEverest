@@ -7918,8 +7918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleDelay: 3
   statusText: {fileID: 2054702787}
-  p1Text: {fileID: 0}
-  p2Text: {fileID: 0}
+  p1Text: {fileID: 5968056335026775244}
+  p2Text: {fileID: 4387869551078573348}
   fightPlatform: {fileID: 210534416}
   cameraSpeed: 2
   adjustSpeed: 10
@@ -10716,9 +10716,10 @@ GameObject:
   - component: {fileID: 7571753336386497093}
   - component: {fileID: 2914974671239957921}
   - component: {fileID: 2914974671239957920}
+  - component: {fileID: 2914974671239957922}
   m_Layer: 15
-  m_Name: Grapple
-  m_TagString: Weapon
+  m_Name: Grapple Gun
+  m_TagString: Equipment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10762,6 +10763,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   line: {fileID: 661675769}
+--- !u!114 &2914974671239957922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2914974671239957919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5761e7859758b5489e32b599b506f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEquipped: 0
+  player: {fileID: 0}
 --- !u!1001 &3229312193853945590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10876,6 +10891,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387442618200064532}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4387869551078573348 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4387869551078573348, guid: 18d7c847c0235bf47b368ed69e10d723,
+    type: 3}
+  m_PrefabInstance: {fileID: 2095745043658098287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5092006491566882952
 Transform:
   m_ObjectHideFlags: 0
@@ -11103,6 +11130,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   t: {fileID: 5376649702736410542}
   speed: 400
+--- !u!114 &5968056335026775244 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5968056335026775244, guid: 18d7c847c0235bf47b368ed69e10d723,
+    type: 3}
+  m_PrefabInstance: {fileID: 2095745043658098287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6398009452188673247
 Transform:
   m_ObjectHideFlags: 0

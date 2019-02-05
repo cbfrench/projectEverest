@@ -223,10 +223,18 @@ public class PlayerController : MonoBehaviour
                 hit = true;
             }
         }
+
+        // Check if object is equipment
+        if (collision.gameObject.CompareTag("Equipment"))
+        {
+            item = collision;   // Set item to object
+        }
+
         if (collision.gameObject.CompareTag("Killbox"))
         {
             die();
         }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -359,6 +367,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+       
+        // Check if player is trying to pick up object or got an object thrown at them
         if (Input.GetButtonDown(eAxis) || hit)
         {
             Transform dropped = null;
@@ -385,6 +395,11 @@ public class PlayerController : MonoBehaviour
                 {
                     singleFire = true;
                 }
+
+                // Set object's isEquipped to true
+                item.gameObject.GetComponent<PickupController>().SetEquipped(true);
+                // Set the object's playercontroller to this player.
+                item.gameObject.GetComponent<PickupController>().SetPlayer(this);
             }
             hit = false;
         }
