@@ -12,7 +12,8 @@ public class GrappleController : MonoBehaviour
     public LayerMask mask;          // Mask to tell what the grapple can attach to
     public LineRenderer line;       // Line renderer for texture of grapple
 
-    //private Rigidbody2D rb2d;
+    //private Rigidbody2D rb2d;       // Player's rigid body 2D
+    private GameObject player;      // Player holding object
 
     DistanceJoint2D joint;          // Distance join 2D used for the grapple
     Vector3 targetPosition;         // Position player is aiming for. 
@@ -30,66 +31,76 @@ public class GrappleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(joint.distance > minDistance)    // Restract if not at minimum distance
+        if (isEquiped)   // Check if equiped by a player
         {
-            joint.distance -= step; // Retract by step
-        }
-        else    // If grapple at minimum distance then break
-        {
-            joint.enabled = false;  // Disable the joint
-            line.enabled = false;   // Disable the line renderer
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPosition.z = 0;
-
-            hit = Physics2D.Raycast(transform.position, targetPosition - transform.position, maxDistance, mask);
-
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (joint.distance > minDistance)    // Restract if not at minimum distance
             {
-                if (joint.enabled == false)
-                {
-                    rb2d.velocity = Vector2.zero;
-                }
-                joint.enabled = true;
-                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
-
-                Vector2 connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
-                connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
-                connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
-                joint.connectedAnchor = connectPoint;
-
-                joint.distance = Vector2.Distance(transform.position, hit.point);
-
-                line.enabled = true;
-                line.SetPosition(0, transform.position);
-                //line.SetPosition(1, hit.collider.transform.position);
-                //line.SetPosition(1, connectPoint);
-                line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
+                joint.distance -= step; // Retract by step
+            }
+            else    // If grapple at minimum distance then break
+            {
+                joint.enabled = false;  // Disable the joint
+                line.enabled = false;   // Disable the line renderer
             }
 
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                targetPosition.z = 0;
 
-        //line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
+                hit = Physics2D.Raycast(transform.position, targetPosition - transform.position, maxDistance, mask);
 
-        if (Input.GetMouseButton(0))
-        {
-            line.SetPosition(0, transform.position);
-        }
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+                {
+                    if (joint.enabled == false)
+                    {
+                        //rb2d.velocity = Vector2.zero;
+                    }
+                    joint.enabled = true;
+                    joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            joint.enabled = false;
-            line.enabled = false;
+                    Vector2 connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
+                    connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
+                    connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
+                    joint.connectedAnchor = connectPoint;
+
+                    joint.distance = Vector2.Distance(transform.position, hit.point);
+
+                    line.enabled = true;
+                    line.SetPosition(0, transform.position);
+                    //line.SetPosition(1, hit.collider.transform.position);
+                    //line.SetPosition(1, connectPoint);
+                    line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
+                }
+
+            }
+
+            //line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
+
+            if (Input.GetMouseButton(0))
+            {
+                line.SetPosition(0, transform.position);
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                joint.enabled = false;
+                line.enabled = false;
+            }
         }
+        
     }
-}
+
 
     // Sets isEquipped value. Used by other scripts
     void SetEquipped(bool val)
     {
         isEquiped = val;
     }
+
+    void SetPlayer(GameObject thePlayer)
+    {
+        player = thePlayer;
+    }
 }
+
