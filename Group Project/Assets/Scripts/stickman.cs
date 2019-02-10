@@ -263,6 +263,7 @@ public class stickman : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Killbox"))
         {
+            print("Should Die");
             die();
         }
     }
