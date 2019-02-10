@@ -1,0 +1,15 @@
+Updated stickman script to use my controller for movement, including
+wall jumping and wall sliding.
+I implemented my own physics on the player, which includes affecting
+there physics when wallsliding, so the important part of this update
+was that PLAYER'S RIGIDBODY 2D IS NOW KINEMATIC.
+
+We make it kinematic, rather than entirely delete it because
+otherwise the player's triggers won't work. Here's some detail from
+unity's website:
+
+Static Rigidbody 2Ds are designed not to move, and collisions between two Static Rigidbody 2D objects
+ that intersect are not registered. However, Static Rigidbody 2Ds and Kinematic Rigidbody 2Ds will interact with each other if one of their Collider 2Ds is set to be a trigger. 
+
+Getting rid of player's rigidbody 2D entirely will break triggers,
+so keep it as a kinematic rigidbody2D.
