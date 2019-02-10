@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//
+
 [RequireComponent(typeof(BoxCollider2D))]
 public class Stickman_MovementController : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class Stickman_MovementController : MonoBehaviour
     float verticalRaySpacing;
 
     public LayerMask collisionMask; //What do we want to collide with?
+    public LayerMask collisionMask_Below; //What do we want to collide with below us?
     public struct CollisionInfo
     {
         public bool above, below;
@@ -119,6 +122,18 @@ public class Stickman_MovementController : MonoBehaviour
         float directionY = Mathf.Sign(velocity.y); //up = +1, down = -1
         float rayLength = Mathf.Abs(velocity.y) + skinWidth; //unsigned y velocity
 
+        LayerMask mask;
+
+        //Special case: only turn on collisions with "Platforms" that are below us
+        if (directionY == -1)
+        {
+            mask = collisionMask_Below;
+        }
+        else
+        {
+            mask = collisionMask;
+        }
+
         for (int i = 0; i < verticalRayCount; i++)
         {
             //start from the bottom if we're going down, from the top otherwise
@@ -131,7 +146,7 @@ public class Stickman_MovementController : MonoBehaviour
             //when we draw our ray, we want to see if we've "hit something (vertically)"
             //We'll define something as "hit" if its in the direction we're moving (directionY)
             //AND marked as something we can hit (collisionMask) 
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, mask);
 
             //draw our ray
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
@@ -172,7 +187,7 @@ public class Stickman_MovementController : MonoBehaviour
 
         }
 
-        for (int i = 0; i < verticalRayCount; i++)
+        for (int i = 0; i < horizontalRayCount; i++)
         {
             //start rays depending on what direction we're going
             Vector2 rayOrigin = (directionX == -1.0) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;

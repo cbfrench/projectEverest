@@ -134,6 +134,7 @@ public class stickman : MonoBehaviour
         //most movement logic for the player
         //movePlayer();
         movePlayer_update();
+        movePlayer_updateAnim();
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
@@ -182,7 +183,7 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall"))
         {
             Vector2 dist = getDistanceToWall();
-            if(dist.x >= 1 && dist.y >= 1)
+            if (dist.x >= 1 && dist.y >= 1)
             {
                 ableToJump = true;
                 //wallJumping = false;
@@ -255,7 +256,7 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = collision;
-            if(collision.GetComponent<Rigidbody2D>().velocity.magnitude > 20)
+            if (collision.GetComponent<Rigidbody2D>().velocity.magnitude > 20)
             {
                 //weapon was thrown/dropped from high up
                 hit = true;
@@ -270,7 +271,7 @@ public class stickman : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Weapon"))
+        if (collision.gameObject.CompareTag("Weapon"))
         {
             item = collision;
         }
@@ -300,7 +301,7 @@ public class stickman : MonoBehaviour
                 particleParent = other.transform.parent.transform.parent.transform.parent.transform.parent.gameObject;
                 weaponFired = other.transform.parent.transform.parent.gameObject;
             }
-            catch(NullReferenceException e)
+            catch (NullReferenceException e)
             {
 
             }
@@ -336,13 +337,21 @@ public class stickman : MonoBehaviour
                     }
                 }
                 rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
-                if (h != 0)
-                {
-                    transform.localScale = new Vector3(Mathf.Sign(h), transform.localScale.y, transform.localScale.z);
-                }
             }
         }
-    }*/
+    }
+    */
+
+    public void movePlayer_updateAnim()
+    {
+        float h = Input.GetAxis(hAxis);
+        if (h != 0)
+        {
+            transform.localScale = new Vector3(Mathf.Sign(h), transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+
 
     public void respawn()
     {
