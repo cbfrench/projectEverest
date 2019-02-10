@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Stickman_MovementController))]
 public class stickman : MonoBehaviour
 {
-    public Rigidbody2D rb2d;
-    public float playerSpeed;
-    public float jumpStrength;
-    public float wallJumpStrength;
+    //public Rigidbody2D rb2d;
+    //public float playerSpeed;
+    //public float jumpStrength;
+    //public float wallJumpStrength;
     public bool dead = false;
     public bool ableToJump = true;
     public GameObject equip;
     public float initialRespawnTimer;
     public float respawnTimer;
     public bool controlsDisabled = false;
-    public bool wallJumping = false;
+    //public bool wallJumping = false;
     public GameObject shaker;
     public int playerNum;
     public stickman otherPlayer;
@@ -31,7 +32,7 @@ public class stickman : MonoBehaviour
     public GameObject glow;
 
     private bool lastControls;
-    private int wallJumpNum = 0;
+    //private int wallJumpNum = 0;
     private Collider2D item;
     private string hAxis;
     private bool footstool = false;
@@ -51,7 +52,33 @@ public class stickman : MonoBehaviour
     private float gameEndDelay = 3f;
     private Animator anim;
 
-    private bool DEBUG = false;
+    /*Sarah_Dev: Player Movement*/
+    Stickman_MovementController movementController;
+    Vector3 velocity;
+
+    public float playerSpeed = 20;
+
+    public float jumpHeight = 9; //how many units is a jump?
+    public float timeToJumpApex = .4f; //how long until the top of a jump?
+    float gravity;
+    float jumpVelocity;
+
+    float velocityXSmoothing;
+    public float accelerationTimeAirborne = .2f; //time to change direction in air
+    public float accelerationTimeGrounded = .1f; //time to change direction on ground
+
+    public float wallSlideSpeedMax = 3; //Give as a postive!! (speed means no neg)
+    public Vector2 wallJumpClimb = new Vector2(7.5f, 40);
+    public Vector2 wallJumpOff = new Vector2(8.5f, 30);
+    public Vector2 wallLeap = new Vector2(24, 36);
+    public float wallStickTime = .25f; //Makes wallLeap's easier to perform
+    float timeToWallUnstick;
+    bool canWallJumpClimb;
+
+    bool touchingGround;
+    /*Sarah_Dev*/
+
+    private bool DEBUG = true;
 
     private void Awake()
     {
@@ -91,10 +118,13 @@ public class stickman : MonoBehaviour
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        //rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
+
+        movementController = GetComponent<Stickman_MovementController>();
+        movePlayer_start();
     }
 
     private void Update()
@@ -102,13 +132,14 @@ public class stickman : MonoBehaviour
         //checks if controls are enabled or not
         resetControls();
         //most movement logic for the player
-        movePlayer();
+        //movePlayer();
+        movePlayer_update();
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
         checkThrow();
         //checks if the player is attempting to jump off of the wall
-        wallJump();
+        //wallJump();
         //checks if the player is attempting to use their weapon
         fireWeapon();
         //checks to see if player is taking damage
@@ -124,14 +155,14 @@ public class stickman : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(rb2d.velocity.x > GameControl.instance.maxPlayerSpeed)
+        /*if(rb2d.velocity.x > GameControl.instance.maxPlayerSpeed)
         {
             rb2d.velocity = new Vector2(GameControl.instance.maxPlayerSpeed, rb2d.velocity.y);
         }
         if (rb2d.velocity.y > GameControl.instance.maxPlayerSpeed)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, GameControl.instance.maxPlayerSpeed);
-        }
+        }*/
         playerCanvas.transform.localScale = transform.localScale;
         float h = Input.GetAxis(hAxis);
         anim.SetBool("Running", Mathf.Abs(h) > 0 && ableToJump);
@@ -140,11 +171,12 @@ public class stickman : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && rb2d.velocity.y == 0)
+        if (collision.gameObject.CompareTag("Ground") && velocity.y == 0)
         {
             ableToJump = true;
-            wallJumping = false;
-            wallJumpNum = 0;
+            touchingGround = true;
+            //wallJumping = false;
+            //wallJumpNum = 0;
             shaker.SetActive(true);
         }
         if (collision.gameObject.CompareTag("Wall"))
@@ -153,8 +185,8 @@ public class stickman : MonoBehaviour
             if(dist.x >= 1 && dist.y >= 1)
             {
                 ableToJump = true;
-                wallJumping = false;
-                wallJumpNum = 0;
+                //wallJumping = false;
+                //wallJumpNum = 0;
                 shaker.SetActive(true);
             }
         }
@@ -174,6 +206,7 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ableToJump = true;
+            touchingGround = true;
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -181,8 +214,8 @@ public class stickman : MonoBehaviour
             if (dist.x >= 1 && dist.y >= 1)
             {
                 ableToJump = true;
-                wallJumping = false;
-                wallJumpNum = 0;
+                //wallJumping = false;
+                //wallJumpNum = 0;
             }
         }
     }
@@ -192,8 +225,9 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ableToJump = false;
+            touchingGround = false;
         }
-        if (collision.gameObject.CompareTag("Wall") && rb2d.velocity.y == 0)
+        if (collision.gameObject.CompareTag("Wall") && velocity.y == 0)
         {
             Vector2 dist = getDistanceToWall();
             if (dist.x >= 1 && dist.y >= 1)
@@ -272,13 +306,15 @@ public class stickman : MonoBehaviour
         }
     }
 
+    /*
     public void movePlayer()
     {
         if (!dead && !controlsDisabled && !GameControl.instance.paused)
         {
             bool v = Input.GetButtonDown(jAxis);
             float h = Input.GetAxis(hAxis);
-            if(rb2d.velocity.y <= 0 && wallJumping)
+
+            if (rb2d.velocity.y <= 0 && wallJumping)
             {
                 wallJumping = false;
             }
@@ -305,7 +341,7 @@ public class stickman : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     public void respawn()
     {
@@ -321,7 +357,7 @@ public class stickman : MonoBehaviour
                 }
                 t.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
-                rb2d.velocity = Vector2.zero;
+                velocity = Vector3.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
@@ -344,7 +380,7 @@ public class stickman : MonoBehaviour
                 trail.SetActive(false);
                 transform.position = new Vector3(platforms[ind].transform.position.x, platforms[ind].transform.position.y + 3, transform.position.z);
                 trail.SetActive(true);
-                rb2d.velocity = Vector2.zero;
+                velocity = Vector3.zero;
                 respawnTimer = initialRespawnTimer;
                 dead = false;
                 controlsDisabled = false;
@@ -455,7 +491,7 @@ public class stickman : MonoBehaviour
         return Mathf.Sign(value);
     }
 
-    public float checkWallJump(Rigidbody2D rb2d)
+    /*public float checkWallJump(Rigidbody2D rb2d)
     {
         float h = Input.GetAxis(hAxis);
         int ignore = LayerMask.GetMask("Wall");
@@ -470,6 +506,7 @@ public class stickman : MonoBehaviour
         }
         return 1;
     }
+    */
 
     public Vector2 getDistanceToWall()
     {
@@ -516,7 +553,7 @@ public class stickman : MonoBehaviour
         }
     }
 
-    public void wallJump()
+    /*public void wallJump()
     {
         Vector2 walls = getDistanceToWall();
         if (Input.GetButtonDown(jAxis) && !ableToJump)
@@ -538,16 +575,16 @@ public class stickman : MonoBehaviour
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
             }
         }
-    }
+    }*/
 
     private void gameEnd()
     {
         if (dead)
         {
             GameControl.instance.gameOver = true;
-            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
-            otherPlayer.rb2d.velocity = Vector2.zero;
-            rb2d.velocity = Vector2.zero;
+            //otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
+            //otherPlayer.rb2d.velocity = Vector2.zero;
+            velocity = Vector3.zero;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
@@ -710,7 +747,169 @@ public class stickman : MonoBehaviour
     {
         dead = true;
         controlsDisabled = true;
-        rb2d.velocity = Vector2.zero;
+        velocity = Vector3.zero;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
+
+    /*Sarah_Dev: Wall Collision + Sliding + Jumping*/
+    public void movePlayer_start()
+    {
+        //~KINEMATICS TIME~
+        // /\d = vi * t + (a*t^2)/2
+        //-> (-1 * jumpHeight) = 0 + (gravity * timeToJumpApex^2)/2
+        gravity = -(2 * jumpHeight) / (timeToJumpApex * timeToJumpApex);
+        //vf = vi + a*t -> jumpSpeed = 0 + (-1 * gravity) * timeToJumpApex
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+
+        canWallJumpClimb = false;
+    }
+
+    public void movePlayer_update()
+    {
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        int wallDirX = (movementController.collisions.left) ? -1 : 1; //-1 = left, 1 = right
+
+        bool wallSliding = false;
+
+        //NOTE - wallsliding will now set velocity.x = 0 to allow for wallStickTime
+        //SO - YOU MUST SET VELOCITY X BEFORE WALLSLIDING CALCULATIONS
+        movePlayer_updateVelocityX(input);
+
+        //wallsliding is true IF: colliding with a wall to our left or right, 
+        //not grounded, and moving downwards
+        /*if ((movementController.collisions.left || movementController.collisions.right)
+            && (!movementController.collisions.below) && (velocity.y < 0))
+        {
+            wallSliding = true;
+            movePlayer_updateWallSliding(input, wallDirX);
+        }*/
+
+        if ((movementController.collisions.left || movementController.collisions.right) 
+            && !movementController.collisions.below && velocity.y < 0 && !touchingGround)
+        {
+            wallSliding = true;
+
+            if (velocity.y < -wallSlideSpeedMax)
+            {
+                velocity.y = -wallSlideSpeedMax;
+            }
+
+            if (timeToWallUnstick > 0)
+            {
+                velocityXSmoothing = 0;
+                velocity.x = 0;
+
+                if (input.x != wallDirX && input.x != 0)
+                {
+                    timeToWallUnstick -= Time.deltaTime;
+                }
+                else
+                {
+                    timeToWallUnstick = wallStickTime;
+                }
+            }
+            else
+            {
+                timeToWallUnstick = wallStickTime;
+            }
+
+        }
+
+
+        //prevent gravity from accumulating if we're not falling
+        if (movementController.collisions.above || movementController.collisions.below)
+        {
+            velocity.y = 0;
+        }
+
+        if ((!canWallJumpClimb) && movementController.collisions.below)
+        {
+            canWallJumpClimb = true;
+        }
+
+        if (Input.GetButtonDown(jAxis))
+        {
+            print("attempting to jump");
+
+            if (wallSliding) //can wall jump
+            {
+                print("Walljumping!");
+                movePlayer_updateWallJump(input, wallDirX);
+            }
+
+            if (movementController.collisions.below) //can regular jump
+            {
+                velocity.y = jumpVelocity;
+            }
+        }
+
+        //multiply by Time.deltaTime to account for uneven updating
+        velocity.y += gravity * Time.deltaTime; //apply gravity
+        movementController.Move(velocity * Time.deltaTime); //move the player
+    }
+
+    void movePlayer_updateVelocityX(Vector2 input)
+    {
+        //our final x velocity
+        float targetVelocityX = input.x * playerSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
+            (movementController.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+    }
+
+    void movePlayer_updateWallSliding(Vector2 input, int wallDirX)
+    {
+        if (velocity.y < -wallSlideSpeedMax)
+        {
+            velocity.y = -wallSlideSpeedMax;
+        }
+
+        if (timeToWallUnstick > 0)
+        {
+            velocity.x = 0;
+            velocityXSmoothing = 0;
+
+            if (input.x != wallDirX && input.x != 0)
+            {
+                timeToWallUnstick -= Time.deltaTime;
+            }
+            else
+            {
+                timeToWallUnstick = wallStickTime;
+            }
+        }
+        else
+        {
+            timeToWallUnstick = wallStickTime;
+        }
+    }
+
+    void movePlayer_updateWallJump(Vector2 input, int wallDirX)
+    {
+
+        if (wallDirX == input.x) //walljump climb
+        {
+            if (canWallJumpClimb)
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+
+                canWallJumpClimb = false;
+            }
+        }
+        else if (input.x == 0) //walljump
+        {
+            velocity.x = -wallDirX * wallJumpOff.x;
+            velocity.y = wallJumpOff.y;
+        }
+        else //wall leap
+        {
+            velocity.x = -wallDirX * wallLeap.x;
+            velocity.y = wallLeap.y;
+        }
+
+    }
+    /*Sarah_Dev*/
+
 }
