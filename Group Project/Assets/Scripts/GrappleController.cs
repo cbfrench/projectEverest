@@ -69,10 +69,11 @@ public class GrappleController : MonoBehaviour
 
             if (joint.distance > minDistance)    // Restract if not at minimum distance
             {
-                joint.distance -= step; // Retract by step
+                joint.distance -= (step * Time.deltaTime); // Retract by step
             }
             else
             {
+                Debug.Log("Breakign grapple");
                 joint.enabled = false;  // Disable the joint
                 line.enabled = false;   // Disable the line renderer
                 hook.transform.parent = this.transform;
@@ -135,6 +136,7 @@ public class GrappleController : MonoBehaviour
         }
         else
         {
+            Debug.Log("Weapon no longer equipped");
             if(joint != null)
             {
                 joint.enabled = false;
