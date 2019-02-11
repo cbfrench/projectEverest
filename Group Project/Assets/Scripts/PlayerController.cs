@@ -326,12 +326,11 @@ public class PlayerController : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
-                Transform dropped = dropObject();
                 minimapIcon.SetActive(false);
                 glow.SetActive(false);
-                if (dropped != null)
+                if (equipedWeapon != null)
                 {
-                    dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                    dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
                 }
             }
             if (respawnTimer <= 0)
@@ -376,11 +375,10 @@ public class PlayerController : MonoBehaviour
             Transform dropped = null;
             if(equip.transform.childCount == 1)
             {
-                dropped = dropObject();
+                dropObject(new Vector2(-5 * transform.localScale.x, 20));
                 //throw
                 float h = Input.GetAxis(hAxis);
                 float v = Input.GetAxis(vAxis);
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(-5 * transform.localScale.x, 20);
             }
             if (item != null && item.transform != dropped)
             {
@@ -409,16 +407,19 @@ public class PlayerController : MonoBehaviour
         equipedWeapon.shootProjectile();
     }
 
-    private Transform dropObject()
+    private void dropObject(Vector2 launchWeapon = Vector2.zero)
     {
         //drop
         if (equipedWeapon == null) {
-            return null;
+            return;
+        }
+        equipedWeapon.setDroppedDefaults();
+        if(launchWeapon != Vector2.zero){
+            equipedWeapon.gameObject.GetComponent<Rigidbody2D>().velocity = launchWeapon;
         }
 
-        equipedWeapon.setDroppedDefaults();
-
-        return equipedWeapon;
+        equipedWeapon = null;
+        return;
     }
 
     private void checkThrow()
@@ -429,12 +430,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown(tAxis))
         {
-            Transform dropped = null; //Maybe make a boolean to ropObject to see if throw or not?
-            if (equip.transform.childCount == 1)
+            if (equipedWeapon != null)
             {
-                dropped = dropObject();
-                //throw
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * transform.localScale.x, 10);
+                dropObject(new Vector2(throwSpeed * transform.localScale.x, 10));
             }
         }
     }
@@ -560,10 +558,9 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
-            Transform dropped = dropObject();
-            if (dropped != null)
+            if (equipedWeapon != null)
             {
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
             }
             if (gameEndDelay > 0)
             {
