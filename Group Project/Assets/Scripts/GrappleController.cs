@@ -53,6 +53,7 @@ public class GrappleController : MonoBehaviour
 
             if (horizontal == 0f && vertical == 0f)
             {
+                // If no joystick input default to straight ahead
                 angle = -90f;
             }
             else
@@ -63,7 +64,7 @@ public class GrappleController : MonoBehaviour
 
             //Debug.Log("Angle: " + angle.ToString());
 
-            // Update the aim containers rotation
+            // Update the aim containers rotation to move the aim target
             aimContainer.eulerAngles = new Vector3(0, 0, angle);
 
             if (joint.distance > minDistance)    // Restract if not at minimum distance
@@ -75,9 +76,9 @@ public class GrappleController : MonoBehaviour
                 Debug.Log("Breakign grapple");
                 joint.enabled = false;  // Disable the joint
                 line.enabled = false;   // Disable the line renderer
-                hook.transform.parent = this.transform;
-                hook.transform.localPosition = hookStart;
-                hook.transform.eulerAngles = new Vector3(0, 0, -90f);
+                hook.transform.parent = this.transform; // Set the hook back to child
+                hook.transform.localPosition = hookStart;   // Put the hook back on the gun
+                hook.transform.eulerAngles = new Vector3(0, 0, -90f);   // Set its rotation back
             }
 
             if (Input.GetButtonDown("Fire_P1"))
@@ -100,18 +101,22 @@ public class GrappleController : MonoBehaviour
                         joint.enabled = true;
                         joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
 
+                        // Get the poiny on the hit object and scale by object scale
                         connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
                         connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
                         connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
                         joint.connectedAnchor = connectPoint;
 
+                        // get distance to point
                         joint.distance = Vector2.Distance(transform.position, hit.point);
 
+                        // Set the hook to that point with correct angle
                         hook.transform.parent = null;
                         hook.transform.position = joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
                         hookAngle = -Mathf.Atan2(transform.position.x - connectPoint.x, transform.position.y - connectPoint.y) * Mathf.Rad2Deg;
                         hook.transform.eulerAngles = new Vector3(0, 0, angle);
 
+                        // Set the line rederer
                         line.enabled = true;
                         line.SetPosition(0, transform.position);
                         line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
@@ -119,12 +124,14 @@ public class GrappleController : MonoBehaviour
                 }
                 else
                 {
+                    // Update the line rederer and hook angle
                     line.SetPosition(0, transform.position);
                     hookAngle = -Mathf.Atan2(transform.position.x - connectPoint.x, transform.position.y - connectPoint.y) * Mathf.Rad2Deg;
                     hook.transform.eulerAngles = new Vector3(0, 0, angle);
                 }
             }
 
+            // Button released. Grapple over
             if (Input.GetButtonUp("Fire_P1"))
             {
                 Debug.Log("Button Released");
