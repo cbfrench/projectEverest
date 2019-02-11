@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         //checks if the player is attempting to use their weapon
         fireWeapon();
         //checks to see if player is taking damage
-        checkDamage();
+        //checkDamage();
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
         //if the game is over, run game over logic
@@ -372,15 +372,15 @@ public class PlayerController : MonoBehaviour
         // Check if player is trying to pick up object or got an object thrown at them
         if (Input.GetButtonDown(eAxis) || hit)
         {
-            Transform dropped = null;
-            if(equip.transform.childCount == 1)
+            GameObject tempEquipedWeaponRef = equipedWeapon.gameObject;
+            if(equipedWeapon != null)
             {
                 dropObject(new Vector2(-5 * transform.localScale.x, 20));
                 //throw
                 float h = Input.GetAxis(hAxis);
                 float v = Input.GetAxis(vAxis);
             }
-            if (item != null && item.transform != dropped)
+            if (item != null && item.gameObject != tempEquipedWeaponRef)
             {
                 //pickup
                 item.gameObject.transform.parent = equip.transform;
