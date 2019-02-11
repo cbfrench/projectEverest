@@ -78,7 +78,7 @@ public class stickman : MonoBehaviour
     bool touchingGround;
     /*Sarah_Dev*/
 
-    private bool DEBUG = true;
+    private bool DEBUG = false;
 
     private void Awake()
     {
@@ -254,6 +254,15 @@ public class stickman : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Weapon"))
+        {
+            item = collision;
+            if (collision.GetComponent<Rigidbody2D>().velocity.magnitude > 20)
+            {
+                //weapon was thrown/dropped from high up
+                hit = true;
+            }
+        }
+        if (collision.gameObject.CompareTag("Equipment"))
         {
             item = collision;
             if (collision.GetComponent<Rigidbody2D>().velocity.magnitude > 20)
@@ -440,6 +449,9 @@ public class stickman : MonoBehaviour
                 {
                     singleFire = true;
                 }
+
+                item.GetComponent<PickupController>().isEquipped = true;
+                item.GetComponent<PickupController>().player = this.gameObject;
             }
             hit = false;
         }
@@ -467,10 +479,22 @@ public class stickman : MonoBehaviour
             dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
             dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
         }
+        else if(dropped.name.Contains("Grapple"))
+        {
+
+        }
         else
         {
-            dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
+            // Null check added to stop potential crashes
+            if (dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>() != null)
+            {
+                dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
+            }
         }
+        
+        // Set the items isequipped to false and remove the player reference
+        dropped.GetComponent<PickupController>().isEquipped = true;
+        dropped.GetComponent<PickupController>().player = null;
         return dropped;
     }
 
@@ -653,10 +677,14 @@ public class stickman : MonoBehaviour
         }
         if (Input.GetButtonDown(fAxis))
         {
-            firing = true;
-            if (equip.transform.GetChild(0).name.Contains("Flashlight"))
+            // Null check to prevent crashes
+            if(equip.transform.childCount != 0)
             {
-                singleFire = true;
+                firing = true;
+                if (equip.transform.GetChild(0).name.Contains("Flashlight"))
+                {
+                    singleFire = true;
+                }
             }
         }
         if (Input.GetButtonUp(fAxis))
@@ -697,6 +725,10 @@ public class stickman : MonoBehaviour
             return;
         }
         if (equip.transform.GetChild(0).name.Contains("Flashlight"))
+        {
+            return;
+        }
+        if (equip.transform.GetChild(0).name.Contains("Grapple"))
         {
             return;
         }
