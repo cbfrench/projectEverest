@@ -11141,10 +11141,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 1
       objectReference: {fileID: 0}
-    - target: {fileID: 294091960, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
-      propertyPath: otherPlayer
-      value: 
-      objectReference: {fileID: 569032559}
     - target: {fileID: 294091956, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.08
@@ -11193,6 +11189,18 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 64a124f401f340d4f9a3b70e4ce0623e, type: 2}
+    - target: {fileID: 294091960, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 569032559}
+    - target: {fileID: 294091961, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 294091962, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1338286196, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
       propertyPath: camTransform
       value: 
@@ -11204,14 +11212,6 @@ PrefabInstance:
     - target: {fileID: 1447463513, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 294091961, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 294091962, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adee9335f9af4ffabb696c4064fb67a, type: 3}
