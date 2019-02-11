@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GrappleController : MonoBehaviour
 {
-
-    public bool isEquiped = false;  // Stores boolean value of if grapple is equiped by a player
     public float maxDistance = 10f; // Maximum distance that grapple can reach
     public float minDistance = 5f;  // Minimum distance that grapple can reach
     public float step = .2f;        // Step for grapple retraction
@@ -24,6 +22,7 @@ public class GrappleController : MonoBehaviour
     DistanceJoint2D joint;          // Distance join 2D used for the grapple
     Vector3 targetPosition;         // Position player is aiming for. 
     RaycastHit2D hit;               // Raycast of object hit by grapple
+    Vector2 connectPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -84,7 +83,7 @@ public class GrappleController : MonoBehaviour
             if (Input.GetButtonDown("Fire_P1"))
             {
                 Debug.Log("Fire button pressed");
-                if (!joint.enabled)
+                if(!joint.enabled)
                 {
                     Debug.Log("Raycasting");
                     // Raycast to get target position
@@ -101,7 +100,7 @@ public class GrappleController : MonoBehaviour
                         joint.enabled = true;
                         joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
 
-                        Vector2 connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
+                        connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
                         connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
                         connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
                         joint.connectedAnchor = connectPoint;
@@ -121,6 +120,8 @@ public class GrappleController : MonoBehaviour
                 else
                 {
                     line.SetPosition(0, transform.position);
+                    hookAngle = -Mathf.Atan2(transform.position.x - connectPoint.x, transform.position.y - connectPoint.y) * Mathf.Rad2Deg;
+                    hook.transform.eulerAngles = new Vector3(0, 0, angle);
                 }
             }
 
