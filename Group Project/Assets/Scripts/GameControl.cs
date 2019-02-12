@@ -61,7 +61,7 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //stopParticles();
+        stopParticles();
         changeSprites();
     }
 
@@ -146,6 +146,7 @@ public class GameControl : MonoBehaviour
             {
                 Time.timeScale = 1;
                 statusText.text = previousText;
+                Music.instance.music.volume = 1;
             }
             else
             {
@@ -154,6 +155,7 @@ public class GameControl : MonoBehaviour
                     Time.timeScale = 0;
                     previousText = statusText.text;
                     statusText.text = "PAUSED";
+                    Music.instance.music.volume = 0.25f;
                 }
             }
             paused = !paused;
