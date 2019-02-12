@@ -375,8 +375,10 @@ public class PlayerController : MonoBehaviour
             GameObject tempEquipedWeaponRef = equipedWeapon.gameObject;
             if(equipedWeapon != null)
             {
-                //drop + throw
-                dropObject(new Vector2(-5 * transform.localScale.x, 20));  
+                dropObject(new Vector2(-5 * transform.localScale.x, 20));
+                //throw
+                float h = Input.GetAxis(hAxis);
+                float v = Input.GetAxis(vAxis);
             }
             if (item != null && item.gameObject != tempEquipedWeaponRef)
             {
