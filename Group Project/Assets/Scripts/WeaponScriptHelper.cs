@@ -4,30 +4,31 @@ using UnityEngine;
 
 public static class WeaponScriptHelper
 {
-    public static void setDroppedDefaults(this WeaponScript weapon){
-/*      Transform dropped = equip.transform.GetChild(0);
-        dropped.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        dropped.gameObject.transform.eulerAngles = Vector3.zero;
-        float s = -1;
-        if (transform.localScale.x == 1)
-        {
-            s = 1;
-        }
-        //maybe make helper class???
-        dropped.gameObject.transform.localScale = new Vector3(s, dropped.gameObject.transform.localScale.y, dropped.gameObject.transform.localScale.z);
-        dropped.parent = GameControl.instance.pickups.transform;
-        dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);*/
-        weapon.setUniqueDroppedDefaults();
+    public static void resetWeapon(this WeaponScript weapon, GameObject attachedGO, GameObject player)
+    {
+        // Change rb2d type back to dynamic
+        attachedGO.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        // Reset velocity
+        attachedGO.transform.eulerAngles = Vector3.zero;
+        // Set direction to direction player is facing
+        attachedGO.transform.localScale = new Vector3(player.transform.localScale.x, attachedGO.transform.localScale.y, attachedGO.transform.localScale.z);  // Scale may need to be moved to individual scripts
+        // Individual weapon script
+        weapon.resetWeaponUnique(player);
     }
 
-    public static void setPickupDefaults(){
-        /*
-        item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        item.GetComponent<Rigidbody2D>().angularVelocity = 0;
-        item.gameObject.transform.eulerAngles = equip.transform.eulerAngles;
-        item.gameObject.transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-        item.gameObject.transform.position = equip.transform.position;
-        item.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);*/
+    public static void initWeapon(this WeaponScript weapon, GameObject attachedGO, GameObject player)
+    {
+        // Change rb2d to kinematic
+        attachedGO.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        // Reset velocity and angular velocity
+        attachedGO.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        attachedGO.GetComponent<Rigidbody2D>().angularVelocity = 0;
+        // Set angle to holding parents angle
+        attachedGO.gameObject.transform.eulerAngles = player.transform.Find("Holding").transform.eulerAngles;
+        // Set scale and position to that of the holding
+        attachedGO.transform.localScale = new Vector3(1, attachedGO.transform.localScale.y, attachedGO.transform.localScale.z);    // Scale may need to be moved to individual scripts
+        attachedGO.transform.position = player.transform.Find("Holding").transform.position;
+        // Individual weapon script
+        weapon.initWeaponUnique(player);
     }
 }

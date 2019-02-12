@@ -5,10 +5,10 @@ using UnityEngine;
 public interface WeaponScript
 {
 
-    void setUniquePickupDefaults();
+    void initWeaponUnique(GameObject player);
     //dunno if there is anything unique yet on pickup
 
-    void setUniqueDroppedDefaults();
+    void resetWeaponUnique(GameObject player);
 /*
         if (dropped.name.Contains("Flashlight"))
         {
@@ -21,8 +21,7 @@ public interface WeaponScript
             dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
         }*/
 
-
-    void shootProjectile();
+    void shoot();
 }
 
 /*
