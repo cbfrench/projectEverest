@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6467289}
   - component: {fileID: 6467288}
-  - component: {fileID: 6467287}
   m_Layer: 0
   m_Name: Minimap Camera
   m_TagString: Untagged
@@ -130,14 +129,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &6467287
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6467286}
-  m_Enabled: 1
 --- !u!20 &6467288
 Camera:
   m_ObjectHideFlags: 0
@@ -14882,6 +14873,7 @@ MonoBehaviour:
   fight: 0
   platformSprite: {fileID: 21300000, guid: e406e658a1dddb44b9386962778073f8, type: 3}
   wallSprite: {fileID: 21300000, guid: 58b6d8b61232b704fbbfaff0024be9d9, type: 3}
+  music: {fileID: 8300000, guid: 873a619686de73d419780f8301affbfd, type: 3}
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ TagManager:
   - Light
   - CameraPath
   - Particles
-  - Equipment
   layers:
   - Default
   - TransparentFX

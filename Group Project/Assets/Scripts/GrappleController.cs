@@ -144,7 +144,7 @@ public class GrappleController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Weapon no longer equipped");
+            //Debug.Log("Weapon no longer equipped");
             if(joint != null)
             {
                 joint.enabled = false;

@@ -40,6 +40,7 @@ public class GameControl : MonoBehaviour
     public bool fight = false;
     public Sprite platformSprite;
     public Sprite wallSprite;
+    public AudioClip music;
     
     private string previousText;
     private float cameraShaking;
@@ -76,6 +77,8 @@ public class GameControl : MonoBehaviour
         climbDelay = scaleDelay;
         paused = false;
         Time.timeScale = 1;
+        Music.instance.music.clip = music;
+        Music.instance.music.Play();
     }
 
     void Update()
