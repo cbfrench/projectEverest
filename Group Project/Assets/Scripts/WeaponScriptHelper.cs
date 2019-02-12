@@ -20,7 +20,7 @@ public static class WeaponScriptHelper
         weapon.setUniqueDroppedDefaults();
     }
 
-    public static void setPickupDefaults(){
+    public static void setPickupDefaults(this WeaponScript weapon){
         /*
         item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -29,5 +29,6 @@ public static class WeaponScriptHelper
         item.gameObject.transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         item.gameObject.transform.position = equip.transform.position;
         item.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);*/
+        weapon.setUniquePickupDefaults();
     }
 }
