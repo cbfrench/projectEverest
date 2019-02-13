@@ -996,6 +996,11 @@ PrefabInstance:
       propertyPath: Loop
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6528231878372225258, guid: 48697b4af8b08ba42aea7811c5dbf071,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 968bdbf2cc2fba14fbb85994beb53253, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48697b4af8b08ba42aea7811c5dbf071, type: 3}
 --- !u!1 &987808824
@@ -2697,13 +2702,13 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Move: Analog Stick
 
-    Jump: A
+    Jump: a
 
-    Equip: B
+    Equip: b
 
-    Fire: L / R
+    Fire: l / r
 
-    Throw: X'
+    Throw: x'
 --- !u!222 &2142359658
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -53,46 +53,14 @@ public class stickman : MonoBehaviour
     private Animator anim;
     private bool sliding = false;
 
-    private bool DEBUG = false;
-
     private void Awake()
     {
-        if (DEBUG)
-        {
-            Debug.Log("There are no controllers detected, switching to keyboard mode.");
-            if (true)
-            {
-                hAxis = "Horizontal";
-                vAxis = "Vertical";
-                jAxis = "Jump";
-                fAxis = "Fire1";
-                eAxis = "Fire2";
-                tAxis = "Fire3";
-            }
-            return;
-        }
-        if (playerNum == 1)
-        {
-            hAxis = "Horizontal_P1";
-            jAxis = "Jump_P1";
-            eAxis = "Equip_P1";
-            fAxis = "Fire_P1";
-            vAxis = "Vertical_P1";
-            tAxis = "Throw_P1";
-        }
-        else
-        {
-            hAxis = "Horizontal_P2";
-            jAxis = "Jump_P2";
-            eAxis = "Equip_P2";
-            fAxis = "Fire_P2";
-            vAxis = "Vertical_P2";
-            tAxis = "Throw_P2";
-        }
+        
     }
 
     void Start()
     {
+        checkControls();
         rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
@@ -162,6 +130,7 @@ public class stickman : MonoBehaviour
                 wallJumping = false;
                 wallJumpNum = 0;
                 shaker.SetActive(true);
+                thud.Play();
             }
         }
         if (collision.gameObject.CompareTag("Player"))
@@ -279,6 +248,46 @@ public class stickman : MonoBehaviour
             {
 
             }
+        }
+    }
+
+    public void checkControls()
+    {
+        if (!GameControl.instance.USING_CONTROLLERS)
+        {
+            hAxis = "Horizontal";
+            vAxis = "Vertical";
+            jAxis = "Jump";
+            fAxis = "Fire1";
+            eAxis = "Fire2";
+            tAxis = "Fire3";
+            return;
+        }
+        if (GameControl.instance.USING_GAMECUBE_CONTROLLERS)
+        {
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
+        }
+        if (GameControl.instance.USING_SONY_CONTROLLERS)
+        {
+            // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
+
         }
     }
 

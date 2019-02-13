@@ -51,6 +51,10 @@ public class GameControl : MonoBehaviour
     private float climbDelay;
     private Vector3 cameraDir;
 
+    public bool USING_CONTROLLERS = false;
+    public bool USING_GAMECUBE_CONTROLLERS = false;
+    public bool USING_SONY_CONTROLLERS = true;
+
     void Awake()
     {
         if (instance == null)
@@ -63,6 +67,23 @@ public class GameControl : MonoBehaviour
         }
         stopParticles();
         changeSprites();
+        string[] controllers = Input.GetJoystickNames();
+        if(controllers.Length == 0)
+        {
+            USING_CONTROLLERS = false;
+            USING_SONY_CONTROLLERS = false;
+            return;
+        }
+        USING_CONTROLLERS = true;
+        for(int i = 0; i < controllers.Length; i++)
+        {
+            if (controllers[i].Contains("vJoy"))
+            {
+                USING_SONY_CONTROLLERS = false;
+                USING_GAMECUBE_CONTROLLERS = true;
+            }
+        }
+        Debug.Log("Using Controllers: " + USING_CONTROLLERS + ", Gamecube?: " + USING_GAMECUBE_CONTROLLERS + ", Sony?: " + USING_SONY_CONTROLLERS);
     }
 
     private void Start()
