@@ -45,8 +45,8 @@ public class GrappleController : MonoBehaviour
             }
 
             // Get target position for grapple
-            float horizontal = Input.GetAxis("Look_Horizontal_P1");
-            float vertical = Input.GetAxis("Look_Vertical_P1");
+            float horizontal = Input.GetAxis("Look_Horizontal_P1_GC");
+            float vertical = Input.GetAxis("Look_Vertical_P1_GC");
             //Debug.Log("X: " + horizontal.ToString() + "Y: " + vertical.ToString());
 
             float angle = 0f;

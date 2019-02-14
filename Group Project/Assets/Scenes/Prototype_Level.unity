@@ -8554,7 +8554,7 @@ PrefabInstance:
     - target: {fileID: 1315452002670339926, guid: d07fc8f12f9c65540af2a52953795461,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1315452001652963417, guid: d07fc8f12f9c65540af2a52953795461, type: 3}
@@ -10553,7 +10553,7 @@ MonoBehaviour:
   step: 10
   mask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 5120
   line: {fileID: 7851633626856323460}
   aimContainer: {fileID: 7851633627732700324}
   aimTransform: {fileID: 7851633626866896782}
@@ -10727,7 +10727,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c330ca07f49ba95428fe2a1bb3aaeb90, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
