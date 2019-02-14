@@ -287,7 +287,24 @@ public class stickman : MonoBehaviour
         if (GameControl.instance.USING_SONY_CONTROLLERS)
         {
             // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
-
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
         }
     }
 
@@ -445,6 +462,10 @@ public class stickman : MonoBehaviour
                         }
                     }
                 }
+                else if (item.name.Contains("Grapple"))
+                {
+
+                }
                 else
                 {
                     ParticleSystem ps = item.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>();
@@ -453,6 +474,9 @@ public class stickman : MonoBehaviour
                         ps.Stop();
                     }
                 }
+
+                item.GetComponent<PickupController>().isEquipped = true;
+                item.GetComponent<PickupController>().player = this.gameObject;
             }
             hit = false;
         }
@@ -479,12 +503,19 @@ public class stickman : MonoBehaviour
             dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
             dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
         }
+        else if (dropped.name.Contains("Grapple"))
+        {
+
+        }
         else
         {
             dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
             dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<AudioSource>().Stop();
         }
         dropped.parent = GameControl.instance.pickups.transform;
+
+        dropped.GetComponent<PickupController>().isEquipped = false;
+        dropped.GetComponent<PickupController>().player = null;
         return dropped;
     }
 
@@ -724,6 +755,10 @@ public class stickman : MonoBehaviour
             return;
         }
         if (equip.transform.GetChild(0).name.Contains("Flashlight"))
+        {
+            return;
+        }
+        if (equip.transform.GetChild(0).name.Contains("Grapple"))
         {
             return;
         }

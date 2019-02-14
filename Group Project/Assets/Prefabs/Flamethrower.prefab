@@ -4906,7 +4906,7 @@ ParticleSystem:
 --- !u!199 &8051161035419233615
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5243,6 +5243,7 @@ GameObject:
   - component: {fileID: 880386134737160804}
   - component: {fileID: 4499419448796018854}
   - component: {fileID: 2560850406323380393}
+  - component: {fileID: 8668531968119765228}
   m_Layer: 15
   m_Name: Flamethrower
   m_TagString: Weapon
@@ -5315,6 +5316,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &8668531968119765228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127404281499944819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5761e7859758b5489e32b599b506f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEquipped: 0
+  player: {fileID: 0}
 --- !u!1 &8607999190453531880
 GameObject:
   m_ObjectHideFlags: 0
