@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 #if false
 
 public class GrappleController : MonoBehaviour
 {
+    public Text label;
     public float maxDistance = 10f; // Maximum distance that grapple can reach
     public float minDistance = 5f;  // Minimum distance that grapple can reach
     public float step = .2f;        // Step for grapple retraction
@@ -32,6 +34,28 @@ public class GrappleController : MonoBehaviour
         line.enabled = false;   // Disable the line renderer
 
         hookStart = hook.transform.localPosition;   // get starting position of hook
+    }
+
+    private Update()
+    {
+       
+    }
+
+    // Called when a player picks up the weapon
+    public void initWeaponUnique(GameObject player)
+    {
+        // Set the player reference
+        this.player = player;
+        label.gameObject.SetActive(false);
+    }
+
+    // Called when a player drops the weapon
+    public void resetWeaponUnique(GameObject player)
+    {
+        // Set the player reference back to null on drop
+        this.player = null;
+        label.gameObject.SetActive(true);
+        particles.Stop();
     }
 
     // Update is called once per frame

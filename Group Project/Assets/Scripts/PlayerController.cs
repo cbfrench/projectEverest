@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public GameObject trail;
     public GameObject glow;
     public AudioSource thud;
+    public GameObject pickupContainer;
 
     private bool lastControls;
     private int wallJumpNum = 0;
@@ -475,11 +476,16 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) {
             return;
         }
-        equippedWeapon.GetComponent<WeaponScript>().resetWeapon(equippedWeapon, this.gameObject);
-        if(launchWeapon != Vector2.zero){
-            equippedWeapon.GetComponent<Rigidbody2D>().velocity = launchWeapon;
-        }
 
+        // Reset the weapon
+        equippedWeapon.GetComponent<WeaponScript>().resetWeapon(equippedWeapon, this.gameObject);
+        // Set the parent to the pickup container
+        equippedWeapon.transform.parent = pickupContainer.transform;
+        
+        // Launch the weapon
+        equippedWeapon.GetComponent<Rigidbody2D>().velocity = launchWeapon;
+
+        // Set the equipped weapon back to null
         equippedWeapon = null;
         return;
     }

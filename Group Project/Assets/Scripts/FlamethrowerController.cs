@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
 
-    
     public Text label;          // Reference to the text label
     public ParticleSystem particles;   // Refernce to the particle system
 
