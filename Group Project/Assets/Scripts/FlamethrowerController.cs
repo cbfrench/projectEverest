@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Flamethrower : MonoBehaviour, WeaponScript
+public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
 
-    public GameObject player;   // Stores reference to the player
+    
     public Text label;          // Reference to the text label
+    public ParticleSystem particles;   // Refernce to the particle system
 
-    private ParticleSystem particles;
+    private GameObject player;          // Stores reference to the player
 
     // Start is called before the first frame update
     void Start()
@@ -23,14 +24,13 @@ public class Flamethrower : MonoBehaviour, WeaponScript
         label.gameObject.SetActive(true);
 
         // Get the particle system for the flame
-        particles = GetComponent<ParticleSystem>();
         particles.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-  
+
     }
 
     // Called when a player picks up the weapon

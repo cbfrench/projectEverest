@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if false
+
 public class GrappleController : MonoBehaviour
 {
     public float maxDistance = 10f; // Maximum distance that grapple can reach
@@ -15,7 +17,6 @@ public class GrappleController : MonoBehaviour
 
     //private Rigidbody2D rb2d;       // Player's rigid body 2D
     private GameObject player;        // Player holding object
-    private PickupController pickup;  // Pickup controller for this object
     private Vector3 hookStart;
     private float hookAngle;
 
@@ -162,3 +163,4 @@ public class GrappleController : MonoBehaviour
     }
 }
 
+#endif 

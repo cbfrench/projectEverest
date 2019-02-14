@@ -13,6 +13,7 @@ public static class WeaponScriptHelper
         // Set direction to direction player is facing
         attachedGO.transform.localScale = new Vector3(player.transform.localScale.x, attachedGO.transform.localScale.y, attachedGO.transform.localScale.z);  // Scale may need to be moved to individual scripts
         // Individual weapon script
+
         weapon.resetWeaponUnique(player);
     }
 
