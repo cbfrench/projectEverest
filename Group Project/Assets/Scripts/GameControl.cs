@@ -53,7 +53,7 @@ public class GameControl : MonoBehaviour
 
     public bool USING_CONTROLLERS = false;
     public bool USING_GAMECUBE_CONTROLLERS = false;
-    public bool USING_SONY_CONTROLLERS = true;
+    public bool USING_SONY_CONTROLLERS = false;
 
     void Awake()
     {
@@ -71,18 +71,22 @@ public class GameControl : MonoBehaviour
         if(controllers.Length == 0)
         {
             USING_CONTROLLERS = false;
+            USING_GAMECUBE_CONTROLLERS = false;
             USING_SONY_CONTROLLERS = false;
             return;
         }
-        USING_CONTROLLERS = true;
         for(int i = 0; i < controllers.Length; i++)
         {
             if (controllers[i].Contains("vJoy"))
             {
-                USING_SONY_CONTROLLERS = false;
                 USING_GAMECUBE_CONTROLLERS = true;
             }
+            else
+            {
+                USING_SONY_CONTROLLERS = true;
+            }
         }
+        USING_CONTROLLERS = USING_GAMECUBE_CONTROLLERS || USING_SONY_CONTROLLERS;
         Debug.Log("Using Controllers: " + USING_CONTROLLERS + ", Gamecube?: " + USING_GAMECUBE_CONTROLLERS + ", Sony?: " + USING_SONY_CONTROLLERS);
     }
 

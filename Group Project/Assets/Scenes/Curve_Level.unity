@@ -7488,11 +7488,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6902618979365363900, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 7865224813656439145, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7547,56 +7542,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865224813656439145, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 17.14275
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865224813656439145, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 6.820004
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772501158253326179, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032805442140716241, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851175744850989083, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4117543964639235857, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6163939695640442519, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104973407302416248, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003488374548281807, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3973093661766237187, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6909521314692903559, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
         type: 3}
@@ -8269,7 +8214,7 @@ SpriteRenderer:
   m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e45bd4aca1dbcf8468d57770df687f17, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -14874,6 +14819,9 @@ MonoBehaviour:
   platformSprite: {fileID: 21300000, guid: e406e658a1dddb44b9386962778073f8, type: 3}
   wallSprite: {fileID: 21300000, guid: 58b6d8b61232b704fbbfaff0024be9d9, type: 3}
   music: {fileID: 8300000, guid: 873a619686de73d419780f8301affbfd, type: 3}
+  USING_CONTROLLERS: 0
+  USING_GAMECUBE_CONTROLLERS: 0
+  USING_SONY_CONTROLLERS: 0
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0
@@ -20084,7 +20032,7 @@ PrefabInstance:
     - target: {fileID: 7865224813656439145, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.25
+      value: 13.075
       objectReference: {fileID: 0}
     - target: {fileID: 7865224813656439145, guid: 1cd95f3b31feb1d46aea11eb7ad32e53,
         type: 3}
@@ -20449,6 +20397,14 @@ PrefabInstance:
     - target: {fileID: 1263712114, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029892164, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029892164, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
+      propertyPath: m_Color.b
+      value: 0.9607843
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aefeb7985fe06f4a890e2c676aa5da9, type: 3}
