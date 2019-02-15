@@ -40,6 +40,7 @@ public class GameControl : MonoBehaviour
     public bool fight = false;
     public Sprite platformSprite;
     public Sprite wallSprite;
+    public AudioClip music;
     
     private string previousText;
     private float cameraShaking;
@@ -49,6 +50,10 @@ public class GameControl : MonoBehaviour
     private GameObject lastWaypoint;
     private float climbDelay;
     private Vector3 cameraDir;
+
+    public bool USING_CONTROLLERS = false;
+    public bool USING_GAMECUBE_CONTROLLERS = false;
+    public bool USING_SONY_CONTROLLERS = true;
 
     void Awake()
     {
@@ -60,8 +65,25 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //stopParticles();
+        stopParticles();
         changeSprites();
+        string[] controllers = Input.GetJoystickNames();
+        if(controllers.Length == 0)
+        {
+            USING_CONTROLLERS = false;
+            USING_SONY_CONTROLLERS = false;
+            return;
+        }
+        USING_CONTROLLERS = true;
+        for(int i = 0; i < controllers.Length; i++)
+        {
+            if (controllers[i].Contains("vJoy"))
+            {
+                USING_SONY_CONTROLLERS = false;
+                USING_GAMECUBE_CONTROLLERS = true;
+            }
+        }
+        Debug.Log("Using Controllers: " + USING_CONTROLLERS + ", Gamecube?: " + USING_GAMECUBE_CONTROLLERS + ", Sony?: " + USING_SONY_CONTROLLERS);
     }
 
     private void Start()
@@ -76,6 +98,8 @@ public class GameControl : MonoBehaviour
         climbDelay = scaleDelay;
         paused = false;
         Time.timeScale = 1;
+        Music.instance.music.clip = music;
+        Music.instance.music.Play();
     }
 
     void Update()
@@ -143,6 +167,7 @@ public class GameControl : MonoBehaviour
             {
                 Time.timeScale = 1;
                 statusText.text = previousText;
+                Music.instance.music.volume = 1;
             }
             else
             {
@@ -151,6 +176,7 @@ public class GameControl : MonoBehaviour
                     Time.timeScale = 0;
                     previousText = statusText.text;
                     statusText.text = "PAUSED";
+                    Music.instance.music.volume = 0.25f;
                 }
             }
             paused = !paused;

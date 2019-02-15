@@ -22,6 +22,8 @@ public interface WeaponScript
         }*/
 
     void shoot();
+
+    void stop();
 }
 
 /*
