@@ -1520,6 +1520,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5669993516200176259, guid: 9a6709979ceeedc4d97abfcc17ceeee9,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 1315452002536047854}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6709979ceeedc4d97abfcc17ceeee9, type: 3}
 --- !u!4 &551967767 stripped
@@ -8018,8 +8023,8 @@ MonoBehaviour:
   adjustSpeed: 10
   cameraOffsetX: 20
   cameraOffsetY: 7.5
-  player1: {fileID: 0}
-  player2: {fileID: 0}
+  player1: {fileID: 1383809838}
+  player2: {fileID: 1383809838}
   cam: {fileID: 1315452001816809521}
   climbing: 0
   reachedTop: 0
@@ -8400,6 +8405,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1383809838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5669993516268552402, guid: 9a6709979ceeedc4d97abfcc17ceeee9,
+    type: 3}
+  m_PrefabInstance: {fileID: 492387651}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1389700026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8526,15 +8537,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
+    - target: {fileID: 7127404281499944819, guid: 17b368cbcfa118b44b2241610ce14c51,
+        type: 3}
+      propertyPath: m_Name
+      value: Flashlight
+      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: 17b368cbcfa118b44b2241610ce14c51,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: 8.07
       objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: 17b368cbcfa118b44b2241610ce14c51,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.53
+      value: 13.27
       objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: 17b368cbcfa118b44b2241610ce14c51,
         type: 3}
@@ -8580,11 +8596,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7127404281499944819, guid: 17b368cbcfa118b44b2241610ce14c51,
-        type: 3}
-      propertyPath: m_Name
-      value: Flashlight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17b368cbcfa118b44b2241610ce14c51, type: 3}
@@ -8759,6 +8770,7 @@ Transform:
   - {fileID: 1406882192}
   - {fileID: 1550687889}
   - {fileID: 551967767}
+  - {fileID: 4852778211098047150}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9051,6 +9063,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
+    - target: {fileID: 7127404281499944819, guid: a048d8055f1802649ade4107a5a9c2d5,
+        type: 3}
+      propertyPath: m_Name
+      value: Flamethrower
+      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: a048d8055f1802649ade4107a5a9c2d5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9105,11 +9122,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7127404281499944819, guid: a048d8055f1802649ade4107a5a9c2d5,
-        type: 3}
-      propertyPath: m_Name
-      value: Flamethrower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a048d8055f1802649ade4107a5a9c2d5, type: 3}
@@ -9214,6 +9226,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
+    - target: {fileID: 7127404281499944819, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
+        type: 3}
+      propertyPath: m_Name
+      value: Squirt Gun
+      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9252,7 +9269,7 @@ PrefabInstance:
     - target: {fileID: 880386134737160804, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
         type: 3}
@@ -9268,11 +9285,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7127404281499944819, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
-        type: 3}
-      propertyPath: m_Name
-      value: Squirt Gun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c, type: 3}
@@ -11351,7 +11363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1315452001164773808
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12856,6 +12868,81 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &3981953265952677242
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1449021119}
+    m_Modifications:
+    - target: {fileID: 1928762883320505027, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_Name
+      value: Grenade Launcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4730ac057dd31ee4b82ed7650b698506, type: 3}
+--- !u!4 &4852778211098047150 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
+    type: 3}
+  m_PrefabInstance: {fileID: 3981953265952677242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5748667484941886115
 MonoBehaviour:
   m_ObjectHideFlags: 0
