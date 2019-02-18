@@ -33,6 +33,11 @@ public class LoadGame : MonoBehaviour
         SceneManager.LoadScene("Curve_Level");
     }
 
+    public void loadVolcano()
+    {
+        SceneManager.LoadScene("Hardcore_Level");
+    }
+
     public void instructions()
     {
         main.gameObject.SetActive(false);

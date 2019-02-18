@@ -20,7 +20,7 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        if (shakeDuration > 0)
+        if (shakeDuration > 0 && !GameControl.instance.paused)
         {
             camTransform.localPosition = originalPos + Random.insideUnitCircle * shakeAmount;
             shakeDuration -= Time.deltaTime * decreaseFactor;

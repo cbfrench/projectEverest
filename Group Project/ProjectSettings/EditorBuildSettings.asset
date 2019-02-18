@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Curve_Level.unity
     guid: c58ae0b72da33394fb3eac067107b3dd
+  - enabled: 1
+    path: Assets/Scenes/Hardcore_Level.unity
+    guid: da4dcb45153b7be448659bc425bf67ac
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

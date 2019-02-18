@@ -121,7 +121,7 @@ public class GameControl : MonoBehaviour
             }
             if (player1.gameObject.GetComponent<SpriteRenderer>().enabled && player2.gameObject.GetComponent<SpriteRenderer>().enabled)
             {
-                ableToDie = true;
+                //ableToDie = true;
             }
         }
         aboveScreen = cameraAdjust();
@@ -236,7 +236,7 @@ public class GameControl : MonoBehaviour
 
     public void wayfind()
     {
-        if (!reachedTop && climbing)
+        if (!reachedTop && climbing && !gameOver)
         {
             Vector3 dir = waypoints[nextPath].transform.position - waypoints[prevPath].transform.position;
             dir = dir.normalized;

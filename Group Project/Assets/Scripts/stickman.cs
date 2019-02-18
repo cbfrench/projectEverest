@@ -32,6 +32,7 @@ public class stickman : MonoBehaviour
     public AudioSource thud;
     public ParticleSystem wallSlide;
     public float wallSlideSpeed;
+    public int lives = 5;
 
     private bool lastControls;
     private int wallJumpNum = 0;
@@ -56,6 +57,11 @@ public class stickman : MonoBehaviour
     private bool sliding = false;
     private float wallDistance = 0.55f;
     private float wallDistanceBelow = 1.015f;
+    private bool leftWallJump = false;
+    private bool rightWallJump = false;
+    private GameObject leftWall;
+    private GameObject rightWall;
+    private GameObject lastWall = null;
 
     private void Awake()
     {
@@ -94,8 +100,17 @@ public class stickman : MonoBehaviour
         checkDamage();
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
+        if (!dead)
+        {
+            Text t = GameControl.instance.p2Text;
+            if(playerNum == 1)
+            {
+                t = GameControl.instance.p1Text;
+            }
+            t.text = "Lives: " + lives.ToString();
+        }
         //if the game is over, run game over logic
-        if (GameControl.instance.fight)
+        if (GameControl.instance.fight || lives == 0)
         {
             gameEnd();
         }
@@ -357,7 +372,7 @@ public class stickman : MonoBehaviour
     public void respawn()
     {
         Text t = GameControl.instance.p2Text;
-        if (!GameControl.instance.ableToDie)
+        if (!GameControl.instance.ableToDie && lives > 0)
         {
             if (dead && !GameControl.instance.paused)
             {
@@ -366,7 +381,7 @@ public class stickman : MonoBehaviour
                 {
                     t = GameControl.instance.p1Text;
                 }
-                t.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
+                t.text = "Respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -383,6 +398,7 @@ public class stickman : MonoBehaviour
             }
             if (respawnTimer <= 0)
             {
+                lives--;
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
                 t.text = "";
@@ -552,10 +568,12 @@ public class stickman : MonoBehaviour
         if (left.collider != null)
         {
             result.x = left.distance;
+            leftWall = left.transform.gameObject;
         }
         if(right.collider != null)
         {
             result.y = right.distance;
+            rightWall = right.transform.gameObject;
         }
         return result;
     }
@@ -633,14 +651,30 @@ public class stickman : MonoBehaviour
             rb2d.gravityScale = 8;
             if (walls.x < wallDistance)
             {
-                wallJumpNum++;
+                if (leftWall == lastWall)
+                {
+                    wallJumpNum++;
+                }
+                else
+                {
+                    wallJumpNum = 1;
+                }
+                lastWall = leftWall;
                 rb2d.velocity = new Vector2(wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
                 transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             }
             if (walls.y < wallDistance)
             {
-                wallJumpNum++;
+                if (rightWall == lastWall)
+                {
+                    wallJumpNum++;
+                }
+                else
+                {
+                    wallJumpNum = 1;
+                }
+                lastWall = rightWall;
                 rb2d.velocity = new Vector2(-wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
@@ -669,6 +703,7 @@ public class stickman : MonoBehaviour
             {
                 GameControl.instance.statusText.text = "Game!";
                 gameEndDelay -= Time.deltaTime;
+                Debug.Log(gameEndDelay);
             }
             else
             {
