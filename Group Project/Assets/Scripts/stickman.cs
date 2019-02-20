@@ -230,6 +230,10 @@ public class stickman : MonoBehaviour
         {
             die();
         }
+        if (collision.gameObject.CompareTag("Tutorial"))
+        {
+            GameControl.instance.tutorialCollision = true;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -398,7 +402,13 @@ public class stickman : MonoBehaviour
             }
             if (respawnTimer <= 0)
             {
-                lives--;
+                if (!GameControl.instance.inTutorial)
+                {
+                    if (lives != 1 || GameControl.instance.reachedTop)
+                    {
+                        lives--;
+                    }
+                }
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
                 t.text = "";
@@ -684,7 +694,7 @@ public class stickman : MonoBehaviour
 
     private void gameEnd()
     {
-        if (dead)
+        if (dead && lives == 0)
         {
             GameControl.instance.gameOver = true;
             otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;

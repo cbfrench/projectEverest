@@ -23,6 +23,11 @@ public class LoadGame : MonoBehaviour
     {
     }
 
+    public void loadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial_Level");
+    }
+
     public void loadCave()
     {
         SceneManager.LoadScene("Prototype_Level");
@@ -50,7 +55,7 @@ public class LoadGame : MonoBehaviour
     {
         main.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
-        firstLevelButton = GameObject.Find("Cave").transform.GetComponent<Button>();
+        firstLevelButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
         firstLevelButton.Select();
     }
 

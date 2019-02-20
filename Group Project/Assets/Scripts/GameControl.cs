@@ -41,7 +41,13 @@ public class GameControl : MonoBehaviour
     public Sprite platformSprite;
     public Sprite wallSprite;
     public AudioClip music;
-    
+    public bool tutorial = false;
+    public Textbox textbox;
+    public bool textboxDestroyed = false;
+    public float initialCameraSpeed;
+    public bool inTutorial = false;
+    public bool tutorialCollision = false;
+
     private string previousText;
     private float cameraShaking;
     private int prevPath = 0;
@@ -50,6 +56,8 @@ public class GameControl : MonoBehaviour
     private GameObject lastWaypoint;
     private float climbDelay;
     private Vector3 cameraDir;
+    private int tutorialCount = 0;
+    private string[] tutorialText = {"Welcome to the Tutorial Level! Here is where you will learn everything you need to know to become a champion!", "If you want to survive, you're going to have to climb out of here. Press A to jump!" , "You're also going to have to fight, so pick up weapons with B and use them with L or R!", "If you don't like your weapon, you can drop it by pressing B again or throw it by pressing X. Try throwing it at an opponent!", "The camera is about to start moving. Be careful not to fall behind!", "If you fall out of the view of the camera, you will lose a life!", "You only have a limited number of lives, and if they all run out, you lose!", "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the A button!", "When you reach the final platform, all other platforms will drop away and you will duel each other to drain each other's lives!"};
 
     public bool USING_CONTROLLERS = false;
     public bool USING_GAMECUBE_CONTROLLERS = false;
@@ -104,10 +112,20 @@ public class GameControl : MonoBehaviour
         Time.timeScale = 1;
         Music.instance.music.clip = music;
         Music.instance.music.Play();
+        initialCameraSpeed = cameraSpeed;
+        if(SceneManager.GetActiveScene().name == "Tutorial_Level")
+        {
+            tutorial = true;
+            setText(tutorialText[tutorialCount]);
+        }
     }
 
     void Update()
     {
+        if (tutorial)
+        {
+            runTutorial();
+        }
         if (gameOver)
         {
             controlsDisabled = true;
@@ -357,6 +375,81 @@ public class GameControl : MonoBehaviour
         for(int i = 0; i < walls.Length; i++)
         {
             walls[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = wallSprite;
+        }
+    }
+
+    public void setText(string s)
+    {
+        if (!tutorial)
+        {
+            return;
+        }
+        GameObject[] t = GameObject.FindGameObjectsWithTag("Textbox");
+        if(t.Length != 0)
+        {
+            for(int i = 0; i < t.Length; i++)
+            {
+                Destroy(t[i]);
+            }
+        }
+        Textbox text = Instantiate(textbox, new Vector3(cam.transform.position.x, cam.transform.position.y - 11, -5), Quaternion.identity) as Textbox;
+        text.content = s;
+        text.transform.parent = cam.transform;
+    }
+
+    public void runTutorial()
+    {
+        GameObject[] exists = GameObject.FindGameObjectsWithTag("Textbox");
+        inTutorial = exists.Length != 0;
+        bool triggerText = false;
+        if (!inTutorial)
+        {
+            if(cam.transform.position.y >= 184.5 && tutorialCount == 7)
+            {
+                tutorialCount = 8;
+                triggerText = true;
+            }
+            if(cam.transform.position.y >= 115 && tutorialCount == 6)
+            {
+                tutorialCount = 7;
+                triggerText = true;
+            }
+            if (textboxDestroyed && tutorialCount == 5)
+            {
+                tutorialCount = 6;
+                triggerText = true;
+            }
+            if (tutorialCount == 4 && ((player1.GetComponent<stickman>().dead && player1.GetComponent<stickman>().healthBar.value > 0) || (player2.GetComponent<stickman>().dead && player2.GetComponent<stickman>().healthBar.value > 0)))
+            {
+                tutorialCount = 5;
+                triggerText = true;
+            }
+            if (textboxDestroyed && tutorialCount == 3)
+            {
+                tutorialCount = 4;
+                triggerText = true;
+            }
+            if (textboxDestroyed && tutorialCount == 2)
+            {
+                tutorialCount = 3;
+                triggerText = true;
+            }
+            if (textboxDestroyed && tutorialCount == 1)
+            {
+                tutorialCount = 2;
+                triggerText = true;
+            }
+            if (textboxDestroyed && tutorialCount == 0)
+            {
+                tutorialCount = 1;
+                triggerText = true;
+            }
+        }
+
+        if (tutorialCount < tutorialText.Length && triggerText)
+        {
+            setText(tutorialText[tutorialCount]);
+            triggerText = false;
         }
     }
 }
