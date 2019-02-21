@@ -5,14 +5,12 @@ using UnityEngine;
 public class GrenadeController : MonoBehaviour
 {
     public AudioClip explosionSound;
-    public float launchForce = 2f;
     public float lifeSpan = 1f;
     public float explosionRadius = 2.5f;
     public float explosionForce = 300f;
     public int bounceLimit = 3;
     public GameObject explosion;
 
-    private Rigidbody2D rb2d;
     private ParticleSystem particles;
     private float lifeTime = 0;
     private int bounces;
@@ -20,11 +18,7 @@ public class GrenadeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-
         particles = GetComponent<ParticleSystem>();
-
-        rb2d.AddForce(new Vector2(launchForce, 0));
     }
 
     // Update is called once per frame
