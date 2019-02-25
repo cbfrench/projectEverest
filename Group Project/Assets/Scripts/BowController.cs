@@ -71,8 +71,6 @@ public class BowController : MonoBehaviour, WeaponScript
     {
         //Scaling value to new range
         var arrowVelocity = Mathf.Lerp(10f, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
-        Debug.Log(arrowVelocity);
-        Debug.Log(drawTime);
         bowDraw = false;
         drawTime = 0;
 
