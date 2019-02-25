@@ -24,6 +24,7 @@ TextureImporter:
     21300038: BowB_8
     21300040: BowB_9
     21300042: BowB_10
+    21300044: BowCharged
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -563,6 +564,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 137da2d5805f7d941a65f4729dd99b46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BowCharged
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 191
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c005e563f37624748ab1059d92afd485
       vertices: []
       indices: 
       edges: []

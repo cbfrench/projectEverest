@@ -38,6 +38,7 @@ public class BowController : MonoBehaviour, WeaponScript
                 drawTime += Time.deltaTime;
             }else{
                 drawTime = maxDrawtime;
+                anim.SetTrigger("FullDraw");
             }
         }
         anim.SetBool("Drawing", bowDraw);
@@ -59,6 +60,7 @@ public class BowController : MonoBehaviour, WeaponScript
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
+        anim.SetBool("Drawing", false);
     }
 
     public void shoot()
@@ -73,6 +75,7 @@ public class BowController : MonoBehaviour, WeaponScript
         var arrowVelocity = Mathf.Lerp(10f, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
         bowDraw = false;
         drawTime = 0;
+        anim.ResetTrigger("FullDraw");
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
 
@@ -82,19 +85,31 @@ public class BowController : MonoBehaviour, WeaponScript
 
 
 /*
-   public List<GameObject> pooledProjectiles = new List<GameObject>();
-   public GameObject projectilePrefab;
-   public int poolAmt;
+    public List<GameObject> pooledProjectiles = new List<GameObject>();
+    public GameObject projectilePrefab;
+    public int poolAmt;
 
-   void Start(){
-      for (int i = 0; i < poolAmt; i++) {
-        GameObject obj = (GameObject)Instantiate(projectilePrefab);
-        obj.SetActive(false); 
-        pooledProjectiles.Add(obj);
-      }
-   
+    void Start(){
+        for (int i = 0; i < poolAmt; i++) {
+            GameObject obj = (GameObject)Instantiate(projectilePrefab);
+            obj.SetActive(false); 
+            pooledProjectiles.Add(obj);
+    }
 
-    Vector3 dir = rigidbody.velocity;
-    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    GameObject projectile = this.GetInactiveProjectile();
+
+    if (projectile != null) {
+        projectile.transform.position = firePoint.transform.position;
+        projectile.transform.localRotation = firePoint.transform.parent.transform.localRotation;
+        projectile.SetActive(true);
+    }
+
+    public GameObject GetInactiveProjectile() {
+        for (int i = 0; i < pooledProjectiles.Count; i++) {
+            if (!pooledProjectiles[i].activeInHierarchy) {
+                return pooledProjectiles[i];
+            }
+        }  
+        return null;
+    }
 */
