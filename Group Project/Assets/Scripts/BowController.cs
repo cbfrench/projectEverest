@@ -40,6 +40,7 @@ public class BowController : MonoBehaviour, WeaponScript
                 drawTime = maxDrawtime;
             }
         }
+        anim.SetBool("Drawing", bowDraw);
     }
 
     // Called when a player picks up the weapon
