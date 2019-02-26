@@ -12,7 +12,7 @@ public class LoadGame : MonoBehaviour
 
     private Button playButton;
     private Button backButton;
-    private Button firstLevelButton;
+    private Button tutorialButton;
 
     public void Awake()
     {
@@ -55,8 +55,8 @@ public class LoadGame : MonoBehaviour
     {
         main.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
-        firstLevelButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
-        firstLevelButton.Select();
+        tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
+        tutorialButton.Select();
     }
 
     public void back()
