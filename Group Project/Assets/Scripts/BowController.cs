@@ -51,6 +51,7 @@ public class BowController : MonoBehaviour, WeaponScript
         bowDraw = false;
         // Set the player reference
         this.player = player;
+        this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
 
@@ -60,6 +61,7 @@ public class BowController : MonoBehaviour, WeaponScript
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
+        this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         anim.SetBool("Drawing", false);
     }
 
