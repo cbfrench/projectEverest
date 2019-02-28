@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GrappleController : MonoBehaviour, WeaponScript
+public class GrappleController : MonoBehaviour
 {
-    public Text label;
+
+    public bool isEquiped = false;  // Stores boolean value of if grapple is equiped by a player
     public float maxDistance = 10f; // Maximum distance that grapple can reach
     public float minDistance = 5f;  // Minimum distance that grapple can reach
     public float step = .2f;        // Step for grapple retraction
@@ -14,9 +14,7 @@ public class GrappleController : MonoBehaviour, WeaponScript
 
     //private Rigidbody2D rb2d;       // Player's rigid body 2D
     private GameObject player;        // Player holding object
-    private Vector3 hookStart;
-    private float hookAngle;
-    private bool grappling;
+    private PickupController pickup;  // Pickup controller for this object
 
     DistanceJoint2D joint;          // Distance join 2D used for the grapple
     Vector3 targetPosition;         // Position player is aiming for. 
@@ -25,43 +23,17 @@ public class GrappleController : MonoBehaviour, WeaponScript
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize 
-        player = null;
-
-        // Set label text
-        label.text = "Grapple Gun";
-        label.gameObject.SetActive(true);
-
+        pickup = GetComponent<PickupController>();  // Get pickup controller
+        joint = GetComponent<DistanceJoint2D>();    // Get the distance join
+        joint.enabled = false;  // Disable the joint at start
         line.enabled = false;   // Disable the line renderer
-        hookStart = hook.transform.localPosition;   // get starting position of hook
-        grappling = false;
+        //rb2d = GetComponent<Rigidbody2D>(); // Get the rigid body of player
     }
 
-    // Called when a player picks up the weapon
-    public void initWeaponUnique(GameObject player)
+    // Update is called once per frame
+    void Update()
     {
-        // Set the player reference
-        this.player = player;
-        label.gameObject.SetActive(false);
-
-        // Get the distance joint of the player
-        joint = player.gameObject.GetComponent<DistanceJoint2D>();
-    }
-
-    // Called when a player drops the weapon
-    public void resetWeaponUnique(GameObject player)
-    {
-        // Set the player reference back to null on drop
-        this.player = null;
-        label.gameObject.SetActive(true);
-
-        // Set the joint to null
-        joint = null;
-    }
-
-    private void Update()
-    {
-        if (grappling)
+        if (pickup.isEquipped)   // Check if equiped by a player
         {
             if (joint.distance > minDistance)    // Restract if not at minimum distance
             {
@@ -69,67 +41,59 @@ public class GrappleController : MonoBehaviour, WeaponScript
             }
             else    // If grapple at minimum distance then break
             {
-                breakGrapple();
+                joint.enabled = false;  // Disable the joint
+                line.enabled = false;   // Disable the line renderer
             }
-        }
-    }
 
-    public void shoot()
-    {
-        grappling = true;
-
-        if (!joint.enabled)
-        {
-            // Raycast to get target position
-            hit = Physics2D.Raycast(transform.position, aimTransform.position - transform.position, maxDistance, mask);
-
-            // Check for raycasting hit
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (Input.GetButtonDown("Fire_P1"))
             {
-                //Debug.Log("Hit something");
-                if (joint.enabled == false)
+                // Get target position for grapple
+                targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                targetPosition.z = 0;
+
+                // Raycast to get target position
+                hit = Physics2D.Raycast(transform.position, targetPosition - transform.position, maxDistance, mask);
+
+                // Check for raycasting hit
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
                 {
-                    //rb2d.velocity = Vector2.zero;
+                    if (joint.enabled == false)
+                    {
+                        //rb2d.velocity = Vector2.zero;
+                    }
+                    joint.enabled = true;
+                    joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+
+                    Vector2 connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
+                    connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
+                    connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
+                    joint.connectedAnchor = connectPoint;
+
+                    joint.distance = Vector2.Distance(transform.position, hit.point);
+
+                    line.enabled = true;
+                    line.SetPosition(0, transform.position);
+                    //line.SetPosition(1, hit.collider.transform.position);
+                    //line.SetPosition(1, connectPoint);
+                    line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
                 }
-                joint.enabled = true;
-                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
 
-                // Get the poiny on the hit object and scale by object scale
-                connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
-                connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
-                connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
-                joint.connectedAnchor = connectPoint;
+            }
 
-                // get distance to point
-                joint.distance = Vector2.Distance(transform.position, hit.point);
+            //line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
 
-                // Set the hook to that point with correct angle
-                hook.transform.parent = null;
-                hook.transform.position = joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
-                hookAngle = -Mathf.Atan2(transform.position.x - connectPoint.x, transform.position.y - connectPoint.y) * Mathf.Rad2Deg;
-                hook.transform.eulerAngles = new Vector3(0, 0, hookAngle);
-
-                // Set the line rederer
-                line.enabled = true;
+            if (Input.GetButtonDown("Fire_P1"))
+            {
                 line.SetPosition(0, transform.position);
-                line.SetPosition(1, joint.connectedBody.transform.TransformPoint(joint.connectedAnchor));
+            }
+
+            if (Input.GetButtonUp("Fire_P1"))
+            {
+                joint.enabled = false;
+                line.enabled = false;
             }
         }
-    }
-
-    public void stop()
-    {
-        grappling = false;
-        breakGrapple();
-    }
-
-    public void breakGrapple()
-    {
-        // Reset all grapple components
-        joint.enabled = false;
-        line.enabled = false;
-        hook.transform.parent = this.transform;
-        hook.transform.localPosition = hookStart;
-        hook.transform.eulerAngles = new Vector3(0, 0, -90f);
+        
     }
 }
+
