@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public Button quit;
-    public AudioClip menuMusic;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +32,6 @@ public class PauseMenu : MonoBehaviour
 
     public void returnToMenu()
     {
-        Music.instance.music.clip = menuMusic;
-        Music.instance.music.volume = 1;
-        Music.instance.music.Play();
         SceneManager.LoadScene("Main_Menu");
     }
 

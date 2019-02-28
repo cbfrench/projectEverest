@@ -27,6 +27,6 @@ public class parallax : MonoBehaviour
         {
             xScale = 1;
         }
-        transform.position = new Vector3(cam.transform.position.x * speed * xScale + startingX, cam.transform.position.y * speed + startingY, startingZ);
+        transform.position = new Vector3(cam.transform.position.x * speed * xScale, cam.transform.position.y * speed, startingZ);
     }
 }
