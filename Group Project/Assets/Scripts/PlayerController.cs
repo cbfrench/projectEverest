@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     public bool wallJumping = false;
     public GameObject shaker;
     public int playerNum;
-    public PlayerController otherPlayer;
     public bool firing = false;
     public float throwSpeed;
     public bool hit = false;
@@ -29,6 +28,8 @@ public class PlayerController : MonoBehaviour
     public GameObject minimapIcon;
     public GameObject trail;
     public GameObject glow;
+    public AudioSource thud;
+    public GameObject pickupContainer;
 
     private bool lastControls;
     private int wallJumpNum = 0;
@@ -49,56 +50,31 @@ public class PlayerController : MonoBehaviour
     private GameObject weaponFired;
     private GameObject environmentalDamage;
     private float gameEndDelay = 3f;
+    private Animator anim;
+    private bool sliding = false;
 
-    private bool DEBUG = false;
+    private GameObject equippedWeapon = null;
 
     private void Awake()
     {
-        if (DEBUG)
-        {
-            Debug.Log("There are no controllers detected, switching to keyboard mode.");
-            if (playerNum == 1)
-            {
-                hAxis = "Horizontal";
-                vAxis = "Vertical";
-                jAxis = "Jump";
-                fAxis = "Fire1";
-                eAxis = "Fire2";
-                tAxis = "Fire3";
-            }
-            return;
-        }
-        if (playerNum == 1)
-        {
-            hAxis = "Horizontal_P1";
-            jAxis = "Jump_P1";
-            eAxis = "Equip_P1";
-            fAxis = "Fire_P1";
-            vAxis = "Vertical_P1";
-            tAxis = "Throw_P1";
-        }
-        else
-        {
-            hAxis = "Horizontal_P2";
-            jAxis = "Jump_P2";
-            eAxis = "Equip_P2";
-            fAxis = "Fire_P2";
-            vAxis = "Vertical_P2";
-            tAxis = "Throw_P2";
-        }
+        
     }
 
     void Start()
     {
+        checkControls();
         rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
+        anim = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
     {
         //checks if controls are enabled or not
         resetControls();
+
+        checkSlide();
         //most movement logic for the player
         movePlayer();
         float h = Input.GetAxis(hAxis);
@@ -145,6 +121,7 @@ public class PlayerController : MonoBehaviour
             wallJumping = false;
             wallJumpNum = 0;
             shaker.SetActive(true);
+            thud.Play();
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -155,6 +132,7 @@ public class PlayerController : MonoBehaviour
                 wallJumping = false;
                 wallJumpNum = 0;
                 shaker.SetActive(true);
+                thud.Play();
             }
         }
         if (collision.gameObject.CompareTag("Player"))
@@ -192,12 +170,15 @@ public class PlayerController : MonoBehaviour
         {
             ableToJump = false;
         }
-        if (collision.gameObject.CompareTag("Wall") && rb2d.velocity.y == 0)
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            Vector2 dist = getDistanceToWall();
-            if (dist.x >= 1 && dist.y >= 1)
+            if (rb2d.velocity.y == 0)
             {
-                ableToJump = false;
+                Vector2 dist = getDistanceToWall();
+                if (dist.x >= 1 && dist.y >= 1)
+                {
+                    ableToJump = false;
+                }
             }
         }
         if (collision.gameObject.CompareTag("Player"))
@@ -210,6 +191,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                thud.Play();
                 ableToJump = true;
             }
         }
@@ -226,18 +208,10 @@ public class PlayerController : MonoBehaviour
                 hit = true;
             }
         }
-
-        // Check if object is equipment
-        if (collision.gameObject.CompareTag("Equipment"))
-        {
-            item = collision;   // Set item to object
-        }
-
         if (collision.gameObject.CompareTag("Killbox"))
         {
             die();
         }
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -279,12 +253,70 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void checkControls()
+    {
+        if (!GameControl.instance.USING_CONTROLLERS)
+        {
+            hAxis = "Horizontal";
+            vAxis = "Vertical";
+            jAxis = "Jump";
+            fAxis = "Fire1";
+            eAxis = "Fire2";
+            tAxis = "Fire3";
+            return;
+        }
+        if (GameControl.instance.USING_GAMECUBE_CONTROLLERS)
+        {
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
+        }
+        if (GameControl.instance.USING_SONY_CONTROLLERS)
+        {
+            // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
+        }
+    }
+
     public void movePlayer()
     {
         if (!dead && !controlsDisabled && !GameControl.instance.paused)
         {
             bool v = Input.GetButtonDown(jAxis);
             float h = Input.GetAxis(hAxis);
+            Vector2 dist = getDistanceToWall();
             if(rb2d.velocity.y <= 0 && wallJumping)
             {
                 wallJumping = false;
@@ -297,15 +329,39 @@ public class PlayerController : MonoBehaviour
                     ableToJump = false;
                     if (footstool)
                     {
+                        // Needs to be updated to not need reference to pther player
+                        /*
                         if (otherPlayer.ableToJump)
                         {
                             Rigidbody2D r = otherPlayer.GetComponent<Rigidbody2D>();
                             r.velocity = new Vector2(r.velocity.x, -jumpStrength);
                         }
-                        footstool = false;
+                        footstool = false;*/
                     }
                 }
-                rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
+                else
+                {
+                    if (sliding)
+                    {
+                        rb2d.gravityScale = 0;
+                        rb2d.velocity = new Vector2(0, -5);
+                    }
+                    else
+                    {
+                        rb2d.gravityScale = 8;
+                    }
+                }
+                if (sliding)
+                {
+                    if ((dist.x >= 1 && h < 0) || (dist.y >= 1 && h > 0))
+                    {
+                        rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
+                    }
+                }
+                else
+                {
+                    rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
+                }
                 if (h != 0)
                 {
                     transform.localScale = new Vector3(Mathf.Sign(h), transform.localScale.y, transform.localScale.z);
@@ -316,30 +372,34 @@ public class PlayerController : MonoBehaviour
 
     public void respawn()
     {
+        Text t = GameControl.instance.p2Text;
         if (!GameControl.instance.ableToDie)
         {
             if (dead && !GameControl.instance.paused)
             {
                 string color = getColor();
-                GameControl.instance.statusText.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
+                if (playerNum == 1)
+                {
+                    t = GameControl.instance.p1Text;
+                }
+                t.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
-                Transform dropped = dropObject();
                 minimapIcon.SetActive(false);
                 glow.SetActive(false);
-                if (dropped != null)
+                if(equippedWeapon != null)
                 {
-                    dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                    dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
                 }
             }
             if (respawnTimer <= 0)
             {
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
-                GameControl.instance.statusText.text = "";
+                t.text = "";
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = false;
                 equip.SetActive(true);
@@ -374,68 +434,61 @@ public class PlayerController : MonoBehaviour
         // Check if player is trying to pick up object or got an object thrown at them
         if (Input.GetButtonDown(eAxis) || hit)
         {
-            Transform dropped = null;
-            if(equip.transform.childCount == 1)
+            GameObject tempEquipedWeaponRef = equippedWeapon;
+            if(equippedWeapon != null)
             {
-                dropped = dropObject();
+                dropObject(new Vector2(-5 * transform.localScale.x, 20));
                 //throw
                 float h = Input.GetAxis(hAxis);
                 float v = Input.GetAxis(vAxis);
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(-5 * transform.localScale.x, 20);
             }
-            if (item != null && item.transform != dropped)
+            if (item != null && item.gameObject != tempEquipedWeaponRef)
             {
                 //pickup
                 item.gameObject.transform.parent = equip.transform;
-                item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                item.GetComponent<Rigidbody2D>().angularVelocity = 0;
-                item.gameObject.transform.eulerAngles = equip.transform.eulerAngles;
-                item.gameObject.transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-                item.gameObject.transform.position = equip.transform.position;
-                item.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-                if (item.name.Contains("Flashlight"))
-                {
-                    singleFire = true;
-                }
 
-                // Set object's isEquipped to true
-                item.gameObject.GetComponent<PickupController>().SetEquipped(true);
-                // Set the object's playercontroller to this player.
-                item.gameObject.GetComponent<PickupController>().SetPlayer(this);
+                // Find the weapon script attached to the weapon (All weapons must extend WeaponScript)
+                equippedWeapon = item.gameObject;
+                equippedWeapon.GetComponent<WeaponScript>().initWeapon(equippedWeapon, this.gameObject);
             }
             hit = false;
         }
     }
 
-    private Transform dropObject()
+    private void fireWeapon()
+    {
+        if (dead || controlsDisabled || equippedWeapon == null)
+        {
+            return;
+        }
+
+        if (Input.GetButtonDown(fAxis)){
+            equippedWeapon.GetComponent<WeaponScript>().shoot();
+        }
+        else if (Input.GetButtonUp(fAxis))
+        {
+            equippedWeapon.GetComponent<WeaponScript>().stop();
+        }
+    }
+
+    private void dropObject(Vector2 launchWeapon)
     {
         //drop
-        if (equip.transform.childCount == 0) {
-            return null;
+        if (equippedWeapon == null) {
+            return;
         }
-        Transform dropped = equip.transform.GetChild(0);
-        dropped.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        dropped.gameObject.transform.eulerAngles = Vector3.zero;
-        float s = -1;
-        if (transform.localScale.x == 1)
-        {
-            s = 1;
-        }
-        dropped.gameObject.transform.localScale = new Vector3(s, dropped.gameObject.transform.localScale.y, dropped.gameObject.transform.localScale.z);
-        dropped.parent = GameControl.instance.pickups.transform;
-        dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-        if (dropped.name.Contains("Flashlight"))
-        {
-            dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-            dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
-        }
-        if (dropped.name.Contains("Flamethrower") || dropped.name.Contains("Squirt Gun"))
-        {
-            dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
-        }
-        return dropped;
+
+        // Reset the weapon
+        equippedWeapon.GetComponent<WeaponScript>().resetWeapon(equippedWeapon, this.gameObject);
+        // Set the parent to the pickup container
+        equippedWeapon.transform.parent = pickupContainer.transform;
+        
+        // Launch the weapon
+        equippedWeapon.GetComponent<Rigidbody2D>().velocity = launchWeapon;
+
+        // Set the equipped weapon back to null
+        equippedWeapon = null;
+        return;
     }
 
     private void checkThrow()
@@ -446,12 +499,10 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown(tAxis))
         {
-            Transform dropped = null;
             if (equip.transform.childCount == 1)
             {
-                dropped = dropObject();
                 //throw
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * transform.localScale.x, 10);
+                dropObject(new Vector2(throwSpeed * transform.localScale.x, 10));
             }
         }
     }
@@ -526,6 +577,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void checkSlide()
+    {
+        Vector2 walls = getDistanceToWall();
+        if(walls.x < 1 || walls.y < 1)
+        {
+            sliding = true;
+        }
+        else
+        {
+            sliding = false;
+        }
+    }
+
     public void wallJump()
     {
         Vector2 walls = getDistanceToWall();
@@ -533,16 +597,9 @@ public class PlayerController : MonoBehaviour
         {
             float h = Input.GetAxis(hAxis);
             float scale = 2;
+            rb2d.gravityScale = 8;
             if (walls.x < 1)
             {
-                /*if (h > 0)
-                {
-                    scale = 2;
-                }
-                if (h < 0)
-                {
-                    scale = 0.5f;
-                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -550,14 +607,6 @@ public class PlayerController : MonoBehaviour
             }
             if (walls.y < 1)
             {
-                /*if (h < 0)
-                {
-                    scale = 2;
-                }
-                if (h > 0)
-                {
-                    scale = 0.5f;
-                }*/
                 wallJumpNum++;
                 rb2d.velocity = new Vector2(-wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
@@ -571,16 +620,14 @@ public class PlayerController : MonoBehaviour
         if (dead)
         {
             GameControl.instance.gameOver = true;
-            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
-            otherPlayer.rb2d.velocity = Vector2.zero;
             rb2d.velocity = Vector2.zero;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
-            Transform dropped = dropObject();
-            if (dropped != null)
+            GameControl.instance.topText.gameObject.SetActive(false);
+            if (equippedWeapon != null)
             {
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
             }
             if (gameEndDelay > 0)
             {
@@ -599,7 +646,6 @@ public class PlayerController : MonoBehaviour
                     GameControl.instance.restartButton.Select();
                     ended = true;
                 }
-                //Time.timeScale = 0;
             }
         }
     }
@@ -622,111 +668,6 @@ public class PlayerController : MonoBehaviour
             color = "Red";
         }
         return color;
-    }
-
-    private void fireWeapon()
-    {
-        if (dead || controlsDisabled)
-        {
-            return;
-        }
-        if (Input.GetButtonDown(fAxis))
-        {
-            firing = true;
-            singleFire = true;
-        }
-        if (Input.GetButtonUp(fAxis))
-        {
-            firing = false;
-        }
-        if (singleFire)
-        {
-            fireOnce();
-        }
-        else
-        {
-            fireMulti();
-        }
-    }
-
-    private void fireOnce()
-    {
-        if(equip.transform.childCount != 1)
-        {
-            return;
-        }
-        if (firing && singleFire)
-        {
-            GameObject projectile = equip.transform.GetChild(0).gameObject;
-            if (equip.transform.GetChild(0).name.Contains("Flashlight"))
-            {
-                projectile = equip.transform.GetChild(0).transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-                projectile.SetActive(!projectile.activeSelf);
-            }
-            singleFire = false;
-        }
-    }
-    private void fireMulti()
-    {
-        if (equip.transform.childCount == 0)
-        {
-            return;
-        }
-        if (equip.transform.GetChild(0).name.Contains("Flashlight"))
-        {
-            return;
-        }
-        GameObject projectile = equip.transform.GetChild(0).gameObject; 
-        projectile = equip.transform.GetChild(0).transform.GetChild(0).GetChild(1).gameObject;
-        ParticleSystem ps = projectile.GetComponent<ParticleSystem>();
-        if (firing)
-        {
-            if (!ps.isEmitting)
-            {
-                ps.Play();
-            }
-        }
-        else
-        {
-            if (ps.isEmitting)
-            {
-                ps.Stop();
-            }
-        }
-    }
-
-    private void checkDamage()
-    {
-        if(particleParent == null || particleParent.name == gameObject.name)
-        {
-            return;
-        }
-        if (particleParent != environmentalDamage)
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.flamethrowerDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
-        else
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.avalancheDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
     }
 
     private void die()

@@ -3,36 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PistolController : MonoBehaviour, WeaponScript
+public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
 
     public Text label;          // Reference to the text label
-    public GameObject bulletPrefab;
-    public float fireDelay;
-    public float velocity;
-    //public Transform firePoint; needed?
-    private float delayTimer = 0;
+    public ParticleSystem particles;   // Refernce to the particle system
+
     private GameObject player;          // Stores reference to the player
-    //private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+
         // Initialize 
         player = null;
-        //anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
 
         // Set label text
-        label.text = "Pistol";
+        label.text = "Flamethrower";
         label.gameObject.SetActive(true);
+
+        // Get the particle system for the flame
+        particles.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(delayTimer > 0 ){
-            delayTimer -= Time.deltaTime;
-        }
+
     }
 
     // Called when a player picks up the weapon
@@ -40,7 +37,6 @@ public class PistolController : MonoBehaviour, WeaponScript
     {
         // Set the player reference
         this.player = player;
-        //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
 
@@ -50,20 +46,18 @@ public class PistolController : MonoBehaviour, WeaponScript
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
-        //this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+        particles.Stop();
     }
 
+    // Shoot flame
     public void shoot()
     {
-        if(delayTimer <= 0){
-            GameObject bullet = Instantiate(bulletPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
-            bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, 0));
-            delayTimer = fireDelay;
-        }
+        particles.Play();
     }
 
+    // Stop shooting flame
     public void stop()
     {
-        
+        particles.Stop();
     }
 }

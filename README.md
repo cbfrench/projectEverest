@@ -123,4 +123,3 @@ This is a GameObject that contains a Particle System to simulate an avalanche an
 ___
 
 I'll make sure to update this periodically and please make sure to update this with any changes you make to the Project or its structure that wouldn't work as a comment in the code.
-Working on merging now.
