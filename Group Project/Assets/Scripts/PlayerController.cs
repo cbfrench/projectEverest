@@ -29,9 +29,6 @@ public class PlayerController : MonoBehaviour
     public GameObject trail;
     public GameObject glow;
     public AudioSource thud;
-    public ParticleSystem wallSlide;
-    public float wallSlideSpeed;
-    public int lives = 5;
     public GameObject pickupContainer;
 
     private bool lastControls;
@@ -55,13 +52,6 @@ public class PlayerController : MonoBehaviour
     private float gameEndDelay = 3f;
     private Animator anim;
     private bool sliding = false;
-    private float wallDistance = 0.55f;
-    private float wallDistanceBelow = 1.015f;
-    private bool leftWallJump = false;
-    private bool rightWallJump = false;
-    private GameObject leftWall;
-    private GameObject rightWall;
-    private GameObject lastWall = null;
 
     private GameObject equippedWeapon = null;
 
@@ -89,7 +79,7 @@ public class PlayerController : MonoBehaviour
         movePlayer();
         float h = Input.GetAxis(hAxis);
         anim.SetBool("Running", Mathf.Abs(rb2d.velocity.x) > 0 && ableToJump);
-        anim.SetFloat("Run Speed", Mathf.Abs(rb2d.velocity.x) / 20);
+        anim.speed = Mathf.Abs(rb2d.velocity.x) / 20;
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
@@ -101,17 +91,8 @@ public class PlayerController : MonoBehaviour
 
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
-        if (!dead)
-        {
-            Text t = GameControl.instance.p2Text;
-            if(playerNum == 1)
-            {
-                t = GameControl.instance.p1Text;
-            }
-            t.text = "Lives: " + lives.ToString();
-        }
         //if the game is over, run game over logic
-        if (GameControl.instance.fight || lives == 0)
+        if (GameControl.instance.fight)
         {
             gameEnd();
         }
@@ -143,8 +124,8 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
-            float d = getWallBeneath();
-            if(d <= wallDistanceBelow)
+            Vector2 dist = getDistanceToWall();
+            if(dist.x >= 1 && dist.y >= 1)
             {
                 ableToJump = true;
                 wallJumping = false;
@@ -172,9 +153,8 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
-            float d = getWallBeneath();
-            Debug.Log(d);
-            if (d <= wallDistanceBelow)
+            Vector2 dist = getDistanceToWall();
+            if (dist.x >= 1 && dist.y >= 1)
             {
                 ableToJump = true;
                 wallJumping = false;
@@ -194,7 +174,7 @@ public class PlayerController : MonoBehaviour
             if (rb2d.velocity.y == 0)
             {
                 Vector2 dist = getDistanceToWall();
-                if (dist.x >= wallDistance && dist.y >= wallDistance)
+                if (dist.x >= 1 && dist.y >= 1)
                 {
                     ableToJump = false;
                 }
@@ -230,10 +210,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Killbox"))
         {
             die();
-        }
-        if (collision.gameObject.CompareTag("Tutorial"))
-        {
-            GameControl.instance.tutorialCollision = true;
         }
     }
 
@@ -312,7 +288,24 @@ public class PlayerController : MonoBehaviour
         if (GameControl.instance.USING_SONY_CONTROLLERS)
         {
             // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
-
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
         }
     }
 
@@ -323,7 +316,7 @@ public class PlayerController : MonoBehaviour
             bool v = Input.GetButtonDown(jAxis);
             float h = Input.GetAxis(hAxis);
             Vector2 dist = getDistanceToWall();
-            if(rb2d.velocity.y <= 5 && wallJumping)
+            if(rb2d.velocity.y <= 0 && wallJumping)
             {
                 wallJumping = false;
             }
@@ -350,7 +343,7 @@ public class PlayerController : MonoBehaviour
                     if (sliding)
                     {
                         rb2d.gravityScale = 0;
-                        rb2d.velocity = new Vector2(0, -wallSlideSpeed);
+                        rb2d.velocity = new Vector2(0, -5);
                     }
                     else
                     {
@@ -359,7 +352,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (sliding)
                 {
-                    if ((dist.x >= wallDistance && h < 0) || (dist.y >= wallDistance && h > 0))
+                    if ((dist.x >= 1 && h < 0) || (dist.y >= 1 && h > 0))
                     {
                         rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
                     }
@@ -368,7 +361,7 @@ public class PlayerController : MonoBehaviour
                 {
                     rb2d.velocity = new Vector2(h * playerSpeed, rb2d.velocity.y);
                 }
-                if (h != 0 && !sliding)
+                if (h != 0)
                 {
                     transform.localScale = new Vector3(Mathf.Sign(h), transform.localScale.y, transform.localScale.z);
                 }
@@ -379,7 +372,7 @@ public class PlayerController : MonoBehaviour
     public void respawn()
     {
         Text t = GameControl.instance.p2Text;
-        if (!GameControl.instance.ableToDie && lives > 0)
+        if (!GameControl.instance.ableToDie)
         {
             if (dead && !GameControl.instance.paused)
             {
@@ -388,7 +381,7 @@ public class PlayerController : MonoBehaviour
                 {
                     t = GameControl.instance.p1Text;
                 }
-                t.text = "Respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
+                t.text = color + " respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -396,7 +389,6 @@ public class PlayerController : MonoBehaviour
                 healthBar.gameObject.SetActive(false);
                 minimapIcon.SetActive(false);
                 glow.SetActive(false);
-                wallSlide.Stop();
                 if(equippedWeapon != null)
                 {
                     dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
@@ -404,13 +396,6 @@ public class PlayerController : MonoBehaviour
             }
             if (respawnTimer <= 0)
             {
-                if (!GameControl.instance.inTutorial)
-                {
-                    if (lives != 1 || GameControl.instance.reachedTop)
-                    {
-                        lives--;
-                    }
-                }
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
                 t.text = "";
@@ -556,25 +541,12 @@ public class PlayerController : MonoBehaviour
         if (left.collider != null)
         {
             result.x = left.distance;
-            leftWall = left.transform.gameObject;
         }
         if(right.collider != null)
         {
             result.y = right.distance;
-            rightWall = right.transform.gameObject;
         }
         return result;
-    }
-
-    public float getWallBeneath()
-    {
-        int ignore = LayerMask.GetMask("Wall", "Platform");
-        RaycastHit2D down = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.down), Mathf.Infinity, ignore);
-        if(down.collider != null)
-        {
-            return down.distance;
-        }
-        return Mathf.Infinity;
     }
 
     public void raycastToPlayer()
@@ -607,26 +579,14 @@ public class PlayerController : MonoBehaviour
     public void checkSlide()
     {
         Vector2 walls = getDistanceToWall();
-        float d = getWallBeneath();
-        if((walls.x < wallDistance || walls.y < wallDistance) && d >= wallDistanceBelow)
+        if(walls.x < 1 || walls.y < 1)
         {
             sliding = true;
-            if (walls.x < walls.y)
-            {
-                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-            }
-            else
-            {
-                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-            }
-            wallSlide.Play();
         }
         else
         {
             sliding = false;
-            wallSlide.Stop();
         }
-        anim.SetBool("Wall Sliding", sliding);
     }
 
     public void wallJump()
@@ -637,32 +597,16 @@ public class PlayerController : MonoBehaviour
             float h = Input.GetAxis(hAxis);
             float scale = 2;
             rb2d.gravityScale = 8;
-            if (walls.x < wallDistance)
+            if (walls.x < 1)
             {
-                if (leftWall == lastWall)
-                {
-                    wallJumpNum++;
-                }
-                else
-                {
-                    wallJumpNum = 1;
-                }
-                lastWall = leftWall;
+                wallJumpNum++;
                 rb2d.velocity = new Vector2(wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
                 transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             }
-            if (walls.y < wallDistance)
+            if (walls.y < 1)
             {
-                if (rightWall == lastWall)
-                {
-                    wallJumpNum++;
-                }
-                else
-                {
-                    wallJumpNum = 1;
-                }
-                lastWall = rightWall;
+                wallJumpNum++;
                 rb2d.velocity = new Vector2(-wallJumpStrength * scale, jumpStrength / wallJumpNum);
                 wallJumping = true;
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
@@ -672,7 +616,7 @@ public class PlayerController : MonoBehaviour
 
     private void gameEnd()
     {
-        if (dead && lives == 0)
+        if (dead)
         {
             GameControl.instance.gameOver = true;
             rb2d.velocity = Vector2.zero;
@@ -688,7 +632,6 @@ public class PlayerController : MonoBehaviour
             {
                 GameControl.instance.statusText.text = "Game!";
                 gameEndDelay -= Time.deltaTime;
-                Debug.Log(gameEndDelay);
             }
             else
             {

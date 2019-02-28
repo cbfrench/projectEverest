@@ -12,8 +12,6 @@ TagManager:
   - Light
   - CameraPath
   - Particles
-  - Textbox
-  - Tutorial
   layers:
   - Default
   - TransparentFX

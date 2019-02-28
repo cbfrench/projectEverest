@@ -5243,6 +5243,7 @@ GameObject:
   - component: {fileID: 880386134737160804}
   - component: {fileID: 4499419448796018854}
   - component: {fileID: 2560850406323380393}
+  - component: {fileID: 8149437355196444578}
   m_Layer: 15
   m_Name: Squirt Gun
   m_TagString: Weapon
