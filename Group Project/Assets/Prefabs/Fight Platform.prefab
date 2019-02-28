@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 210534419}
   - component: {fileID: 1773590879094699954}
   - component: {fileID: 4234510044299753842}
-  - component: {fileID: 1969213640159692708}
   m_Layer: 10
   m_Name: Fight Platform
   m_TagString: Ground
@@ -80,27 +79,6 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!50 &1969213640159692708
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210534416}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4460938169324378670
 GameObject:
   m_ObjectHideFlags: 0
