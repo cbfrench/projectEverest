@@ -12,7 +12,7 @@ public class LoadGame : MonoBehaviour
 
     private Button playButton;
     private Button backButton;
-    private Button firstLevelButton;
+    private Button tutorialButton;
 
     public void Awake()
     {
@@ -23,6 +23,11 @@ public class LoadGame : MonoBehaviour
     {
     }
 
+    public void loadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial_Level");
+    }
+
     public void loadCave()
     {
         SceneManager.LoadScene("Prototype_Level");
@@ -31,6 +36,11 @@ public class LoadGame : MonoBehaviour
     public void loadMountain()
     {
         SceneManager.LoadScene("Curve_Level");
+    }
+
+    public void loadVolcano()
+    {
+        SceneManager.LoadScene("Hardcore_Level");
     }
 
     public void instructions()
@@ -45,8 +55,8 @@ public class LoadGame : MonoBehaviour
     {
         main.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
-        firstLevelButton = GameObject.Find("Cave").transform.GetComponent<Button>();
-        firstLevelButton.Select();
+        tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
+        tutorialButton.Select();
     }
 
     public void back()
