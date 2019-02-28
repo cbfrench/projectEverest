@@ -11,9 +11,6 @@ public class GrappleController : MonoBehaviour, WeaponScript
     public float step = .2f;        // Step for grapple retraction
     public LayerMask mask;          // Mask to tell what the grapple can attach to
     public LineRenderer line;       // Line renderer for texture of grapple
-    public Transform aimContainer;
-    public Transform aimTransform;
-    public GameObject hook;
 
     //private Rigidbody2D rb2d;       // Player's rigid body 2D
     private GameObject player;        // Player holding object
@@ -24,7 +21,6 @@ public class GrappleController : MonoBehaviour, WeaponScript
     DistanceJoint2D joint;          // Distance join 2D used for the grapple
     Vector3 targetPosition;         // Position player is aiming for. 
     RaycastHit2D hit;               // Raycast of object hit by grapple
-    Vector2 connectPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -69,11 +65,9 @@ public class GrappleController : MonoBehaviour, WeaponScript
         {
             if (joint.distance > minDistance)    // Restract if not at minimum distance
             {
-                joint.distance -= (step * Time.deltaTime); // Retract by step
-                line.SetPosition(0, transform.position);
-                hookAngle = -Mathf.Atan2(transform.position.x - hook.transform.position.x, transform.position.y - hook.transform.position.y) * Mathf.Rad2Deg;
+                joint.distance -= step; // Retract by step
             }
-            else
+            else    // If grapple at minimum distance then break
             {
                 breakGrapple();
             }
