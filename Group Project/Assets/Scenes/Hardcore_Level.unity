@@ -2237,7 +2237,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -8717,6 +8717,12 @@ MonoBehaviour:
   platformSprite: {fileID: 21300000, guid: cf3b31698bf95404480471463904210b, type: 3}
   wallSprite: {fileID: 21300000, guid: 4c8e6b8e6bfd70a49a43977ceb39168c, type: 3}
   music: {fileID: 8300000, guid: 972e6a9ba620a7e4689bcfa9b59fa525, type: 3}
+  tutorial: 0
+  textbox: {fileID: 0}
+  textboxDestroyed: 0
+  initialCameraSpeed: 0
+  inTutorial: 0
+  tutorialCollision: 0
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0
