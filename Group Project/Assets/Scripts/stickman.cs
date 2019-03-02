@@ -35,7 +35,6 @@ public class stickman : MonoBehaviour
     public int lives = 5;
 
     private bool lastControls;
-    private int wallJumpNum = 0;
     private Collider2D item;
     private string hAxis;
     private bool footstool = false;
@@ -55,6 +54,7 @@ public class stickman : MonoBehaviour
     private float gameEndDelay = 3f;
     private Animator anim;
     private bool sliding = false;
+    private int wallJumpNum = 0;
     private float wallDistance = 0.55f;
     private float wallDistanceBelow = 1.015f;
     private bool leftWallJump = false;
@@ -62,6 +62,8 @@ public class stickman : MonoBehaviour
     private GameObject leftWall;
     private GameObject rightWall;
     private GameObject lastWall = null;
+
+    private GameObject equippedWeapon = null;
 
     private void Awake()
     {
@@ -88,6 +90,9 @@ public class stickman : MonoBehaviour
         float h = Input.GetAxis(hAxis);
         anim.SetBool("Running", Mathf.Abs(rb2d.velocity.x) > 0 && ableToJump);
         anim.SetFloat("Run Speed", Mathf.Abs(rb2d.velocity.x) / 20);
+        /*anim.speed = Mathf.Abs(rb2d.velocity.x) / 20;
+        anim.SetBool("Jumping", rb2d.velocity.y > 0); // Might be a problem for double jumping?
+        anim.SetBool("Falling", rb2d.velocity.y < 0);*/
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
@@ -96,10 +101,9 @@ public class stickman : MonoBehaviour
         wallJump();
         //checks if the player is attempting to use their weapon
         fireWeapon();
-        //checks to see if player is taking damage
-        checkDamage();
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
+        //if the game is over, run game over logic
         if (!dead)
         {
             Text t = GameControl.instance.p2Text;
@@ -109,7 +113,6 @@ public class stickman : MonoBehaviour
             }
             t.text = "Lives: " + lives.ToString();
         }
-        //if the game is over, run game over logic
         if (GameControl.instance.fight || lives == 0)
         {
             gameEnd();
@@ -172,7 +175,6 @@ public class stickman : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall"))
         {
             float d = getWallBeneath();
-            Debug.Log(d);
             if (d <= wallDistanceBelow)
             {
                 ableToJump = true;
@@ -311,7 +313,6 @@ public class stickman : MonoBehaviour
         if (GameControl.instance.USING_SONY_CONTROLLERS)
         {
             // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
-
         }
     }
 
@@ -334,6 +335,7 @@ public class stickman : MonoBehaviour
                     ableToJump = false;
                     if (footstool)
                     {
+                        // Needs to be updated to not need reference to pther player
                         if (otherPlayer.ableToJump)
                         {
                             Rigidbody2D r = otherPlayer.GetComponent<Rigidbody2D>();
@@ -391,13 +393,11 @@ public class stickman : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
-                Transform dropped = dropObject();
                 minimapIcon.SetActive(false);
                 glow.SetActive(false);
-                wallSlide.Stop();
-                if (dropped != null)
+                if(equippedWeapon != null)
                 {
-                    dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                    dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
                 }
             }
             if (respawnTimer <= 0)
@@ -442,87 +442,66 @@ public class stickman : MonoBehaviour
         {
             return;
         }
+       
+        // Check if player is trying to pick up object or got an object thrown at them
         if (Input.GetButtonDown(eAxis) || hit)
         {
-            Transform dropped = null;
-            if(equip.transform.childCount == 1)
+            GameObject tempEquipedWeaponRef = equippedWeapon;
+            if(equippedWeapon != null)
             {
-                dropped = dropObject();
+                dropObject(new Vector2(-5 * transform.localScale.x, 20));
                 //throw
                 float h = Input.GetAxis(hAxis);
                 float v = Input.GetAxis(vAxis);
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(-5 * transform.localScale.x, 20);
             }
-            if (item != null && item.transform != dropped)
+            if (item != null && item.gameObject != tempEquipedWeaponRef)
             {
                 //pickup
                 item.gameObject.transform.parent = equip.transform;
-                item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                item.GetComponent<Rigidbody2D>().angularVelocity = 0;
-                item.gameObject.transform.eulerAngles = equip.transform.eulerAngles;
-                item.gameObject.transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-                item.gameObject.transform.position = equip.transform.position;
-                item.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-                if (item.name.Contains("Flashlight"))
-                {
-                    singleFire = true;
-                    if(hit)
-                    {
-                        health -= 30;
-                        healthBar.value = health;
-                        if(health <= 0)
-                        {
-                            dead = true;
-                        }
-                    }
-                }
-                else
-                {
-                    ParticleSystem ps = item.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>();
-                    ps.Stop();
-                }
-            }
-            if(item != null)
-            {
-                if (!item.name.Contains("Flashlight"))
-                {
-                    ParticleSystem ps = item.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>();
-                    ps.Stop();
-                }
+                //TODO Flashlight throw damage value need to be put somewheres
+
+                // Find the weapon script attached to the weapon (All weapons must extend WeaponScript)
+                equippedWeapon = item.gameObject;
+                equippedWeapon.GetComponent<WeaponScript>().initWeapon(equippedWeapon, this.gameObject);
             }
             hit = false;
         }
     }
 
-    private Transform dropObject()
+    private void fireWeapon()
+    {
+        if (dead || controlsDisabled || equippedWeapon == null)
+        {
+            return;
+        }
+
+        if (Input.GetButtonDown(fAxis)){
+            equippedWeapon.GetComponent<WeaponScript>().shoot();
+        }
+        else if (Input.GetButtonUp(fAxis))
+        {
+            equippedWeapon.GetComponent<WeaponScript>().stop();
+        }
+    }
+
+    private void dropObject(Vector2 launchWeapon)
     {
         //drop
-        if (equip.transform.childCount == 0) {
-            return null;
+        if (equippedWeapon == null) {
+            return;
         }
-        Transform dropped = equip.transform.GetChild(0);
-        dropped.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        dropped.gameObject.transform.eulerAngles = Vector3.zero;
-        float s = -1;
-        if (transform.localScale.x == 1)
-        {
-            s = 1;
-        }
-        dropped.gameObject.transform.localScale = new Vector3(s, dropped.gameObject.transform.localScale.y, dropped.gameObject.transform.localScale.z);
-        dropped.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-        if (dropped.name.Contains("Flashlight"))
-        {
-            dropped.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            dropped.GetComponent<Rigidbody2D>().gravityScale = 5;
-        }
-        else
-        {
-            dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<ParticleSystem>().Stop();
-            dropped.transform.GetChild(0).GetChild(1).gameObject.GetComponent<AudioSource>().Stop();
-        }
-        dropped.parent = GameControl.instance.pickups.transform;
-        return dropped;
+
+        // Reset the weapon
+        equippedWeapon.GetComponent<WeaponScript>().resetWeapon(equippedWeapon, this.gameObject);
+        // Set the parent to the pickup container
+        equippedWeapon.transform.parent = GameControl.instance.pickups.transform;
+        
+        // Launch the weapon
+        equippedWeapon.GetComponent<Rigidbody2D>().velocity = launchWeapon;
+
+        // Set the equipped weapon back to null
+        equippedWeapon = null;
+        return;
     }
 
     private void checkThrow()
@@ -533,12 +512,10 @@ public class stickman : MonoBehaviour
         }
         if (Input.GetButtonDown(tAxis))
         {
-            Transform dropped = null;
             if (equip.transform.childCount == 1)
             {
-                dropped = dropObject();
                 //throw
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(throwSpeed * transform.localScale.x, 10);
+                dropObject(new Vector2(throwSpeed * transform.localScale.x, 10));
             }
         }
     }
@@ -697,23 +674,21 @@ public class stickman : MonoBehaviour
         if (dead && lives == 0)
         {
             GameControl.instance.gameOver = true;
-            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
+            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic; //TODO
             otherPlayer.rb2d.velocity = Vector2.zero;
             rb2d.velocity = Vector2.zero;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
-            Transform dropped = dropObject();
             GameControl.instance.topText.gameObject.SetActive(false);
-            if (dropped != null)
+            if (equippedWeapon != null)
             {
-                dropped.GetComponent<Rigidbody2D>().velocity = new Vector2(UnityEngine.Random.Range(-10f, 10f), 50);
+                dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
             }
             if (gameEndDelay > 0)
             {
                 GameControl.instance.statusText.text = "Game!";
                 gameEndDelay -= Time.deltaTime;
-                Debug.Log(gameEndDelay);
             }
             else
             {
@@ -749,123 +724,6 @@ public class stickman : MonoBehaviour
             color = "Red";
         }
         return color;
-    }
-
-    private void fireWeapon()
-    {
-        if (dead || controlsDisabled || equip.transform.childCount == 0)
-        {
-            return;
-        }
-        if (Input.GetButtonDown(fAxis))
-        {
-            firing = true;
-            if (equip.transform.GetChild(0).name.Contains("Flashlight"))
-            {
-                singleFire = true;
-            }
-        }
-        if (Input.GetButtonUp(fAxis))
-        {
-            firing = false;
-        }
-        if (singleFire && equip.transform.childCount == 1 && equip.transform.GetChild(0).name.Contains("Flashlight"))
-        {
-            fireOnce();
-        }
-        else
-        {
-            fireMulti();
-        }
-    }
-
-    private void fireOnce()
-    {
-        if(equip.transform.childCount != 1)
-        {
-            return;
-        }
-        if (firing && singleFire)
-        {
-            GameObject projectile = equip.transform.GetChild(0).gameObject;
-            if (equip.transform.GetChild(0).name.Contains("Flashlight"))
-            {
-                projectile = equip.transform.GetChild(0).transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-                projectile.SetActive(!projectile.activeSelf);
-            }
-            singleFire = false;
-        }
-    }
-    private void fireMulti()
-    {
-        if (equip.transform.childCount == 0)
-        {
-            return;
-        }
-        if (equip.transform.GetChild(0).name.Contains("Flashlight"))
-        {
-            return;
-        }
-        GameObject projectile = equip.transform.GetChild(0).gameObject; 
-        projectile = equip.transform.GetChild(0).transform.GetChild(0).GetChild(1).gameObject;
-        ParticleSystem ps = projectile.GetComponent<ParticleSystem>();
-        AudioSource sound = ps.gameObject.GetComponent<AudioSource>();
-        if (firing)
-        {
-            if (!ps.isEmitting)
-            {
-                ps.Play();
-                if(sound != null)
-                {
-                    sound.Play();
-                }
-            }
-        }
-        else
-        {
-            if (ps.isEmitting)
-            {
-                ps.Stop();
-                if(sound != null)
-                {
-                    sound.Stop();
-                }
-            }
-        }
-    }
-
-    private void checkDamage()
-    {
-        if(particleParent == null || particleParent.name == gameObject.name)
-        {
-            return;
-        }
-        if (particleParent != environmentalDamage)
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.flamethrowerDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
-        else
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.avalancheDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
     }
 
     private void die()
