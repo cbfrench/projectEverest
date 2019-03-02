@@ -419,7 +419,7 @@ public class GameControl : MonoBehaviour
                 tutorialCount = 6;
                 triggerText = true;
             }
-            if (tutorialCount == 4 && ((player1.GetComponent<stickman>().dead && player1.GetComponent<stickman>().healthBar.value > 0) || (player2.GetComponent<stickman>().dead && player2.GetComponent<stickman>().healthBar.value > 0)))
+            if (tutorialCount == 4 && ((player1.GetComponent<PlayerController>().dead && player1.GetComponent<PlayerController>().healthBar.value > 0) || (player2.GetComponent<PlayerController>().dead && player2.GetComponent<PlayerController>().healthBar.value > 0)))
             {
                 tutorialCount = 5;
                 triggerText = true;

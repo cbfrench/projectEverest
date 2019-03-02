@@ -14,6 +14,7 @@ TagManager:
   - Particles
   - Textbox
   - Tutorial
+  - Equipment
   layers:
   - Default
   - TransparentFX
