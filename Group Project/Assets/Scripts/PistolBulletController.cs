@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PistolBulletController : MonoBehaviour
 {
+    public GameObject player;
+    public float bulletDamage = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +22,12 @@ public class PistolBulletController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            //do damage
+            collision.gameObject.GetComponent<PlayerController>().recieveDamage(bulletDamage);
+            Destroy(gameObject);
         }
         else if(collision.gameObject.tag == "Platforms" || collision.gameObject.tag == "Wall")
         {

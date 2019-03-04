@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BowArrowController : MonoBehaviour
 {
-
+    public GameObject player;
     //private TrailRenderer tr = null;
     // Start is called before the first frame update
     void Start()
@@ -24,11 +24,12 @@ public class BowArrowController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            //do damage
+            collision.gameObject.GetComponent<PlayerController>().recieveDamage(20f); //TODO make it based on velocity;
+            Destroy(gameObject);
         }
         else if(collision.gameObject.tag == "Platforms" || collision.gameObject.tag == "Wall")
         {

@@ -12,16 +12,15 @@ public class BowController : MonoBehaviour, WeaponScript
     public float maxVelocity;
     //public Transform firePoint; needed?
 
+    private GameObject player;
     private float drawTime;
     private bool bowDraw;
-    private GameObject player;          // Stores reference to the player
     private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialize 
-        player = null;
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
 
         // Set label text
@@ -51,6 +50,7 @@ public class BowController : MonoBehaviour, WeaponScript
         bowDraw = false;
         // Set the player reference
         this.player = player;
+        arrowPrefab.GetComponent<BowArrowController>().player = player;
         this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
@@ -59,7 +59,6 @@ public class BowController : MonoBehaviour, WeaponScript
     public void resetWeaponUnique(GameObject player)
     {
         // Set the player reference back to null on drop
-        this.player = null;
         label.gameObject.SetActive(true);
         this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         anim.SetBool("Drawing", false);

@@ -40,6 +40,7 @@ public class PistolController : MonoBehaviour, WeaponScript
     {
         // Set the player reference
         this.player = player;
+        bulletPrefab.GetComponent<PistolBulletController>().player = player;
         //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
