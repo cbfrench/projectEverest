@@ -964,7 +964,6 @@ MonoBehaviour:
   shaker: {fileID: 3229312194031296534}
   playerNum: 1
   otherPlayer: {fileID: 0}
-  firing: 0
   throwSpeed: 25
   hit: 0
   initialHealth: 100
@@ -976,6 +975,7 @@ MonoBehaviour:
   thud: {fileID: 781229661}
   wallSlide: {fileID: 463209447197717673}
   wallSlideSpeed: 8
+  lives: 5
 --- !u!61 &3229312194097646145
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5690,7 +5690,7 @@ ParticleSystem:
 --- !u!199 &243473430584593292
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

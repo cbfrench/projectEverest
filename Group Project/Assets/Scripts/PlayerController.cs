@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     public GameObject shaker;
     public int playerNum;
     public PlayerController otherPlayer;
-    public bool firing = false;
     public float throwSpeed;
     public bool hit = false;
     public int initialHealth = 100;
@@ -104,6 +103,10 @@ public class PlayerController : MonoBehaviour
         //checks to see if enabling the controls has changed
         lastControls = GameControl.instance.controlsDisabled;
         //if the game is over, run game over logic
+        if (health <= 0)
+        {
+            dead = true;
+        }
         if (!dead)
         {
             Text t = GameControl.instance.p2Text;
@@ -254,6 +257,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+//TODO remove this stuff
     private void OnParticleCollision(GameObject other)
     {
         damaged = true;
@@ -422,7 +426,6 @@ public class PlayerController : MonoBehaviour
                 respawnTimer = initialRespawnTimer;
                 dead = false;
                 controlsDisabled = false;
-                firing = false;
                 healthBar.gameObject.SetActive(true);
                 health = initialHealth;
                 healthBar.value = health;
@@ -733,4 +736,51 @@ public class PlayerController : MonoBehaviour
         rb2d.velocity = Vector2.zero;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
+
+
+    public void recieveDamage(float dmgTaken){
+        health -= dmgTaken;
+        healthBar.value = health;
+        if (health <= 0)
+        {
+            dead = true;
+        }
+    }
 }
+
+/*
+    private void checkDamage()
+    {
+        if(particleParent == null || particleParent.name == gameObject.name)
+        {
+            return;
+        }
+        if (particleParent != environmentalDamage)
+        {
+            if (damaged)
+            {
+                health -= GameControl.instance.flamethrowerDamage * Time.deltaTime;
+                healthBar.value = health;
+                damaged = false;
+                if (health <= 0)
+                {
+                    dead = true;
+                }
+            }
+        }
+        else
+        {
+            if (damaged)
+            {
+                health -= GameControl.instance.avalancheDamage * Time.deltaTime;
+                healthBar.value = health;
+                damaged = false;
+                if (health <= 0)
+                {
+                    dead = true;
+                }
+            }
+        }
+    }
+    public float flamethrowerDamage = 33f;
+*/

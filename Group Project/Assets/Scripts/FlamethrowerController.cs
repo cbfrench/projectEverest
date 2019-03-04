@@ -9,14 +9,14 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public Text label;          // Reference to the text label
     public ParticleSystem particles;   // Refernce to the particle system
 
-    private GameObject player;          // Stores reference to the player
+    //private GameObject player;          // Stores reference to the player
 
     // Start is called before the first frame update
     void Start()
     {
 
         // Initialize 
-        player = null;
+        //player = null;
 
         // Set label text
         label.text = "Flamethrower";
@@ -36,7 +36,8 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public void initWeaponUnique(GameObject player)
     {
         // Set the player reference
-        this.player = player;
+        particles.GetComponent<FlamethrowerParticleController>().player = player;
+        //this.player = player;
         label.gameObject.SetActive(false);
     }
 
@@ -44,7 +45,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public void resetWeaponUnique(GameObject player)
     {
         // Set the player reference back to null on drop
-        this.player = null;
+        //this.player = null;
         label.gameObject.SetActive(true);
         particles.Stop();
     }
