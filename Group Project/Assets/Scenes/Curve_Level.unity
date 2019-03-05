@@ -2353,6 +2353,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 738598984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &498529383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 498529383, guid: 4bd87b74d73bd81429734226eb6fd07d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1892170293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &509416888 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2095745043000967733, guid: 18d7c847c0235bf47b368ed69e10d723,
@@ -13418,6 +13424,11 @@ PrefabInstance:
       propertyPath: otherPlayer
       value: 
       objectReference: {fileID: 1892170294}
+    - target: {fileID: 8118606563747662620, guid: 7e03326ae138f0042a78156509ff4c6f,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 1239060915802896121}
     - target: {fileID: 1263712114, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -15043,6 +15054,8 @@ MonoBehaviour:
   initialCameraSpeed: 0
   inTutorial: 0
   tutorialCollision: 0
+  lastWinner: 0
+  crown: {fileID: 116250933051459120, guid: 4e0798dad9583e3428f250cf46178c6d, type: 3}
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0
@@ -19211,6 +19224,11 @@ PrefabInstance:
       propertyPath: otherPlayer
       value: 
       objectReference: {fileID: 760329892}
+    - target: {fileID: 3229312194097646158, guid: 4bd87b74d73bd81429734226eb6fd07d,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 498529383}
     - target: {fileID: 894503876, guid: 4bd87b74d73bd81429734226eb6fd07d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -19219,11 +19237,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4133317962816275808, guid: 4bd87b74d73bd81429734226eb6fd07d,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: c31bcfdd7fb82594a97c4f2a64ec5fc6, type: 2}
     - target: {fileID: 3229312194031296532, guid: 4bd87b74d73bd81429734226eb6fd07d,
         type: 3}
       propertyPath: camTransform
@@ -20604,6 +20617,12 @@ PrefabInstance:
       objectReference: {fileID: 6200000, guid: 64a124f401f340d4f9a3b70e4ce0623e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cd95f3b31feb1d46aea11eb7ad32e53, type: 3}
+--- !u!1 &1239060915802896121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1239060915802896121, guid: 7e03326ae138f0042a78156509ff4c6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 760329891}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1973702486703168195
 PrefabInstance:
   m_ObjectHideFlags: 0

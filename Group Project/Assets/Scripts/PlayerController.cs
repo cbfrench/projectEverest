@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem wallSlide;
     public float wallSlideSpeed;
     public int lives = 5;
+    public GameObject head;
 
     private bool lastControls;
     private Collider2D item;
@@ -81,6 +82,13 @@ public class PlayerController : MonoBehaviour
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
+        Debug.Log("Last Winner: Player " + GameControl.lastWinner);
+        if(GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
+        {
+            GameObject crown = Instantiate(GameControl.instance.crown, Vector3.zero, Quaternion.identity);
+            crown.transform.parent = head.transform;
+            crown.transform.localPosition = Vector3.zero;
+        }
     }
 
     private void Update()
@@ -765,6 +773,14 @@ public class PlayerController : MonoBehaviour
                 GameControl.instance.controlsDisabled = true;
                 GameControl.instance.quitButton.gameObject.SetActive(true);
                 GameControl.instance.restartButton.gameObject.SetActive(true);
+                if (playerNum == 1)
+                {
+                    GameControl.lastWinner = 2;
+                }
+                else
+                {
+                    GameControl.lastWinner = 1;
+                }
                 if (!ended)
                 {
                     GameControl.instance.restartButton.Select();

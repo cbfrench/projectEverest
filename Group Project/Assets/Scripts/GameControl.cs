@@ -49,6 +49,8 @@ public class GameControl : MonoBehaviour
     public float initialCameraSpeed;
     public bool inTutorial = false;
     public bool tutorialCollision = false;
+    public static int lastWinner = 0;
+    public GameObject crown;
 
     private string previousText;
     private float cameraShaking;
