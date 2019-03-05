@@ -406,12 +406,19 @@ public class PlayerController : MonoBehaviour
             }
             if (respawnTimer <= 0)
             {
-                if (!GameControl.instance.inTutorial)
+                if (GameControl.instance.tutorial)
                 {
-                    if (lives != 1 || GameControl.instance.reachedTop)
+                    if (!GameControl.instance.inTutorial)
                     {
-                        lives--;
+                        if (lives != 1 || GameControl.instance.reachedTop)
+                        {
+                            lives--;
+                        }
                     }
+                }
+                else
+                {
+                    lives--;
                 }
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
