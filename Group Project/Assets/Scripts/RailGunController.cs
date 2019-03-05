@@ -10,6 +10,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     public float fireTime = 1f;
     public float fireRate = 5f;
     public GameObject beam;
+    public Slider slider;
 
     public Text label;          // Reference to the text label
     private GameObject player;          // Stores reference to the player
@@ -38,11 +39,17 @@ public class RailGunController : MonoBehaviour, WeaponScript
 
         // disable beam
         beam.SetActive(false);
+
+        // Set slider
+        slider.value = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Update the slider value
+        slider.value = (charge / chargeTime);
+
         if (fired)
         {
             fireDelta += Time.deltaTime;

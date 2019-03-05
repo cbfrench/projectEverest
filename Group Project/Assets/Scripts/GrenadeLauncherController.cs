@@ -8,10 +8,11 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
 
     public float chargeTime = .5f;
     public float launchForce = 2000f;
-
     public Text label;          // Reference to the text label
     public GameObject grenadePrefab;
     public Transform grenadeSpawn;
+    public Slider slider;
+
     private GameObject player;          // Stores reference to the player
     private bool charging;
     private float charge;
@@ -28,11 +29,18 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
 
         // Set charging
         charging = false;
+
+        // Set slider
+        slider.value = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        // Update the slider
+        slider.value = charge / chargeTime;
+
         if (charging)
         {
             charge += Time.deltaTime;
@@ -72,11 +80,15 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
         charging = false;
 
         // Spawn grenade
-        GameObject grenade = Instantiate(grenadePrefab, new Vector3(grenadeSpawn.position.x, grenadeSpawn.position.y, grenadeSpawn.position.z), transform.rotation);
+        GameObject grenade = Instantiate(grenadePrefab, new Vector3(grenadeSpawn.position.x, grenadeSpawn.position.y, grenadeSpawn.position.z), Quaternion.Euler(0, 0, 0));
 
         float force = launchForce * (charge / chargeTime);
+        if(force <= 50)
+        {
+            force = 50;
+        }
 
-        grenade.GetComponent<Rigidbody2D>().AddForce(new Vector2(force, 0));
+        grenade.GetComponent<Rigidbody2D>().AddForce(new Vector2(player.transform.localScale.x * force, 0));
 
         charge = 0;
     }
