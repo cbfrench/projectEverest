@@ -194,11 +194,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
-    - target: {fileID: 7127404281499944819, guid: a048d8055f1802649ade4107a5a9c2d5,
-        type: 3}
-      propertyPath: m_Name
-      value: Flamethrower
-      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: a048d8055f1802649ade4107a5a9c2d5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -253,6 +248,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127404281499944819, guid: a048d8055f1802649ade4107a5a9c2d5,
+        type: 3}
+      propertyPath: m_Name
+      value: Flamethrower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a048d8055f1802649ade4107a5a9c2d5, type: 3}
@@ -1299,11 +1299,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
-    - target: {fileID: 7127404281499944819, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
-        type: 3}
-      propertyPath: m_Name
-      value: Squirt Gun
-      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1358,6 +1353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127404281499944819, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c,
+        type: 3}
+      propertyPath: m_Name
+      value: Squirt Gun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd8d4ac9c57177c4a8fe18dce1c91c7c, type: 3}
@@ -1570,6 +1570,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 569032558, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 618fee39f2acc484e88f6517bc60e40b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
 --- !u!1 &584698970 stripped
@@ -1587,7 +1591,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 584698970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9db160595c77fe4097c2086d65eadd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7459d2ee10fe768418a830935f9b247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &588236281
@@ -2414,7 +2418,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 785262316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9db160595c77fe4097c2086d65eadd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7459d2ee10fe768418a830935f9b247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &785262316 stripped
@@ -7847,7 +7851,6 @@ MonoBehaviour:
   restartButton: {fileID: 1699926999}
   maxPlayerSpeed: 45
   killboxes: {fileID: 1515610451}
-  flamethrowerDamage: 33
   avalancheDamage: 50
   fight: 0
   platformSprite: {fileID: 21300000, guid: cfad8548f9f1c0543a97e7601f36d23a, type: 3}
