@@ -23,7 +23,7 @@ public class FlamethrowerParticleController : MonoBehaviour
     {
         if (other != player && other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().recieveDamage(this.flamethrowerDamage * Time.deltaTime);
+            other.GetComponent<PlayerController>().receiveDamage(this.flamethrowerDamage * Time.deltaTime);
         }
     }
 }

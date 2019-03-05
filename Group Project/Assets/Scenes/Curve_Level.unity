@@ -13426,6 +13426,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8118606563593030310, guid: 7e03326ae138f0042a78156509ff4c6f,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 867079681}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
 --- !u!114 &760329892 stripped
@@ -19219,6 +19224,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c31bcfdd7fb82594a97c4f2a64ec5fc6, type: 2}
+    - target: {fileID: 3229312194031296532, guid: 4bd87b74d73bd81429734226eb6fd07d,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 867079681}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd87b74d73bd81429734226eb6fd07d, type: 3}
 --- !u!114 &1892170294 stripped
