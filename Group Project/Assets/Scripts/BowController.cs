@@ -34,7 +34,7 @@ public class BowController : MonoBehaviour, WeaponScript
 
         //values determined through testing
         Vector2 vels = new Vector2(0, 111.1f);
-        arrow.GetComponent<BowArrowController>().minmax = vels;
+        arrowPrefab.GetComponent<BowArrowController>().minmax = vels;
     }
 
     // Update is called once per frame
