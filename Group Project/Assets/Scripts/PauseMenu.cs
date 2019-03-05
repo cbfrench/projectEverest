@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: functionality for the pause menu
+     */
     public Button quit;
     public AudioClip menuMusic;
     // Start is called before the first frame update

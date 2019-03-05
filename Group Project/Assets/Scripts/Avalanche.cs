@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Avalanche : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for triggering the avalanche on the Mountain level
+     */
     public ParticleSystem snow;
     public GameObject shaker;
 

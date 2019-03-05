@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class BowController : MonoBehaviour, WeaponScript
 {
+    /* Author: Reynaldo Hermawan
+     * Description: class used to control the behavior of the Bow weapon
+     * Contributors: Connor French
+     */
 
     public Text label;          // Reference to the text label
     public float maxDrawtime;

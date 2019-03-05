@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Textbox : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for creating a textbox and populating it with text over time
+     */
     public static Textbox instance;
     public Canvas box;
     public Text text;

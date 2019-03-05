@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for controlling each of the players within the scene
+     * Contributors: Reynaldo Hermawan, Caleb Biggers
+     */
+
     public Rigidbody2D rb2d;
     public float playerSpeed;
     public float jumpStrength;

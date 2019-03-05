@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BowArrowController : MonoBehaviour
 {
+    /* Author: Reynaldo Hermawan
+     * Description: class for controlling behavior of the arrows fired from a bow
+     * Contributors: Connor French
+     */
     public GameObject player;
     public Vector2 minmax;
     //private TrailRenderer tr = null;
