@@ -31,6 +31,10 @@ public class BowController : MonoBehaviour, WeaponScript
         // Set label text
         label.text = "Bow";
         label.gameObject.SetActive(true);
+
+        //values determined through testing
+        Vector2 vels = new Vector2(0, 111.1f);
+        arrow.GetComponent<BowArrowController>().minmax = vels;
     }
 
     // Update is called once per frame
@@ -86,10 +90,6 @@ public class BowController : MonoBehaviour, WeaponScript
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
 
         arrow.GetComponent<Rigidbody2D>().AddForce(new Vector2(arrowVelocity * player.transform.localScale.x, 50));
-        //values determined through testing
-        Vector2 vels = new Vector2(0, 111.1f);
-
-        arrow.GetComponent<BowArrowController>().minmax = vels;
     }
 }
 
