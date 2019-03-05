@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Running", Mathf.Abs(rb2d.velocity.x) > 0 && ableToJump);
         anim.SetFloat("Run Speed", Mathf.Abs(rb2d.velocity.x) / 20);
         anim.SetBool("Jumping", rb2d.velocity.y > 0); // Might be a problem for double jumping?
-        anim.SetBool("Falling", rb2d.velocity.y < 0);
+        anim.SetBool("Falling", rb2d.velocity.y < 0 && !sliding);
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
