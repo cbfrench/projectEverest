@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2092170562}
   - component: {fileID: 7906084258447093127}
   - component: {fileID: 1882239427077601292}
+  - component: {fileID: 2624065305827719655}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -209,6 +210,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   t: {fileID: 2092170562}
   speed: 400
+--- !u!1818360609 &2624065305827719655
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092170560}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources: []
 --- !u!1 &739965358641132972
 GameObject:
   m_ObjectHideFlags: 0

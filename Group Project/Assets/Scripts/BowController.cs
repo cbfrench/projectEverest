@@ -5,10 +5,15 @@ using UnityEngine.UI;
 
 public class BowController : MonoBehaviour, WeaponScript
 {
+    /* Author: Reynaldo Hermawan
+     * Description: class used to control the behavior of the Bow weapon
+     * Contributors: Connor French
+     */
 
     public Text label;          // Reference to the text label
     public float maxDrawtime;
     public GameObject arrowPrefab;
+    public float minVelocity;
     public float maxVelocity;
     //public Transform firePoint; needed?
 
@@ -26,6 +31,10 @@ public class BowController : MonoBehaviour, WeaponScript
         // Set label text
         label.text = "Bow";
         label.gameObject.SetActive(true);
+
+        //values determined through testing
+        Vector2 vels = new Vector2(0, 111.1f);
+        arrowPrefab.GetComponent<BowArrowController>().minmax = vels;
     }
 
     // Update is called once per frame
@@ -73,7 +82,7 @@ public class BowController : MonoBehaviour, WeaponScript
     public void stop()
     {
         //Scaling value to new range
-        var arrowVelocity = Mathf.Lerp(10f, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
+        var arrowVelocity = Mathf.Lerp(minVelocity, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
         bowDraw = false;
         drawTime = 0;
         anim.ResetTrigger("FullDraw");

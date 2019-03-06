@@ -1086,6 +1086,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3229312194031296532, guid: 4bd87b74d73bd81429734226eb6fd07d,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 1315452002536047854}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd87b74d73bd81429734226eb6fd07d, type: 3}
 --- !u!114 &415296427 stripped
@@ -1097,7 +1102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 415296428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9db160595c77fe4097c2086d65eadd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7459d2ee10fe768418a830935f9b247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &415296428 stripped
@@ -2860,6 +2865,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8118606563593030310, guid: 7e03326ae138f0042a78156509ff4c6f,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 1315452002536047854}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
 --- !u!1 &958919429 stripped
@@ -2877,7 +2887,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 958919429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9db160595c77fe4097c2086d65eadd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7459d2ee10fe768418a830935f9b247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &987248398
@@ -3236,7 +3246,6 @@ MonoBehaviour:
   restartButton: {fileID: 1699926999}
   maxPlayerSpeed: 45
   killboxes: {fileID: 1315452000745188983}
-  flamethrowerDamage: 33
   avalancheDamage: 50
   fight: 0
   platformSprite: {fileID: 21300000, guid: 6e919919aaa50dd469eb171d199da54a, type: 3}
@@ -3248,6 +3257,8 @@ MonoBehaviour:
   initialCameraSpeed: 0
   inTutorial: 0
   tutorialCollision: 0
+  lastWinner: 0
+  crown: {fileID: 0}
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0

@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for controlling each of the players within the scene
+     * Contributors: Reynaldo Hermawan, Caleb Biggers
+     */
+
     public Rigidbody2D rb2d;
     public float playerSpeed;
     public float jumpStrength;
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem wallSlide;
     public float wallSlideSpeed;
     public int lives = 5;
+    public GameObject head;
 
     private bool lastControls;
     private Collider2D item;
@@ -76,6 +82,13 @@ public class PlayerController : MonoBehaviour
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
+        Debug.Log("Last Winner: Player " + GameControl.lastWinner);
+        if(GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
+        {
+            GameObject crown = Instantiate(GameControl.instance.crown, Vector3.zero, Quaternion.identity);
+            crown.transform.parent = head.transform;
+            crown.transform.localPosition = Vector3.zero;
+        }
     }
 
     private void Update()
@@ -89,8 +102,8 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxis(hAxis);
         anim.SetBool("Running", Mathf.Abs(rb2d.velocity.x) > 0 && ableToJump);
         anim.SetFloat("Run Speed", Mathf.Abs(rb2d.velocity.x) / 20);
-        anim.SetBool("Jumping", rb2d.velocity.y > 0); // Might be a problem for double jumping?
-        anim.SetBool("Falling", rb2d.velocity.y < 0 && !sliding);
+        anim.SetBool("Jumping", rb2d.velocity.y > 0 && !ableToJump); // Might be a problem for double jumping?
+        anim.SetBool("Falling", rb2d.velocity.y < 0 && !sliding && !ableToJump);
         //checks if the player is attempting to pick up/drop weapon
         checkPickup();
         //checks if the player is throwing a weapon
@@ -259,6 +272,9 @@ public class PlayerController : MonoBehaviour
 //TODO remove this stuff
     private void OnParticleCollision(GameObject other)
     {
+        /* Author: Connor French
+         * Description: code for determining damage received from the Avalanche on the Mountain stage
+         */
         damaged = true;
         if (other.gameObject.name == "Avalanche")
         {
@@ -282,6 +298,9 @@ public class PlayerController : MonoBehaviour
 
     public void checkControls()
     {
+        /* Author: Connor French
+         * Description: runs at the beginning and determines which controllers the player is using
+         */
         if (!GameControl.instance.USING_CONTROLLERS)
         {
             hAxis = "Horizontal";
@@ -321,6 +340,9 @@ public class PlayerController : MonoBehaviour
 
     public void movePlayer()
     {
+        /* Author: Connor French
+         * Description: responsible for the majority of moving the player, adjusting its velocity and jump variables
+         */
         if (!dead && !controlsDisabled && !GameControl.instance.paused)
         {
             bool v = Input.GetButtonDown(jAxis);
@@ -380,6 +402,9 @@ public class PlayerController : MonoBehaviour
 
     public void respawn()
     {
+        /* Author: Connor French
+         * Description: respawns the player upon death and increments the life counter. If the player is out of lives, then it triggers an end of game
+         */
         Text t = GameControl.instance.p2Text;
         if (!GameControl.instance.ableToDie && lives > 0)
         {
@@ -405,12 +430,19 @@ public class PlayerController : MonoBehaviour
             }
             if (respawnTimer <= 0)
             {
-                if (!GameControl.instance.inTutorial)
+                if (GameControl.instance.tutorial)
                 {
-                    if (lives != 1 || GameControl.instance.reachedTop)
+                    if (!GameControl.instance.inTutorial)
                     {
-                        lives--;
+                        if (lives != 1 || GameControl.instance.reachedTop)
+                        {
+                            lives--;
+                        }
                     }
+                }
+                else
+                {
+                    lives--;
                 }
                 int ind = GameControl.instance.getRespawnPlat();
                 GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
@@ -440,6 +472,10 @@ public class PlayerController : MonoBehaviour
 
     private void checkPickup()
     {
+        /* Author: Connor French
+         * Description: checks to see if you can pick something up and if there is something within range. If there is, then it is picked up and made a child of the player
+         * Contributors: Caleb Biggers
+         */
         if (controlsDisabled)
         {
             return;
@@ -472,6 +508,9 @@ public class PlayerController : MonoBehaviour
 
     private void fireWeapon()
     {
+        /* Authors: Connor French & Caleb Biggers
+         * Description: checks to see if the player has a weapon equipped and if the player is interacting with the fire button
+         */
         if (dead || controlsDisabled || equippedWeapon == null)
         {
             return;
@@ -488,6 +527,10 @@ public class PlayerController : MonoBehaviour
 
     private void dropObject(Vector2 launchWeapon)
     {
+        /* Author: Caleb Biggers
+         * Description: drops an object if the player hits the pickup button while already holding a weapon
+         * Contributor: Connor French
+         */
         //drop
         if (equippedWeapon == null) {
             return;
@@ -508,6 +551,10 @@ public class PlayerController : MonoBehaviour
 
     private void checkThrow()
     {
+        /* Author: Connor French
+         * Description: checks if the player is holding a weapon and hitting the throw button. If yes, then it drops the object with a velocity.
+         * Contributor: Caleb Biggers
+         */
         if (controlsDisabled)
         {
             return;
@@ -524,6 +571,9 @@ public class PlayerController : MonoBehaviour
 
     public float sign(float value)
     {
+        /* Author: Connor French
+         * Description: helper function that returns the sign of the input or 0 if the input is 0
+         */
         if(value == 0)
         {
             return 0;
@@ -533,6 +583,9 @@ public class PlayerController : MonoBehaviour
 
     public float checkWallJump(Rigidbody2D rb2d)
     {
+        /* Author: Connor French
+         * Description: checks which wall the player is closest to to the left and right for use in wall-jump calculations
+         */
         float h = Input.GetAxis(hAxis);
         int ignore = LayerMask.GetMask("Wall");
         RaycastHit2D left = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.left), Mathf.Infinity, ignore);
@@ -549,6 +602,9 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 getDistanceToWall()
     {
+        /* Author: Connor French
+         * Description: gets the distance to each wall to the left and right and returns it as a vector
+         */
         Vector2 result = new Vector2(Mathf.Infinity, Mathf.Infinity);
         float h = Input.GetAxis(hAxis);
         int ignore = LayerMask.GetMask("Wall");
@@ -569,6 +625,9 @@ public class PlayerController : MonoBehaviour
 
     public float getWallBeneath()
     {
+        /* Author: Connor French
+         * Description: checks to see if the player is above a wall and returns its distance to be used to determine whether or not the player is standing on a wall
+         */
         int ignore = LayerMask.GetMask("Wall", "Platform");
         RaycastHit2D down = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.down), Mathf.Infinity, ignore);
         if(down.collider != null)
@@ -580,6 +639,9 @@ public class PlayerController : MonoBehaviour
 
     public void raycastToPlayer()
     {
+        /* Author: Connor French
+         * Description: checks to see if the player is above another player to determine if the player can jump off of their head
+         */
         Vector2 result = new Vector2(Mathf.Infinity, Mathf.Infinity);
         int ignore = LayerMask.GetMask("Player");
         RaycastHit2D down = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.down), Mathf.Infinity, ignore);
@@ -595,6 +657,9 @@ public class PlayerController : MonoBehaviour
 
     private void resetControls()
     {
+        /* Author: Connor French
+         * Description: checks to see if the GameController has disabled controls and sets the players controls accordingly
+         */
         if (GameControl.instance.controlsDisabled)
         {
             controlsDisabled = true;
@@ -607,6 +672,9 @@ public class PlayerController : MonoBehaviour
 
     public void checkSlide()
     {
+        /* Author: Connor French
+         * Description: checks to see if the player is close enough to the wall to slide and sets the animation check accordingly
+         */
         Vector2 walls = getDistanceToWall();
         float d = getWallBeneath();
         if((walls.x < wallDistance || walls.y < wallDistance) && d >= wallDistanceBelow)
@@ -632,6 +700,9 @@ public class PlayerController : MonoBehaviour
 
     public void wallJump()
     {
+        /* Author: Connor French
+         * Description: runs the majority of the wall-jump functionality, moving the player according to which wall they are jumping off of
+         */
         Vector2 walls = getDistanceToWall();
         if (Input.GetButtonDown(jAxis) && !ableToJump)
         {
@@ -673,10 +744,13 @@ public class PlayerController : MonoBehaviour
 
     private void gameEnd()
     {
+        /* Author: Connor French
+         * Description: checks to see if the game is over and determines who the winner is and displays that information to the screen
+         */
         if (dead && lives == 0)
         {
             GameControl.instance.gameOver = true;
-            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic; //TODO
+            otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
             otherPlayer.rb2d.velocity = Vector2.zero;
             rb2d.velocity = Vector2.zero;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -699,6 +773,14 @@ public class PlayerController : MonoBehaviour
                 GameControl.instance.controlsDisabled = true;
                 GameControl.instance.quitButton.gameObject.SetActive(true);
                 GameControl.instance.restartButton.gameObject.SetActive(true);
+                if (playerNum == 1)
+                {
+                    GameControl.lastWinner = 2;
+                }
+                else
+                {
+                    GameControl.lastWinner = 1;
+                }
                 if (!ended)
                 {
                     GameControl.instance.restartButton.Select();
@@ -710,6 +792,9 @@ public class PlayerController : MonoBehaviour
 
     private string getWinner()
     {
+        /* Author: Connor French
+         * Description: helper function to return the other player's color
+         */
         string color = "Red";
         if(playerNum == 1)
         {
@@ -720,6 +805,9 @@ public class PlayerController : MonoBehaviour
 
     private string getColor()
     {
+        /* Author: Connor French
+         * Description: helper function to return the player's color
+         */
         string color = "Blue";
         if (playerNum == 1)
         {
@@ -730,6 +818,9 @@ public class PlayerController : MonoBehaviour
 
     private void die()
     {
+        /* Author: Connor French
+         * Description: helper function to reset some values upon player death
+         */
         dead = true;
         controlsDisabled = true;
         rb2d.velocity = Vector2.zero;
@@ -737,7 +828,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void recieveDamage(float dmgTaken){
+    public void receiveDamage(float dmgTaken){
         health -= dmgTaken;
         healthBar.value = health;
         if (health <= 0)

@@ -26,7 +26,7 @@ public class PistolBulletController : MonoBehaviour
     {
         if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController>().recieveDamage(bulletDamage);
+            collision.gameObject.GetComponent<PlayerController>().receiveDamage(bulletDamage);
             Destroy(gameObject);
         }
         else if(collision.gameObject.tag == "Platforms" || collision.gameObject.tag == "Wall")

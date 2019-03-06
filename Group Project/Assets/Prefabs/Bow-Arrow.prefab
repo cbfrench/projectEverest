@@ -175,6 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d31649f039789844ab82c0605664d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  minmax: {x: 10, y: 5555}
 --- !u!212 &1799567510800562533
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4862,7 +4864,7 @@ ParticleSystem:
 --- !u!199 &199986099053228698
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

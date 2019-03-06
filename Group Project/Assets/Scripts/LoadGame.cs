@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class LoadGame : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for running scene loading functions from the main menu as well as the pause menu
+     */
     public Canvas main;
     public Canvas controls;
     public Canvas select;

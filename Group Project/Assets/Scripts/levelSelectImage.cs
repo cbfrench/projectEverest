@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class levelSelectImage : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for changing the preview image on the level select screen
+     */
     public Button tutorialButton;
     public Button caveButton;
     public Button mountainButton;

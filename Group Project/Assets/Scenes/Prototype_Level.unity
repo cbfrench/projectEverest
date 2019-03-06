@@ -1574,6 +1574,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 618fee39f2acc484e88f6517bc60e40b, type: 2}
+    - target: {fileID: 8118606563593030310, guid: 7e03326ae138f0042a78156509ff4c6f,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 1844500902}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e03326ae138f0042a78156509ff4c6f, type: 3}
 --- !u!1 &584698970 stripped
@@ -2407,6 +2412,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3229312194031296532, guid: 4bd87b74d73bd81429734226eb6fd07d,
+        type: 3}
+      propertyPath: camTransform
+      value: 
+      objectReference: {fileID: 1844500902}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd87b74d73bd81429734226eb6fd07d, type: 3}
 --- !u!114 &785262315 stripped
@@ -7862,6 +7872,7 @@ MonoBehaviour:
   initialCameraSpeed: 0
   inTutorial: 0
   tutorialCollision: 0
+  crown: {fileID: 116250933051459120, guid: 4e0798dad9583e3428f250cf46178c6d, type: 3}
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0
@@ -9133,6 +9144,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
     type: 3}
   m_PrefabInstance: {fileID: 127948904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1844500902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1315452000995654189, guid: d07fc8f12f9c65540af2a52953795461,
+    type: 3}
+  m_PrefabInstance: {fileID: 1683029699}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1858219493 stripped
 Transform:

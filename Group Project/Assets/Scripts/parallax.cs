@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class parallax : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for moving something at a relative speed to the camera. Used for moving the background slowly to give it a parallax depth effect
+     */
     public GameObject cam;
     public float speed;
 

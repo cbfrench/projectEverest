@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for controlling the flow of gameplay as well as storing important variables
+     */
     public static GameControl instance;
     public float scaleDelay;
     public Text statusText;
@@ -46,6 +49,8 @@ public class GameControl : MonoBehaviour
     public float initialCameraSpeed;
     public bool inTutorial = false;
     public bool tutorialCollision = false;
+    public static int lastWinner = 0;
+    public GameObject crown;
 
     private string previousText;
     private float cameraShaking;
@@ -149,6 +154,9 @@ public class GameControl : MonoBehaviour
 
     private bool cameraAdjust()
     {
+        /* Author: Connor French
+         * Description: checks whether or not the camera needs to be adjusted in the direction of the camera's movement
+         */
         bool result = false;
         bool addition;
         if(cameraDir.x != 0)
@@ -182,6 +190,9 @@ public class GameControl : MonoBehaviour
 
     private void pauseGame()
     {
+        /* Author: Connor French
+         * Description: pauses the game if the pause button is pressed
+         */
         if (Input.GetButtonDown("Pause") && !gameOver && climbing)
         {
             if (paused)
@@ -206,6 +217,9 @@ public class GameControl : MonoBehaviour
 
     private void beginGame()
     {
+        /* Author: Connor French
+         * Description: counts the clock down at the beginning of the game and begins the game once it reaches 0
+         */
         if (!climbing)
         {
             if (climbDelay > 0)
@@ -227,6 +241,9 @@ public class GameControl : MonoBehaviour
 
     public void DestroyPlats()
     {
+        /* Author: Connor French
+         * Description: destroys all extraneous platforms when the game reaches the final fight
+         */
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platforms");
         foreach (GameObject plat in platforms)
         {
@@ -236,6 +253,9 @@ public class GameControl : MonoBehaviour
 
     public int getRespawnPlat()
     {
+        /* Author: Connor French
+         * Description: checks which platform is the closest to the middle of the screen without being below it in order to respawn a dead player safely
+         */
         float minimum = Mathf.Infinity;
         int ind = -1;
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
@@ -253,6 +273,9 @@ public class GameControl : MonoBehaviour
 
     public void wayfind()
     {
+        /* Author: Connor French
+         * Description: moves the camera along the path dictated by the GameObjects held within CameraPath in the scene
+         */
         if (!reachedTop && climbing && !gameOver)
         {
             Vector3 dir = waypoints[nextPath].transform.position - waypoints[prevPath].transform.position;
@@ -306,6 +329,9 @@ public class GameControl : MonoBehaviour
 
     public void generateWaypoints()
     {
+        /* Author: Connor French
+         * Description: creates a list of the waypoints that the camera must follow
+         */
         Transform p = cameraPath.transform;
         GameObject[] w = new GameObject[p.childCount];
         for(int i = 0; i < p.childCount; i++)
@@ -317,6 +343,9 @@ public class GameControl : MonoBehaviour
 
     public void killboxDespawn()
     {
+        /* Author: Connor French
+         * Description: removes the killboxes in the direction of movement so that moving too far ahead won't kill the player
+         */
         GameObject bottom = killboxes.GetChild(0).gameObject;
         GameObject top = killboxes.GetChild(1).gameObject;
         GameObject left = killboxes.GetChild(2).gameObject;
@@ -355,6 +384,9 @@ public class GameControl : MonoBehaviour
 
     public void stopParticles()
     {
+        /* Author: Connor French
+         * Description: stops all tagged Particle Systems from emitting
+         */
         GameObject[] particles = GameObject.FindGameObjectsWithTag("Particles");
         for(int i = 0; i < particles.Length; i++)
         {
@@ -365,6 +397,9 @@ public class GameControl : MonoBehaviour
 
     public void changeSprites()
     {
+        /* Author: Connor French
+         * Description: changes all wall and floor sprites in a scene to the ones given in the GameController to prevent need for similar prefabs
+         */
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Ground");
         for(int i = 0; i < platforms.Length; i++)
         {
@@ -379,6 +414,9 @@ public class GameControl : MonoBehaviour
 
     public void setText(string s)
     {
+        /* Author: Connor French
+         * Description: creates a textbox and sets its text to the given string
+         */
         if (!tutorial)
         {
             return;
@@ -398,6 +436,9 @@ public class GameControl : MonoBehaviour
 
     public void runTutorial()
     {
+        /* Author: Connor French
+         * Description: runs the tutorial level logic for displaying helpful textboxes
+         */
         GameObject[] exists = GameObject.FindGameObjectsWithTag("Textbox");
         inTutorial = exists.Length != 0;
         bool triggerText = false;

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Pulsate : MonoBehaviour
 {
+    /* Author: Connor French
+     * Description: class for making text labels gradually change color so they don't appear so static
+     */
     public Text t;
     public float speed;
 
