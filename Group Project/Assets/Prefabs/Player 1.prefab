@@ -1044,7 +1044,7 @@ Animator:
   m_GameObject: {fileID: 3229312194097646149}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c31bcfdd7fb82594a97c4f2a64ec5fc6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1b71fa8cd6744a34d8838d938899ef44, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5722,7 +5722,7 @@ ParticleSystem:
 --- !u!199 &243473430584593292
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
