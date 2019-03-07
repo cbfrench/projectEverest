@@ -73,7 +73,7 @@ public class GrenadeController : MonoBehaviour
             if (hit.gameObject.tag == "Player")
             {
                 // Damage player here
-                //hit.GetComponent<PlayerController>().recieveDamage(damage);
+                hit.GetComponent<PlayerController>().receiveDamage(damage);
             }
         }
 
