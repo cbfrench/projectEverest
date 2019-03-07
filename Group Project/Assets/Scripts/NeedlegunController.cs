@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NeedlerController : MonoBehaviour, WeaponScript
+public class NeedlegunController : MonoBehaviour, WeaponScript
 {
 
     public Text label;          // Reference to the text label
     public GameObject needlePrefab;
     public float fireDelay;
     public float velocity;
+    public int needlesToFire = 4;
     //public Transform firePoint; needed?
     private bool firing = false;
     private float delayTimer = 0;
@@ -23,7 +24,7 @@ public class NeedlerController : MonoBehaviour, WeaponScript
         player = null;
 
         // Set label text
-        label.text = "Needler";
+        label.text = "Needle Gun";
         label.gameObject.SetActive(true);
     }
 
@@ -31,12 +32,9 @@ public class NeedlerController : MonoBehaviour, WeaponScript
     void Update()
     {
         if(firing){
-            for(int i = 0; i < needleToFire ; i++){
-                //XXX GameObject projectile = Instantiate(needlePrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
-                //XXX projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, Random.Range(-10.0f, 10.0f)));
-                yield return new WaitForSeconds(.08f);
-            }
+            StartCoroutine(shootSpray());
             delayTimer = fireDelay;
+            firing = false;
         }
 
         if(delayTimer > 0 ){
@@ -49,7 +47,7 @@ public class NeedlerController : MonoBehaviour, WeaponScript
     {
         // Set the player reference
         this.player = player;
-        //needlePrefab.GetComponent<NeedleBulletController>().player = player; XXX
+        needlePrefab.GetComponent<NeedleBulletController>().player = player;
         //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
@@ -67,8 +65,16 @@ public class NeedlerController : MonoBehaviour, WeaponScript
 
     public void shoot()
     {
-        if(!firing && delayTimer == 0){
+        if(!firing && delayTimer <= 0){
             firing = true;
+        }
+    }
+
+    private IEnumerator shootSpray(){
+        for(int i = 0; i < needlesToFire ; i++){
+            GameObject projectile = Instantiate(needlePrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
+            projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, Random.Range(-220.0f, 220.0f)));
+            yield return new WaitForSeconds(.14f);
         }
     }
 

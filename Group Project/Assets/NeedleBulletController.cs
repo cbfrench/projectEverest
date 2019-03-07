@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolBulletController : MonoBehaviour
+public class NeedleBulletController : MonoBehaviour
 {
     public GameObject player;
     public float bulletDamage = 15f;

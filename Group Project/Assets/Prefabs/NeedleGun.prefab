@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 2092170562}
   - component: {fileID: 7906084258447093127}
   - component: {fileID: 1882239427077601292}
-  - component: {fileID: 3447313927488102754}
+  - component: {fileID: 1953966480682418331}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Bow
+  m_Text: Needle Gun
 --- !u!114 &7906084258447093127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   t: {fileID: 2092170562}
   speed: 400
---- !u!1818360609 &3447313927488102754
+--- !u!1818360609 &1953966480682418331
 RotationConstraint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,7 +271,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.08}
+  m_Offset: {x: 0.08, y: 0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -282,7 +282,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31, y: 1}
+  m_Size: {x: 1.16, y: 0.81}
   m_EdgeRadius: 0
 --- !u!1 &6955069804909629898
 GameObject:
@@ -372,9 +372,9 @@ GameObject:
   - component: {fileID: 880386134737160804}
   - component: {fileID: 4499419448796018854}
   - component: {fileID: 2560850406323380393}
-  - component: {fileID: 2512001840244980079}
+  - component: {fileID: 4688586307804478205}
   m_Layer: 15
-  m_Name: Bow
+  m_Name: NeedleGun
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,7 +445,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &2512001840244980079
+--- !u!114 &4688586307804478205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,14 +454,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7127404281499944819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e4073ff83b7fe48b5dc2190be9a5b2, type: 3}
+  m_Script: {fileID: 11500000, guid: f44fe8afe68e27e408f2c2814b9dfc4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 2092170562}
-  maxDrawtime: 4
-  arrowPrefab: {fileID: 1608948167338086, guid: e88fe49432b8eb243a6e029ac13b3e1a,
+  needlePrefab: {fileID: 1608948167338086, guid: 4c85a6d76fe2fcc449bd56fcaf1cad4a,
     type: 3}
-  maxVelocity: 100
+  fireDelay: 1.15
+  velocity: 1700
+  needlesToFire: 5
 --- !u!1 &8062574774802203306
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +473,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8461786788100926526}
   - component: {fileID: 86045526093666235}
-  - component: {fileID: 948840195}
   m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
@@ -489,7 +489,7 @@ Transform:
   m_GameObject: {fileID: 8062574774802203306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 880386134737160804}
   m_RootOrder: 0
@@ -531,9 +531,9 @@ SpriteRenderer:
   m_SortingLayerID: 1995665677
   m_SortingLayer: 12
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: d6a042947af4b0b49bb16cdb31f94a0c, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 9f2b9b1fdd02450478ca6a336f75e5c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.16, y: 0.46}
@@ -542,22 +542,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &948840195
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8062574774802203306}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 861298397287ae947a96d9a3701f93a8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

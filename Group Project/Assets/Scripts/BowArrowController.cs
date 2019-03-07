@@ -5,11 +5,11 @@ using UnityEngine;
 public class BowArrowController : MonoBehaviour
 {
     /* Author: Reynaldo Hermawan
-     * Description: class for controlling behavior of the arrows fired from a bow
-     * Contributors: Connor French
+     * Description: Class controlling the behavior of the arrows fired from the 
+     * bow weapon.
      */
     public GameObject player;
-    public Vector2 minmax;
+    public float maxVelocity;
     //private TrailRenderer tr = null;
     // Start is called before the first frame update
     void Start()
@@ -33,12 +33,11 @@ public class BowArrowController : MonoBehaviour
     {
         if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            float velocity = gameObject.GetComponent<Rigidbody2D>().velocity.x;
-            float damage = Mathf.Pow(((Mathf.Abs(velocity) - minmax.x) / minmax.y), 2) * 100f;
+            var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, gameObject.GetComponent<Rigidbody2D>().velocity.x));
             collision.gameObject.GetComponent<PlayerController>().receiveDamage(damage);
             Destroy(gameObject);
         }
-        else if(collision.gameObject.tag == "Platforms" || collision.gameObject.tag == "Wall")
+        else if(collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Wall")
         {
             Destroy(gameObject);
         }

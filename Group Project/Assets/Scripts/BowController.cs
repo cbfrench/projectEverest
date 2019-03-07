@@ -6,14 +6,12 @@ using UnityEngine.UI;
 public class BowController : MonoBehaviour, WeaponScript
 {
     /* Author: Reynaldo Hermawan
-     * Description: class used to control the behavior of the Bow weapon
-     * Contributors: Connor French
+     * Description: Class controlling the behavior of the Bow weapon.
      */
 
     public Text label;          // Reference to the text label
     public float maxDrawtime;
     public GameObject arrowPrefab;
-    public float minVelocity;
     public float maxVelocity;
     //public Transform firePoint; needed?
 
@@ -32,9 +30,7 @@ public class BowController : MonoBehaviour, WeaponScript
         label.text = "Bow";
         label.gameObject.SetActive(true);
 
-        //values determined through testing
-        Vector2 vels = new Vector2(0, 111.1f);
-        arrowPrefab.GetComponent<BowArrowController>().minmax = vels;
+        arrowPrefab.GetComponent<BowArrowController>().maxVelocity = maxVelocity;
     }
 
     // Update is called once per frame
@@ -81,15 +77,15 @@ public class BowController : MonoBehaviour, WeaponScript
 
     public void stop()
     {
-        //Scaling value to new range
-        var arrowVelocity = Mathf.Lerp(minVelocity, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
+        //Scaling value to new ranges
+        var arrowVelocity = Mathf.Lerp(10f, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
         bowDraw = false;
         drawTime = 0;
         anim.ResetTrigger("FullDraw");
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
 
-        arrow.GetComponent<Rigidbody2D>().AddForce(new Vector2(arrowVelocity * player.transform.localScale.x, 50));
+        arrow.GetComponent<Rigidbody2D>().velocity = new Vector3(arrowVelocity * player.transform.localScale.x, 5f, 0);
     }
 }
 
