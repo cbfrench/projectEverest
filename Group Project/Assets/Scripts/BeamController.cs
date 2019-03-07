@@ -11,7 +11,7 @@ public class BeamController : MonoBehaviour
         if(collision.gameObject.tag == "player")
         {
             // Damage player here
-            //hit.GetComponent<PlayerController>().recieveDamage(damage);
+            collision.GetComponent<PlayerController>().receiveDamage(damage);
         }
     }
 }
