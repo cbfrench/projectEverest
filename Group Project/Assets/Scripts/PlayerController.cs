@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
-        Debug.Log("Last Winner: Player " + GameControl.lastWinner);
         if(GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
         {
             GameObject crown = Instantiate(GameControl.instance.crown, Vector3.zero, Quaternion.identity);
