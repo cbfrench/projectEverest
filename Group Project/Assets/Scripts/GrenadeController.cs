@@ -10,6 +10,7 @@ public class GrenadeController : MonoBehaviour
     public float explosionForce = 300f;
     public int bounceLimit = 3;
     public GameObject explosion;
+    public float damage = 30f;
 
     private ParticleSystem particles;
     private float lifeTime = 0;
@@ -72,6 +73,7 @@ public class GrenadeController : MonoBehaviour
             if (hit.gameObject.tag == "Player")
             {
                 // Damage player here
+                hit.GetComponent<PlayerController>().receiveDamage(damage);
             }
         }
 

@@ -333,7 +333,24 @@ public class PlayerController : MonoBehaviour
         }
         if (GameControl.instance.USING_SONY_CONTROLLERS)
         {
-            // Caleb, your specific axes can be set here, just remember to set them in the Unity editor and don't modify any existing ones
+            if (playerNum == 1)
+            {
+                hAxis = "Horizontal_P1";
+                jAxis = "Jump_P1";
+                eAxis = "Equip_P1";
+                fAxis = "Fire_P1";
+                vAxis = "Vertical_P1";
+                tAxis = "Throw_P1";
+            }
+            else
+            {
+                hAxis = "Horizontal_P2";
+                jAxis = "Jump_P2";
+                eAxis = "Equip_P2";
+                fAxis = "Fire_P2";
+                vAxis = "Vertical_P2";
+                tAxis = "Throw_P2";
+            }
         }
     }
 
