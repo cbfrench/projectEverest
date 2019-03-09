@@ -128,7 +128,6 @@ public class GameControl : MonoBehaviour
         }
         foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList())
         {
-            Debug.Log(go);
             if (go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave)
                 weaponList.Add(go);
         }

@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb0ce5faedb5df4e822d06af918576f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenSpawn: 4
+  timeBetweenSpawn: 10
   finalFightWidth: 49
