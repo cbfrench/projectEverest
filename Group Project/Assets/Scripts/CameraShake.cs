@@ -7,6 +7,7 @@ public class CameraShake : MonoBehaviour
     /* Author: Connor French
      * Description: script that is attached to a GameObject that, upon activation, shakes the camera a variable amount
      */
+
     public Transform camTransform;
     public float initialShakeDuration;
     public float shakeDuration;

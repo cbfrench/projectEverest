@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BeamController : MonoBehaviour
 {
+    /* Author: Caleb Biggers
+    * Description: Controls the beam for the rail gun
+    */
+
     public float damage = 50f;
 
     private void OnTriggerEnter2D(Collider2D collision)

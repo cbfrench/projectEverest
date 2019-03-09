@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GrenadeController : MonoBehaviour
 {
+
+    /* Author: Caleb Biggers
+    * Description: Controls the grenades that the grenade launcher fires
+    */
+
     public AudioClip explosionSound;
     public float lifeSpan = 1f;
     public float explosionRadius = 2.5f;
@@ -11,6 +16,8 @@ public class GrenadeController : MonoBehaviour
     public int bounceLimit = 3;
     public GameObject explosion;
     public float damage = 30f;
+    public float selfDamage = 10f;
+    public GameObject player;
 
     private ParticleSystem particles;
     private float lifeTime = 0;
@@ -39,7 +46,7 @@ public class GrenadeController : MonoBehaviour
         {
             Detonate();
         }
-        else if(collision.gameObject.tag == "Platforms" || collision.gameObject.tag == "Wall")
+        else if(collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Wall")
         {
             bounces++;
             if(bounces >= bounceLimit)
@@ -72,8 +79,16 @@ public class GrenadeController : MonoBehaviour
             //Debug.Log(hit.gameObject.tag);
             if (hit.gameObject.tag == "Player")
             {
-                // Damage player here
-                hit.GetComponent<PlayerController>().receiveDamage(damage);
+                if(hit.gameObject == player)
+                {
+                    // Damage player here
+                    hit.GetComponent<PlayerController>().receiveDamage(selfDamage);
+                }
+                else
+                {
+                    // Damage player here
+                    hit.GetComponent<PlayerController>().receiveDamage(damage);
+                }
             }
         }
 

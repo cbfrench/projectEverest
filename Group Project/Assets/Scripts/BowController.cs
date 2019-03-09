@@ -13,6 +13,7 @@ public class BowController : MonoBehaviour, WeaponScript
     public float maxDrawtime;
     public GameObject arrowPrefab;
     public float maxVelocity;
+    public Slider slider;
     //public Transform firePoint; needed?
 
     private GameObject player;
@@ -36,6 +37,8 @@ public class BowController : MonoBehaviour, WeaponScript
     // Update is called once per frame
     void Update()
     {
+        slider.value = (drawTime / maxDrawtime);
+
         if (bowDraw)
         {
             if(drawTime < maxDrawtime){

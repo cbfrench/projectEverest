@@ -4,8 +4,16 @@ using UnityEngine;
 
 public static class WeaponScriptHelper
 {
+    /* Author: Caleb Biggers & Reynaldo Hermawan
+     * Description: Script to allow all weapons to have the same methods
+     */
+
     public static void resetWeapon(this WeaponScript weapon, GameObject attachedGO, GameObject player)
     {
+        /* Author: Caleb Biggers & Reynaldo Hermawan
+         * Description: Method for when a weapon is dropped to reset it 
+         */
+
         // Change rb2d type back to dynamic
         attachedGO.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         // Reset velocity
@@ -18,6 +26,10 @@ public static class WeaponScriptHelper
 
     public static void initWeapon(this WeaponScript weapon, GameObject attachedGO, GameObject player)
     {
+        /* Author: Caleb Biggers & Reynaldo Hermawan
+         * Description: Method for when a weapon is picked up by a player
+         */
+
         // Change rb2d to kinematic
         attachedGO.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         // Reset velocity and angular velocity
