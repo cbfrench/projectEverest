@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 8487180032054771397}
   - component: {fileID: 8487180032054771396}
   - component: {fileID: 8487180032054771402}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Grenade
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4806,3 +4806,4 @@ MonoBehaviour:
   bounceLimit: 3
   explosion: {fileID: 8602528787307269553, guid: 260eaaf7b00165f4d8b12cf124594602,
     type: 3}
+  damage: 30
