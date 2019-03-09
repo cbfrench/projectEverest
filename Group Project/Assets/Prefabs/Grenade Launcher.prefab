@@ -175,13 +175,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e6260e403f0764faabe2eef70ce2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeTime: 0.5
+  chargeTime: 1
   launchForce: 2000
   label: {fileID: 8659850275538999538}
   grenadePrefab: {fileID: 8487180032054771401, guid: 7684e847c40f4834dabd3617e0e701e9,
     type: 3}
   grenadeSpawn: {fileID: 1931544972071538639}
   slider: {fileID: 1840141349163722983}
+  fireRate: 0.75
 --- !u!1818360609 &8689970884725972578
 RotationConstraint:
   m_ObjectHideFlags: 0
@@ -573,7 +574,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5098549863651084761}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.015, y: 0.015, z: 1}
   m_Children:
@@ -581,10 +582,10 @@ RectTransform:
   - {fileID: 7447115604204940635}
   m_Father: {fileID: 8659850275587176383}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.268, y: 0.494}
+  m_AnchoredPosition: {x: 1.31, y: 0.92}
   m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1840141349163722983
