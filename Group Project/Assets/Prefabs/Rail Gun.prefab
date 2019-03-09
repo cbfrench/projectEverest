@@ -230,9 +230,9 @@ GameObject:
   - component: {fileID: 3241992782245310331}
   - component: {fileID: 3241992782245310328}
   - component: {fileID: 3241992782245310329}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Beam
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
