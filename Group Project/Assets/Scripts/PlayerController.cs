@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
             }
             t.text = "Lives: " + lives.ToString();
         }
-        if (GameControl.instance.fight || lives == 0)
+        if (GameControl.instance.fight || lives <= 1)
         {
             gameEnd();
         }
@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour
          * Description: respawns the player upon death and increments the life counter. If the player is out of lives, then it triggers an end of game
          */
         Text t = GameControl.instance.p2Text;
-        if (!GameControl.instance.ableToDie && lives > 0)
+        if (!GameControl.instance.ableToDie && lives > 1)
         {
             if (dead && !GameControl.instance.paused)
             {
@@ -763,7 +763,7 @@ public class PlayerController : MonoBehaviour
         /* Author: Connor French
          * Description: checks to see if the game is over and determines who the winner is and displays that information to the screen
          */
-        if (dead && lives == 0)
+        if (dead && lives <= 1)
         {
             GameControl.instance.gameOver = true;
             otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
@@ -773,6 +773,12 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
             GameControl.instance.topText.gameObject.SetActive(false);
+            Text t = GameControl.instance.p2Text;
+            if (playerNum == 1)
+            {
+                t = GameControl.instance.p1Text;
+            }
+            t.text = "Lives: 0";
             if (equippedWeapon != null)
             {
                 dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
