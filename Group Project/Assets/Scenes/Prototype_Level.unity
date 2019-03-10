@@ -7951,7 +7951,7 @@ MonoBehaviour:
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0
-  spawnLoc: {fileID: 0}
+  spawnLoc: {fileID: 1595302798}
   weaponList: []
 --- !u!4 &1060277901
 Transform:
@@ -8734,6 +8734,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
     type: 3}
   m_PrefabInstance: {fileID: 767277608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1595302798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3187878148628160209, guid: ab40b28622cf39742977f9c0a53dad11,
+    type: 3}
+  m_PrefabInstance: {fileID: 49825043}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1683029699
 PrefabInstance:
