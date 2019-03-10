@@ -43,7 +43,7 @@ public class BowArrowController : MonoBehaviour
     {
         if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, gameObject.GetComponent<Rigidbody2D>().velocity.x));
+            var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x)));
             collision.gameObject.GetComponent<PlayerController>().receiveDamage(damage);
             Destroy(gameObject);
         }

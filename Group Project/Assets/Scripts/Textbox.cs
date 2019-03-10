@@ -12,10 +12,10 @@ public class Textbox : MonoBehaviour
     public Canvas box;
     public Text text;
     public string content;
-    public float killTime = 3;
+    public float killTime = 4;
 
     private float update = 0;
-    private float textSpeed = 0.025f;
+    private float textSpeed = 0.035f;
     private int ind = 0;
     private bool finished = false;
     private GameObject background1;

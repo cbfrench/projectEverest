@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlamethrowerParticleController : MonoBehaviour
 {
     public GameObject player;
-    public float flamethrowerDamage = 33f;
+    public float flamethrowerDamage = 16.667f;
 
     // Start is called before the first frame update
     void Start()
