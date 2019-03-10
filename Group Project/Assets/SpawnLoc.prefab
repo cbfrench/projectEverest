@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenSpawn: 8
-  finalFightWidth: 49
+  finalFightWidth: 25
+  raycastDownLength: 40

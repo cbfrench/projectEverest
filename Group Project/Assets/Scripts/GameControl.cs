@@ -69,7 +69,7 @@ public class GameControl : MonoBehaviour
     public bool USING_SONY_CONTROLLERS = false;
 
     public GameObject spawnLoc;
-    public List<GameObject> weaponList;
+    public GameObject weaponList;
 
     void Awake()
     {
@@ -125,12 +125,6 @@ public class GameControl : MonoBehaviour
         {
             tutorial = true;
             setText(tutorialText[tutorialCount]);
-        }
-        foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList())
-        {
-            Debug.Log(go);
-            if (go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave)
-                weaponList.Add(go);
         }
         //weaponList = Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList();
     }
@@ -506,6 +500,6 @@ public class GameControl : MonoBehaviour
     }
 
     public GameObject returnRandomWeapon(){
-        return weaponList[Random.Range(0, weaponList.Count)];
+        return weaponList.transform.GetChild(Random.Range(0,weaponList.transform.childCount)).gameObject;
     }
 }
