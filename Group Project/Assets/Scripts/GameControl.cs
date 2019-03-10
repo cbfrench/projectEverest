@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
 
 public class GameControl : MonoBehaviour
 {
@@ -68,9 +67,6 @@ public class GameControl : MonoBehaviour
     public bool USING_GAMECUBE_CONTROLLERS = false;
     public bool USING_SONY_CONTROLLERS = false;
 
-    public GameObject spawnLoc;
-    public List<GameObject> weaponList;
-
     void Awake()
     {
         if (instance == null)
@@ -126,12 +122,6 @@ public class GameControl : MonoBehaviour
             tutorial = true;
             setText(tutorialText[tutorialCount]);
         }
-        foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList())
-        {
-            if (go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave)
-                weaponList.Add(go);
-        }
-        //weaponList = Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList();
     }
 
     void Update()
@@ -259,7 +249,6 @@ public class GameControl : MonoBehaviour
         {
             plat.SetActive(false);
         }
-        spawnLoc.GetComponent<SpawnBox>().startRandomWeaponSpawn();
     }
 
     public int getRespawnPlat()
@@ -502,9 +491,5 @@ public class GameControl : MonoBehaviour
             setText(tutorialText[tutorialCount]);
             triggerText = false;
         }
-    }
-
-    public GameObject returnRandomWeapon(){
-        return weaponList[Random.Range(0, weaponList.Count)];
     }
 }
