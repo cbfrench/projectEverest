@@ -461,6 +461,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NeedleGun
       objectReference: {fileID: 0}
+    - target: {fileID: 7127404281499944819, guid: ad8e272336c6aa64b8332ede07608664,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 880386134737160804, guid: ad8e272336c6aa64b8332ede07608664,
         type: 3}
       propertyPath: m_LocalPosition.x

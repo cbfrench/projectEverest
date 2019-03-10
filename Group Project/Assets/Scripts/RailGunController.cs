@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class RailGunController : MonoBehaviour, WeaponScript
 {
-
+    /* Author: ?
+     * Description:
+     * Contributor: Connor French
+     */
     public float chargeTime = 3f;
     public float fireTime = 1f;
     public float fireRate = 5f;
@@ -95,6 +98,9 @@ public class RailGunController : MonoBehaviour, WeaponScript
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
+        beam.SetActive(false);
+        firing = false;
+        charging = false;
     }
 
     // Press to charge
@@ -112,6 +118,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     {
         // Reset charging
         charging = false;
+        fired = false;
         charge = 0;
     }
 

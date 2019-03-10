@@ -30,6 +30,7 @@ public class FlashlightController : MonoBehaviour, WeaponScript
     {
         // Turn on the label
         label.gameObject.SetActive(true);
+        bulb.SetActive(false);
     }
 
     // Called to shoot weapon

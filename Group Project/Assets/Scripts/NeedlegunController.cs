@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class NeedlegunController : MonoBehaviour, WeaponScript
 {
+    /* Author: ?
+     * Description:
+     * Contributor: Connor French
+     */
 
     public Text label;          // Reference to the text label
     public GameObject needlePrefab;
@@ -59,6 +63,7 @@ public class NeedlegunController : MonoBehaviour, WeaponScript
         label.gameObject.SetActive(true);
         firing = false;
         delayTimer = 0;
+        StopCoroutine(shootSpray());
         //this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
     }
 

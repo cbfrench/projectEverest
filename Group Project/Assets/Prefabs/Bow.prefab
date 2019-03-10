@@ -486,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8562894556102205445
 Transform:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 489a2f6363e18084096beec89cae8d13, type: 2}
+  - {fileID: 2100000, guid: e5ea01dbdf407384c8734d63bc34b810, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -648,8 +648,6 @@ MonoBehaviour:
     type: 3}
   maxVelocity: 100
   slider: {fileID: 7345605887733248518}
-  audioSource: {fileID: 0}
-  bowRelease: {fileID: 0}
 --- !u!1 &8062574774802203306
 GameObject:
   m_ObjectHideFlags: 0

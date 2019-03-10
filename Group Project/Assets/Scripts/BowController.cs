@@ -7,6 +7,7 @@ public class BowController : MonoBehaviour, WeaponScript
 {
     /* Author: Reynaldo Hermawan
      * Description: Class controlling the behavior of the Bow weapon.
+     * Contributor: Connor French
      */
 
     public Text label;          // Reference to the text label
@@ -69,6 +70,7 @@ public class BowController : MonoBehaviour, WeaponScript
         label.gameObject.SetActive(true);
         this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         anim.SetBool("Drawing", false);
+        bowDraw = false;
     }
 
     public void shoot()

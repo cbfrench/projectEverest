@@ -72,6 +72,8 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
         // Set the player reference
         this.player = player;
         label.gameObject.SetActive(false);
+        charging = false;
+        fired = false;
     }
 
     // Called when a player drops the weapon
