@@ -3257,11 +3257,12 @@ MonoBehaviour:
   initialCameraSpeed: 0
   inTutorial: 0
   tutorialCollision: 0
-  lastWinner: 0
   crown: {fileID: 0}
   USING_CONTROLLERS: 0
   USING_GAMECUBE_CONTROLLERS: 0
   USING_SONY_CONTROLLERS: 0
+  spawnLoc: {fileID: 0}
+  weaponList: []
 --- !u!4 &1060277901
 Transform:
   m_ObjectHideFlags: 0
@@ -6861,6 +6862,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074301743282632783, guid: 277fa93d2cd177546ba838e935e13129,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074301743282632783, guid: 277fa93d2cd177546ba838e935e13129,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 76.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 277fa93d2cd177546ba838e935e13129, type: 3}
