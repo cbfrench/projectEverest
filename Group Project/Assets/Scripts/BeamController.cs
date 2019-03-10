@@ -12,7 +12,7 @@ public class BeamController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "player")
+        if(collision.gameObject.tag == "Player")
         {
             // Damage player here
             collision.GetComponent<PlayerController>().receiveDamage(damage);
