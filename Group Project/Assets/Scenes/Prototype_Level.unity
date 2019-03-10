@@ -9755,11 +9755,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1449021119}
     m_Modifications:
-    - target: {fileID: 1928762883320505027, guid: 4730ac057dd31ee4b82ed7650b698506,
-        type: 3}
-      propertyPath: m_Name
-      value: Grenade Launcher (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 8366058045411815380, guid: 4730ac057dd31ee4b82ed7650b698506,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9814,6 +9809,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928762883320505027, guid: 4730ac057dd31ee4b82ed7650b698506,
+        type: 3}
+      propertyPath: m_Name
+      value: Grenade Launcher (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5363233691892263171, guid: 4730ac057dd31ee4b82ed7650b698506,
         type: 3}
@@ -10412,12 +10412,12 @@ PrefabInstance:
     - target: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.716524
+      value: -0.31
       objectReference: {fileID: 0}
     - target: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19.847311
+      value: -24.38
       objectReference: {fileID: 0}
     - target: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
         type: 3}
@@ -10463,6 +10463,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973702485179942220, guid: 722e218d1bc24454b878f6c91a0b8fbd,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.62
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 722e218d1bc24454b878f6c91a0b8fbd, type: 3}
