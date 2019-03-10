@@ -11,9 +11,19 @@ public class BowArrowController : MonoBehaviour
     public GameObject player;
     public float maxVelocity;
     //private TrailRenderer tr = null;
+    public AudioSource audioSource;
+    public AudioClip fireArrow;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        fireArrow = Resources.Load<AudioClip>("Bow");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource.PlayOneShot(fireArrow);
         //tr = gameObject.transform.Find("Trail").GetComponent<TrailRenderer>();
     }
 
