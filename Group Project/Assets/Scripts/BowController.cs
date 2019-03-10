@@ -88,7 +88,7 @@ public class BowController : MonoBehaviour, WeaponScript
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
 
-        arrow.GetComponent<Rigidbody2D>().velocity = new Vector3(arrowVelocity * player.transform.localScale.x, 5f, 0);
+        arrow.GetComponent<Rigidbody2D>().velocity = new Vector3(arrowVelocity * player.transform.localScale.x, 2f, 0);
     }
 }
 
