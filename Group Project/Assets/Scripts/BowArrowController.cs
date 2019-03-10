@@ -11,9 +11,19 @@ public class BowArrowController : MonoBehaviour
     public GameObject player;
     public float maxVelocity;
     //private TrailRenderer tr = null;
+    public AudioSource audioSource;
+    public AudioClip fireArrow;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        fireArrow = Resources.Load<AudioClip>("Bow");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource.PlayOneShot(fireArrow);
         //tr = gameObject.transform.Find("Trail").GetComponent<TrailRenderer>();
     }
 
@@ -33,7 +43,7 @@ public class BowArrowController : MonoBehaviour
     {
         if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
-            var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, gameObject.GetComponent<Rigidbody2D>().velocity.x));
+            var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x)));
             collision.gameObject.GetComponent<PlayerController>().receiveDamage(damage);
             Destroy(gameObject);
         }
