@@ -40,7 +40,6 @@ public class PistolController : MonoBehaviour, WeaponScript
     {
         // Set the player reference
         this.player = player;
-        bulletPrefab.GetComponent<PistolBulletController>().player = player;
         //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
     }
@@ -58,6 +57,7 @@ public class PistolController : MonoBehaviour, WeaponScript
     {
         if(delayTimer <= 0){
             GameObject bullet = Instantiate(bulletPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
+            bullet.GetComponent<PistolBulletController>().player = player;
             bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, 0));
             delayTimer = fireDelay;
         }

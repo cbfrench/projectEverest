@@ -5172,7 +5172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  flamethrowerDamage: 16.667
+  flamethrowerDamage: 25
 --- !u!1 &4038944332861960625
 GameObject:
   m_ObjectHideFlags: 0
