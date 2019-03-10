@@ -356,6 +356,10 @@ public class GameControl : MonoBehaviour
         GameObject top = killboxes.GetChild(1).gameObject;
         GameObject left = killboxes.GetChild(2).gameObject;
         GameObject right = killboxes.GetChild(3).gameObject;
+        if (tutorial)
+        {
+            return;
+        }
         if (cameraDir.y > 0)
         {
             top.SetActive(false);

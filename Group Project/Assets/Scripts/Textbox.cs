@@ -14,6 +14,7 @@ public class Textbox : MonoBehaviour
     public string content;
     public float killTime = 3;
 
+    private GameObject top;
     private float update = 0;
     private float textSpeed = 0.025f;
     private int ind = 0;
@@ -55,6 +56,7 @@ public class Textbox : MonoBehaviour
         background1.GetComponent<Image>().color = trans1;
         background2.GetComponent<Image>().color = trans2;
         GameControl.instance.cameraSpeed = 0;
+        top = GameObject.FindGameObjectsWithTag("Killbox")[2];
     }
 
     // Update is called once per frame
@@ -105,6 +107,7 @@ public class Textbox : MonoBehaviour
                 Destroy(gameObject);
                 GameControl.instance.textboxDestroyed = true;
                 GameControl.instance.cameraSpeed = GameControl.instance.initialCameraSpeed;
+                top.GetComponent<Collider2D>().isTrigger = true;
             }
             fadeOut(killTime);
             killTime -= Time.deltaTime;
@@ -122,6 +125,7 @@ public class Textbox : MonoBehaviour
         background2.GetComponent<Image>().color = Color.Lerp(b2color, transparent, fadeInTimer / 3);
         t.GetComponent<Text>().color = Color.Lerp(tColor, transparent, fadeInTimer / 3);
         fadeInTimer -= Time.deltaTime * 6;
+        top.GetComponent<Collider2D>().isTrigger = false;
     }
     public void fadeOut(float timer)
     {

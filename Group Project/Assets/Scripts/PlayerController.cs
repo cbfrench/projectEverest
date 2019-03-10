@@ -145,6 +145,10 @@ public class PlayerController : MonoBehaviour
             rb2d.velocity = new Vector2(rb2d.velocity.x, GameControl.instance.maxPlayerSpeed);
         }
         playerCanvas.transform.localScale = transform.localScale;
+        if (!GetComponent<Renderer>().isVisible && !controlsDisabled)
+        {
+            die();
+        }
         respawn();
     }
 
@@ -269,7 +273,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-//TODO remove this stuff
+    //TODO remove this stuff
     private void OnParticleCollision(GameObject other)
     {
         /* Author: Connor French
