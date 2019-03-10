@@ -190,6 +190,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ableToJump = true;
+            wallJumpNum = 0;
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
