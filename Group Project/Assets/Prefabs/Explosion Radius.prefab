@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8602528787307269519}
   - component: {fileID: 8602528787307269518}
   - component: {fileID: 7535974971359409853}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Explosion Radius
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
