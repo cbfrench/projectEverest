@@ -74,7 +74,7 @@ public class WhipController : MonoBehaviour, WeaponScript
 
     private IEnumerator swingWhip(){
         anim.SetTrigger("Swing");
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.28f);
         Collider2D[] peopleTipHit = Physics2D.OverlapBoxAll(attackTipPos.position, new Vector2(attackTipRangeX, attackTipRangeY), 0, otherPlayers);
         if(peopleTipHit.Length > 0){
             for(int i = 0; i < peopleTipHit.Length; i++){
