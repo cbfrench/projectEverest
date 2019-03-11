@@ -504,6 +504,6 @@ public class GameControl : MonoBehaviour
     }
 
     public GameObject returnRandomWeapon(){
-        return weaponList.transform.GetChild(Random.Range(0,weaponList.transform.childCount+1)).gameObject;
+        return weaponList.transform.GetChild(Random.Range(0,weaponList.transform.childCount)).gameObject;
     }
 }
