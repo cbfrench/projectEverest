@@ -37,17 +37,6 @@ public class SwordController : MonoBehaviour, WeaponScript
 
     }
 
-    private void swingWeapon(){
-        Collider2D[] peopleHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, otherPlayers); //mask?
-        for(int i = 0; i < peopleHit.Length; i++){
-            if(peopleHit[i].gameObject != this.player){
-                peopleHit[i].GetComponent<PlayerController>().receiveDamage(damage);
-                peopleHit[i].GetComponent<Rigidbody2D>().AddForce(new Vector2(knockback * player.transform.localScale.x, 700));
-            }
-        }
-        delayTimer = attackDelay;
-    }
-
     void OnDrawGizmosSelected(){ 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(attackPos.position, new Vector3(attackRangeX, attackRangeY, 0));
@@ -59,6 +48,7 @@ public class SwordController : MonoBehaviour, WeaponScript
         // Set the player reference
         this.player = player;
         label.gameObject.SetActive(false);
+        //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
     }
 
     // Called when a player drops the weapon
@@ -67,6 +57,7 @@ public class SwordController : MonoBehaviour, WeaponScript
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
+        //this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         delayTimer = 0;
     }
 
@@ -77,7 +68,17 @@ public class SwordController : MonoBehaviour, WeaponScript
             swingWeapon();
             anim.SetTrigger("Swing");
         }
-        
+    }
+
+    private void swingWeapon(){
+        Collider2D[] peopleHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, otherPlayers); //mask?
+        for(int i = 0; i < peopleHit.Length; i++){
+            if(peopleHit[i].gameObject != this.player){
+                peopleHit[i].GetComponent<PlayerController>().receiveDamage(damage);
+                peopleHit[i].GetComponent<Rigidbody2D>().AddForce(new Vector2(knockback * player.transform.localScale.x, 700));
+            }
+        }
+        delayTimer = attackDelay;
     }
 
     public void stop()

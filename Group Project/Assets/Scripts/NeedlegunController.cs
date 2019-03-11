@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class NeedlegunController : MonoBehaviour, WeaponScript
 {
-    /* Author: ?
-     * Description:
+    /* Author: Reynado Hermawan
+     * Description: Class controlling the behavior of the Needle Gun weapon.
      * Contributor: Connor French
      */
 

@@ -136,7 +136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.01, y: 1.36}
+  m_AnchoredPosition: {x: -0.05, y: 1.13}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2092170563
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Sword
+  m_Text: Whip
 --- !u!114 &7906084258447093127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +227,36 @@ RotationConstraint:
   m_IsContraintActive: 1
   m_IsLocked: 1
   m_Sources: []
+--- !u!1 &1177453274383645356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4291087810380222613}
+  m_Layer: 15
+  m_Name: AttackLocationTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4291087810380222613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177453274383645356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.04, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 880386134737160804}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490315642735985879
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475872643866044578}
   m_Layer: 15
-  m_Name: AttackLocation
+  m_Name: AttackLocationWhip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3444499763577471006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.21, y: -0.06, z: 0}
+  m_LocalPosition: {x: 3, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 880386134737160804}
@@ -371,7 +401,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba60aae865881f64da44a7b49b10a8b0, type: 2}
+  - {fileID: 2100000, guid: bab5fd1244000a848a049e17d0218eb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -402,10 +432,10 @@ GameObject:
   - component: {fileID: 880386134737160804}
   - component: {fileID: 4499419448796018854}
   - component: {fileID: 2560850406323380393}
-  - component: {fileID: 2819832940249972165}
   - component: {fileID: 3780203140113772603}
+  - component: {fileID: 7697954694066550872}
   m_Layer: 15
-  m_Name: Sword
+  m_Name: Whip
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,6 +457,7 @@ Transform:
   - {fileID: 1321799723286261299}
   - {fileID: 8562894556102205445}
   - {fileID: 475872643866044578}
+  - {fileID: 4291087810380222613}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -477,29 +508,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &2819832940249972165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127404281499944819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907e13050c0a9a24a9c05214b9e906fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 2092170562}
-  attackPos: {fileID: 475872643866044578}
-  otherPlayers:
-    serializedVersion: 2
-    m_Bits: 4096
-  attackRangeX: 1.4
-  attackRangeY: 2.09
-  attackAngle: 0
-  attackDelay: 1
-  damage: 22
-  knockback: 7000
 --- !u!212 &3780203140113772603
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -548,6 +556,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7697954694066550872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127404281499944819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c733d396f99b4d4d9bdcc6d74d9471c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: {fileID: 2092170562}
+  attackWhipPos: {fileID: 475872643866044578}
+  attackTipPos: {fileID: 4291087810380222613}
+  otherPlayers:
+    serializedVersion: 2
+    m_Bits: 4096
+  attackWhipRangeX: 5.5
+  attackWhipRangeY: 0.2
+  attackTipRangeX: 0.5
+  attackTipRangeY: 0.5
+  attackAngle: 0
+  attackDelay: 1
+  damageWhip: 25
+  damageTip: 45
+  knockbackWhip: 4000
+  knockbackTip: 10000
 --- !u!1 &8062574774802203306
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8461786788100926526}
   - component: {fileID: 86045526093666235}
-  - component: {fileID: 4652032784972945763}
+  - component: {fileID: 4567061520184691744}
   m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
@@ -574,8 +610,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8062574774802203306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.57, y: -0.53, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 880386134737160804}
   m_RootOrder: 0
@@ -617,18 +653,18 @@ SpriteRenderer:
   m_SortingLayerID: 1995665677
   m_SortingLayer: 12
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 29991bfb75e805343b0accfb44adc529, type: 3}
+  m_Sprite: {fileID: 21300008, guid: 5fec8e3d4b96fb945a46c23340313adf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.46}
+  m_Size: {x: 0.49, y: 0.29}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4652032784972945763
+--- !u!95 &4567061520184691744
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -638,7 +674,7 @@ Animator:
   m_GameObject: {fileID: 8062574774802203306}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b6d954dcd8697045a23af3accdae444, type: 2}
+  m_Controller: {fileID: 9100000, guid: ff1f9e3f160a26e4d8b480a7a7d121c8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

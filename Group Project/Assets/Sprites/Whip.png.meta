@@ -1,13 +1,14 @@
 fileFormatVersion: 2
-guid: 29991bfb75e805343b0accfb44adc529
+guid: 5fec8e3d4b96fb945a46c23340313adf
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Sword_0
-    21300002: Sword_1
-    21300004: Sword_2
-    21300006: Sword_3
-    21300008: Sword_4
-    21300010: Sword_5
+    21300000: Whip_0
+    21300002: Whip_1
+    21300004: Whip_2
+    21300006: Whip_3
+    21300008: Whip_4
+    21300010: Whip_5
+    2186277476908879412: ImportLogs
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -112,101 +113,121 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sword_0
+      name: Whip_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 113
-        width: 62
-        height: 63
+        x: 8
+        y: 7
+        width: 30
+        height: 55
       alignment: 9
-      pivot: {x: 0.11099305, y: 0.13036855}
+      pivot: {x: 0.8912175, y: 0.6654874}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd34a35385fcc7c4cbbe5e072ec72c2d
+      spriteID: 26cc876a7a5babc4c885988b6fe8c4fe
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sword_1
+      name: Whip_1
       rect:
         serializedVersion: 2
-        x: 114
-        y: 98
-        width: 45
-        height: 82
+        x: 59
+        y: 40
+        width: 35
+        height: 36
       alignment: 9
-      pivot: {x: 0.42607355, y: 0.09430713}
+      pivot: {x: 0.9037641, y: 0.49334705}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6984b2bb63efea44981c71762c1e3d0
+      spriteID: 43d3216071e6d5047a8ffbc046027c57
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sword_2
+      name: Whip_2
       rect:
         serializedVersion: 2
-        x: 187
-        y: 103
-        width: 63
-        height: 72
+        x: 122
+        y: 55
+        width: 165
+        height: 11
       alignment: 9
-      pivot: {x: 0.12376816, y: 0.09571573}
+      pivot: {x: 0.07612046, y: 0.5217753}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a30c6d41f5e2cbc4c81953e6491b5c91
+      spriteID: df532e739a5b1954d943d7bede82e167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sword_3
+      name: Whip_3
       rect:
         serializedVersion: 2
-        x: 286
-        y: 96
-        width: 77
-        height: 86
+        x: 121
+        y: 19
+        width: 28
+        height: 28
       alignment: 9
-      pivot: {x: 0.08956513, y: 0.6063761}
+      pivot: {x: 0.33746773, y: 0.87639034}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cef53cf012611c41b1010d113e11fc9
+      spriteID: 95a7b1d37cefbd04096f956d836f499d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sword_4
+      name: Whip_4
       rect:
         serializedVersion: 2
-        x: 407
-        y: 95
-        width: 90
-        height: 77
-      alignment: 9
-      pivot: {x: 0.5831665, y: 0.894233}
+        x: 232
+        y: 12
+        width: 49
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abfc78d45131da8489d26356021e99ad
+      spriteID: 6ebf26c01d099844180dc85963094d4b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip_5
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 9
+        width: 23
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ff84285e864d384f92102db03ec087b
       vertices: []
       indices: 
       edges: []
@@ -214,7 +235,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3bc3662cacdd65144a7df94da0644392
+    spriteID: beec54cd59980cb4786b65e8fda15ac2
     vertices: []
     indices: 
     edges: []
