@@ -66,6 +66,10 @@ public class BowController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
+        /* Author: Reynaldo Hermawan
+         * Description: loads resets the bow weapon upon being dropped
+         * Contributor: Connor French
+         */
         // Set the player reference back to null on drop
         label.gameObject.SetActive(true);
         this.gameObject.transform.localPosition = new Vector3(0, 0, 0);

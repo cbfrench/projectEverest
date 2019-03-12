@@ -30,19 +30,14 @@ public class Textbox : MonoBehaviour
 
     private void Awake()
     {
-        /*if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }*/
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        /* Author: Connor French
+         * Description: sets initial values for the textbox and stops the camera from moving
+         */
         GameControl.instance.textboxDestroyed = false;
         background1 = transform.GetChild(0).gameObject;
         background2 = transform.GetChild(1).gameObject;
@@ -62,6 +57,9 @@ public class Textbox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Author: Connor French
+         * Description: displays the textbox, prints the text, then destroys the textbox
+         */
         fadeIn();
         updateText();
         kill();
@@ -69,7 +67,9 @@ public class Textbox : MonoBehaviour
 
     public void newContent(string input)
     {
-        Debug.Log(Time.time);
+        /* Author: Connor French
+         * Description: resets the content of the textbox
+         */
         text.text = "";
         content = input;
         update = 0;
@@ -78,6 +78,9 @@ public class Textbox : MonoBehaviour
 
     public void updateText()
     {
+        /* Author: Connor French
+         * Description: updates the text in the box one letter at a time
+         */
         if (fadingIn)
         {
             return;
@@ -100,6 +103,9 @@ public class Textbox : MonoBehaviour
 
     public void kill()
     {
+        /* Author: Connor French
+         * Description: destroys the textbox if it has been finished printing for a short time
+         */
         if (finished)
         {
             if (killTime <= 0)
@@ -115,7 +121,10 @@ public class Textbox : MonoBehaviour
     }
     public void fadeIn()
     {
-        if(fadeInTimer <= 0)
+        /* Author: Connor French
+         * Description: fades in the textbox upon creation
+         */
+        if (fadeInTimer <= 0)
         {
             fadingIn = false;
             return;
@@ -129,6 +138,9 @@ public class Textbox : MonoBehaviour
     }
     public void fadeOut(float timer)
     {
+        /* Author: Connor French
+         * Description: fades out the textbox when it is done playing
+         */
         Color transparent = new Color(0, 0, 0, 0);
         background1.GetComponent<Image>().color = Color.Lerp(transparent, b1color, timer / 0.5f);
         background2.GetComponent<Image>().color = Color.Lerp(transparent, b2color, timer / 0.5f);

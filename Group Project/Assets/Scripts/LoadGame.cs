@@ -19,6 +19,9 @@ public class LoadGame : MonoBehaviour
 
     public void Awake()
     {
+        /* Author: Connor French
+         * Description: sets play button to active at the opening of the game
+         */
         playButton = GameObject.Find("Play").transform.GetComponent<Button>();
     }
 
@@ -28,26 +31,41 @@ public class LoadGame : MonoBehaviour
 
     public void loadTutorial()
     {
+        /* Author: Connor French
+         * Description: loads tutorial
+         */
         SceneManager.LoadScene("Tutorial_Level");
     }
 
     public void loadCave()
     {
+        /* Author: Connor French
+         * Description: loads cave level
+         */
         SceneManager.LoadScene("Prototype_Level");
     }
 
     public void loadMountain()
     {
+        /* Author: Connor French
+         * Description: loads mountain level
+         */
         SceneManager.LoadScene("Curve_Level");
     }
 
     public void loadVolcano()
     {
+        /* Author: Connor French
+         * Description: loads volcano level
+         */
         SceneManager.LoadScene("Hardcore_Level");
     }
 
     public void instructions()
     {
+        /* Author: Connor French
+         * Description: pulls up controls screen when selected from the main menu
+         */
         main.gameObject.SetActive(false);
         controls.gameObject.SetActive(true);
         backButton = GameObject.Find("Back").transform.GetComponent<Button>();
@@ -56,6 +74,9 @@ public class LoadGame : MonoBehaviour
 
     public void levelSelect()
     {
+        /* Author: Connor French
+         * Description: pulls up level select screen when selected from the main menu
+         */
         main.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
         tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
@@ -64,6 +85,9 @@ public class LoadGame : MonoBehaviour
 
     public void back()
     {
+        /* Author: Connor French
+         * Description: goes back to the main menu when selected from either the level select or the controls screens
+         */
         main.gameObject.SetActive(true);
         controls.gameObject.SetActive(false);
         select.gameObject.SetActive(false);
@@ -72,6 +96,9 @@ public class LoadGame : MonoBehaviour
 
     public void exitGame()
     {
+        /* Author: Connor French
+         * Description: quits game
+         */
         Application.Quit();
     }
 }

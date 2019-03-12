@@ -18,12 +18,18 @@ public class CameraShake : MonoBehaviour
 
     void OnEnable()
     {
+        /* Author: Connor French
+         * Description: stores initial position of the gameobject when it is enabled
+         */
         originalPos = camTransform.localPosition;
         shakeDuration = initialShakeDuration;
     }
 
     void Update()
     {
+        /* Author: Connor French
+         * Description: shakes the gameobject for a specified time, then resets its position to the initial position and becomes inactive
+         */
         if (shakeDuration > 0 && !GameControl.instance.paused)
         {
             camTransform.localPosition = originalPos + Random.insideUnitCircle * shakeAmount;

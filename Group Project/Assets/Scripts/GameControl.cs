@@ -9,6 +9,7 @@ public class GameControl : MonoBehaviour
 {
     /* Author: Connor French
      * Description: class for controlling the flow of gameplay as well as storing important variables
+     * Contributor: Reynaldo Hermawan
      */
     public static GameControl instance;
     public float scaleDelay;
@@ -74,6 +75,9 @@ public class GameControl : MonoBehaviour
 
     void Awake()
     {
+        /* Author: Connor French
+         * Description: ensures that only one GameControl exists and determines which control setup is being used based on connected devices
+         */
         if (instance == null)
         {
             instance = this;
@@ -109,6 +113,9 @@ public class GameControl : MonoBehaviour
 
     private void Start()
     {
+        /* Author: Connor French
+         * Description: sets all values to initial required values. Gets waypoints for the camera movement, plays the music, and determines if this level has a tutorial in it
+         */
         statusText.text = "";
         p1Text.text = "";
         p2Text.text = "";
@@ -139,6 +146,9 @@ public class GameControl : MonoBehaviour
 
     void Update()
     {
+        /* Author: Connor French
+         * Description: runs tutorial if in tutorial level, runs beginning game logic, checks where the players are on the screen, moves the camera and despawns appropriate killboxes, and checks if the player has paused the game
+         */
         if (tutorial)
         {
             runTutorial();

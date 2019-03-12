@@ -20,6 +20,9 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Author: Connor French
+         * Description: checks if the player tries to pause the game when it is acceptable to pause the game
+         */
         if (!GameControl.instance.gameOver && GameControl.instance.climbing)
         {
             if (GameControl.instance.paused)
@@ -36,6 +39,9 @@ public class PauseMenu : MonoBehaviour
 
     public void returnToMenu()
     {
+        /* Author: Connor French
+         * Description: returns to the main menu from the pause menu
+         */
         Music.instance.music.clip = menuMusic;
         Music.instance.music.volume = 1;
         Music.instance.music.Play();
@@ -44,6 +50,9 @@ public class PauseMenu : MonoBehaviour
 
     public void playAgain()
     {
+        /* Author: Connor French
+         * Description: reloads current scene from beginning
+         */
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

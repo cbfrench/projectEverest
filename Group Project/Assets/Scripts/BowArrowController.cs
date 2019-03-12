@@ -5,8 +5,8 @@ using UnityEngine;
 public class BowArrowController : MonoBehaviour
 {
     /* Author: Reynaldo Hermawan
-     * Description: Class controlling the behavior of the arrows fired from the 
-     * bow weapon.
+     * Description: Class controlling the behavior of the arrows fired from the bow weapon.
+     * Contributor: Connor French
      */
     public GameObject player;
     public float maxVelocity;
@@ -41,7 +41,11 @@ public class BowArrowController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject != player && collision.gameObject.tag == "Player")
+        /* Author: Reynaldo Hermawan
+         * Description: damages player on contact, destroys arrow otherwise
+         * Contributor: Connor French
+         */
+        if (collision.gameObject != player && collision.gameObject.tag == "Player")
         {
             var damage = Mathf.Lerp(0f, 100f, Mathf.InverseLerp (0f, this.maxVelocity, Mathf.Abs(gameObject.GetComponent<Rigidbody2D>().velocity.x)));
             collision.gameObject.GetComponent<PlayerController>().receiveDamage(damage);

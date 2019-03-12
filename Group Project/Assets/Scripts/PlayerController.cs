@@ -162,6 +162,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /* Author: Connor French
+         * Description: runs collision logic, resets control variables if hitting ground or wall, checks if jumping off of player if player
+         */
         if (collision.gameObject.CompareTag("Ground") && rb2d.velocity.y == 0)
         {
             ableToJump = true;
@@ -195,6 +198,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        /* Author: Connor French
+         * Description: runs collision logic on the chance that the engine missed the initial collision
+         */
         if (collision.gameObject.CompareTag("Ground"))
         {
             ableToJump = true;
@@ -214,6 +220,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        /* Author: Connor French
+         * Description: runs on exiting collision, checks if footstooling other player
+         */
         if (collision.gameObject.CompareTag("Ground"))
         {
             ableToJump = false;
@@ -247,6 +256,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /* Author: Connor French
+         * Description: runs on entering trigger, allows weapon to be picked up if necessary, kills player on entering a killbox off-screen, and checks if it's time to activate a tutorial textbox
+         */
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = collision;
@@ -268,6 +280,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        /* Author: Connor French
+         * Description: runs weapon pickup allowance again in case the engine missed the initial collision
+         */
         if(collision.gameObject.CompareTag("Weapon"))
         {
             item = collision;
@@ -276,13 +291,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        /* Author: Connor French
+         * Description: disallows pickup of any weapon if you are not close enough to it
+         */
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = null;
         }
     }
 
-    //TODO remove this stuff
     private void OnParticleCollision(GameObject other)
     {
         /* Author: Connor French

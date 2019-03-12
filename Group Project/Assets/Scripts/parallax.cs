@@ -17,6 +17,9 @@ public class parallax : MonoBehaviour
 
     private void Start()
     {
+        /* Author: Connor French
+         * Description: sets initial position for the object
+         */
         offset = transform.position.y - cam.transform.position.y;
         startingX = transform.position.x;
         startingY = transform.position.y;
@@ -25,6 +28,9 @@ public class parallax : MonoBehaviour
 
     private void LateUpdate()
     {
+        /* Author: Connor French
+         * Description: moves the object at a slightly different than the camera, giving the illusion of depth
+         */
         float xScale = 1.5f;
         if(speed == 1)
         {
