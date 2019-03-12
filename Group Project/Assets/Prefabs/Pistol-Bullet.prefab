@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  bulletDamage: 12
+  bulletDamage: 12.5
 --- !u!212 &1529152830609480827
 SpriteRenderer:
   m_ObjectHideFlags: 0
