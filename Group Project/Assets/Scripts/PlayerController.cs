@@ -350,21 +350,22 @@ public class PlayerController : MonoBehaviour
             if (playerNum == 1)
             {
                 hAxis = "Horizontal_P1";
-                jAxis = "Jump_P1";
-                eAxis = "Equip_P1";
-                fAxis = "Fire_P1";
+                jAxis = "Jump_P1_Sony";
+                eAxis = "Equip_P1_Sony";
+                fAxis = "Fire_P1_Sony";
                 vAxis = "Vertical_P1";
-                tAxis = "Throw_P1";
+                tAxis = "Throw_P1_Sony";
             }
             else
             {
                 hAxis = "Horizontal_P2";
-                jAxis = "Jump_P2";
-                eAxis = "Equip_P2";
-                fAxis = "Fire_P2";
+                jAxis = "Jump_P2_Sony";
+                eAxis = "Equip_P2_Sony";
+                fAxis = "Fire_P2_Sony";
                 vAxis = "Vertical_P2";
-                tAxis = "Throw_P2";
+                tAxis = "Throw_P2_Sony";
             }
+            GameControl.instance.pAxis = "Pause_Sony";
         }
     }
 

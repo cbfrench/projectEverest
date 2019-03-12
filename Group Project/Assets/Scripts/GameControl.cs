@@ -52,6 +52,7 @@ public class GameControl : MonoBehaviour
     public bool tutorialCollision = false;
     public static int lastWinner = 0;
     public GameObject crown;
+    public string pAxis = "Pause";
 
     private string previousText;
     private float cameraShaking;
@@ -123,6 +124,13 @@ public class GameControl : MonoBehaviour
         initialCameraSpeed = cameraSpeed;
         if(SceneManager.GetActiveScene().name == "Tutorial_Level")
         {
+            if (USING_SONY_CONTROLLERS)
+            {
+                tutorialText[1] = "If you want to survive, you're going to have to climb out of here. Press X to jump!";
+                tutorialText[2] = "You're also going to have to fight, so pick up weapons with Square and use them with L2 or R2!";
+                tutorialText[3] = "If you don't like your weapon, you can drop it by pressing Square again or throw it by pressing Circle. Try throwing it at an opponent!";
+                tutorialText[7] = "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the Square button!";
+            }
             tutorial = true;
             setText(tutorialText[tutorialCount]);
         }
@@ -198,7 +206,7 @@ public class GameControl : MonoBehaviour
         /* Author: Connor French
          * Description: pauses the game if the pause button is pressed
          */
-        if (Input.GetButtonDown("Pause") && !gameOver && climbing)
+        if (Input.GetButtonDown(pAxis) && !gameOver && climbing)
         {
             if (paused)
             {
