@@ -520,7 +520,7 @@ public class PlayerController : MonoBehaviour
 
     private void checkPickup()
     {
-        /* Author: Connor French
+        /* Author: Connor French & Reynaldo Hermawan
          * Description: checks to see if you can pick something up and if there is something within range. If there is, then it is picked up and made a child of the player
          * Contributors: Caleb Biggers
          */
@@ -556,8 +556,9 @@ public class PlayerController : MonoBehaviour
 
     private void fireWeapon()
     {
-        /* Authors: Connor French & Caleb Biggers
+        /* Authors: Reynaldo Hermawan
          * Description: checks to see if the player has a weapon equipped and if the player is interacting with the fire button
+         * Contributor: Connor French
          */
         if (dead || controlsDisabled || equippedWeapon == null)
         {
@@ -575,7 +576,7 @@ public class PlayerController : MonoBehaviour
 
     private void dropObject(Vector2 launchWeapon)
     {
-        /* Author: Caleb Biggers
+        /* Author: Reynaldo Hermawan
          * Description: drops an object if the player hits the pickup button while already holding a weapon
          * Contributor: Connor French
          */

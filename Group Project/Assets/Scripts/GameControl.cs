@@ -54,6 +54,7 @@ public class GameControl : MonoBehaviour
     public static int lastWinner = 0;
     public GameObject crown;
     public string pAxis = "Pause";
+    public GameObject topKillBox;
 
     private string previousText;
     private float cameraShaking;

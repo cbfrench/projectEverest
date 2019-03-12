@@ -5,15 +5,23 @@ using UnityEngine.UI;
 
 public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
-
+    /* Author: ?
+     * Description:
+     * Contributor: Connor French
+     */
     public Text label;          // Reference to the text label
     public ParticleSystem particles;   // Refernce to the particle system
 
     private GameObject player;          // Stores reference to the player
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
     {
+        /* Author: ?
+         * Description:
+         * Contributor: Connor French
+         */
 
         // Initialize 
         //player = null;
@@ -24,6 +32,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
 
         // Get the particle system for the flame
         particles.Stop();
+        sound = particles.gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,21 +53,36 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
+        /* Author: ?
+         * Description:
+         * Contributor: Connor French
+         */
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
         particles.Stop();
+        sound.Stop();
     }
 
     // Shoot flame
     public void shoot()
     {
+        /* Author: ?
+         * Description:
+         * Contributor: Connor French
+         */
         particles.Play();
+        sound.Play();
     }
 
     // Stop shooting flame
     public void stop()
     {
+        /* Author: ?
+         * Description:
+         * Contributor: Connor French
+         */
         particles.Stop();
+        sound.Stop();
     }
 }

@@ -21,6 +21,7 @@ public class BowController : MonoBehaviour, WeaponScript
     private float drawTime;
     private bool bowDraw;
     private Animator anim;
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class BowController : MonoBehaviour, WeaponScript
         label.gameObject.SetActive(true);
 
         arrowPrefab.GetComponent<BowArrowController>().maxVelocity = maxVelocity;
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -90,6 +92,7 @@ public class BowController : MonoBehaviour, WeaponScript
         bowDraw = false;
         drawTime = 0;
         anim.ResetTrigger("FullDraw");
+        sound.Play();
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
         arrow.GetComponent<BowArrowController>().player = player;

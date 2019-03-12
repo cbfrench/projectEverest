@@ -51,7 +51,7 @@ public class Textbox : MonoBehaviour
         background1.GetComponent<Image>().color = trans1;
         background2.GetComponent<Image>().color = trans2;
         GameControl.instance.cameraSpeed = 0;
-        top = GameObject.FindGameObjectsWithTag("Killbox")[2];
+        top = GameControl.instance.topKillBox;
     }
 
     // Update is called once per frame
