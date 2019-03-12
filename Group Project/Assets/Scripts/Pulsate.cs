@@ -15,23 +15,35 @@ public class Pulsate : MonoBehaviour
 
     private void Awake()
     {
+        /* Author: Connor French
+         * Description: sets intial rotation to prevent label from rotating
+         */
         fixedRotation = transform.rotation;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        /* Author: Connor French
+         * Description: sets the variable t to the Text object in question
+         */
         t = gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        /* Author: Connor French
+         * Description: changes the color of the text to make it pulsate
+         */
         t.color = new Color32(255, 255, 255, (byte)Mathf.Floor(Mathf.PingPong(Time.time * speed, 255)));
     }
 
     private void LateUpdate()
     {
+        /* Author: Connor French
+         * Description: ensures that initial rotation remains the same
+         */
         transform.rotation = fixedRotation;
     }
 }

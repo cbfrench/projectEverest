@@ -28,6 +28,10 @@ public class FlashlightController : MonoBehaviour, WeaponScript
 
     public void resetWeaponUnique(GameObject player)
     {
+        /* Author:
+         * Description:
+         * Contributor: Connor French
+         */
         // Turn on the label
         label.gameObject.SetActive(true);
         bulb.SetActive(false);

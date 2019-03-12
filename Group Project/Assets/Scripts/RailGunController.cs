@@ -95,6 +95,10 @@ public class RailGunController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
+        /* Author:
+         * Description:
+         * Contributor: Connor French
+         */
         // Set the player reference back to null on drop
         this.player = null;
         label.gameObject.SetActive(true);
@@ -116,6 +120,10 @@ public class RailGunController : MonoBehaviour, WeaponScript
     // Release to fire
     public void stop()
     {
+        /* Author:
+         * Description:
+         * Contributor: Connor French
+         */
         // Reset charging
         charging = false;
         fired = false;

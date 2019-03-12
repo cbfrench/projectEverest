@@ -8,6 +8,7 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
 
     /* Author: Caleb Biggers
     * Description: Controller for grenade launcher weapon
+    * Contributor: Connor French
     */
 
     public float chargeTime = .5f;
@@ -69,6 +70,10 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
     // Called when a player picks up the weapon
     public void initWeaponUnique(GameObject player)
     {
+        /* Author: Caleb Biggers
+         * Description: 
+         * Contributor: Connor French
+         */
         // Set the player reference
         this.player = player;
         label.gameObject.SetActive(false);

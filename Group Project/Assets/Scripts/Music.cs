@@ -13,6 +13,9 @@ public class Music : MonoBehaviour
 
     private void Awake()
     {
+        /* Author: Connor French
+         * Description: prevents additional instances from being created and prevents its destruction upon load
+         */
         if (instance != null && instance != this)
         {
             Destroy(gameObject);

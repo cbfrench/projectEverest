@@ -77,12 +77,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        /* Author: Connor French
+         * Description: sets all values to initial levels. If the player won the last game, spawns the crown on top of their head
+         */
         checkControls();
         rb2d = GetComponent<Rigidbody2D>();
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
-        Debug.Log("Last Winner: Player " + GameControl.lastWinner);
         if(GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
         {
             GameObject crown = Instantiate(GameControl.instance.crown, Vector3.zero, Quaternion.identity);
@@ -93,6 +95,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        /* Author: Connor French
+         * Description: runs necessary player logic. Checks if the controls are disabled, then moves/animates the player as necessary
+         */
         //checks if controls are enabled or not
         resetControls();
 
@@ -136,7 +141,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(rb2d.velocity.x > GameControl.instance.maxPlayerSpeed)
+        /* Author: Connor French
+         * Description: limits velocity, flips player text accordingly, and checks if the player dies/respawns
+         */
+        if (rb2d.velocity.x > GameControl.instance.maxPlayerSpeed)
         {
             rb2d.velocity = new Vector2(GameControl.instance.maxPlayerSpeed, rb2d.velocity.y);
         }

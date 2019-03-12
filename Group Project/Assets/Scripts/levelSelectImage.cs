@@ -28,6 +28,9 @@ public class levelSelectImage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Author: Connor French
+         * Description: if the level select menu is active, sets the image displayed to the currently selected button's associated image
+         */
         if (gameObject.activeSelf)
         {
             GameObject selected = EventSystem.current.currentSelectedGameObject;
