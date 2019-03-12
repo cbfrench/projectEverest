@@ -565,7 +565,10 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) {
             return;
         }
-
+        if(equip.transform.childCount == 0 || equippedWeapon != equip.transform.GetChild(0).gameObject){
+            equippedWeapon = null;
+            return;
+        }
         // Reset the weapon
         equippedWeapon.GetComponent<WeaponScript>().resetWeapon(equippedWeapon, this.gameObject);
         // Set the parent to the pickup container
