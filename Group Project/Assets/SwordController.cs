@@ -65,12 +65,13 @@ public class SwordController : MonoBehaviour, WeaponScript
     public void shoot()
     {
         if(delayTimer <= 0){
-            swingWeapon();
-            anim.SetTrigger("Swing");
+            StartCoroutine(swingWeapon());
         }
     }
 
-    private void swingWeapon(){
+    private IEnumerator swingWeapon(){
+        anim.SetTrigger("Swing");
+        yield return new WaitForSeconds(.17f);
         Collider2D[] peopleHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, otherPlayers); //mask?
         for(int i = 0; i < peopleHit.Length; i++){
             if(peopleHit[i].gameObject != this.player){
