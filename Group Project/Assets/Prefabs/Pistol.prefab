@@ -460,7 +460,7 @@ MonoBehaviour:
   label: {fileID: 2092170562}
   bulletPrefab: {fileID: 1608948167338086, guid: fcc42644e1c7cd34a88959dacd6201fc,
     type: 3}
-  fireDelay: 0.17
+  fireDelay: 0.05
   velocity: 1700
 --- !u!1 &8062574774802203306
 GameObject:
