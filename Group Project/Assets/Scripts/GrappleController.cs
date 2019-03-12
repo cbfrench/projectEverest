@@ -92,6 +92,12 @@ public class GrappleController : MonoBehaviour, WeaponScript
             // Check for raycasting hit
             if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
             {
+                // Damage the player
+                if(hit.collider.gameObject.tag == "Player")
+                {
+                    hit.collider.gameObject.GetComponent<PlayerController>().receiveDamage(20);
+                }
+
                 //Debug.Log("Hit something");
                 if (joint.enabled == false)
                 {

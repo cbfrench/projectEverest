@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  bulletDamage: 7.5
+  bulletDamage: 12
 --- !u!212 &1529152830609480827
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4864,7 +4864,7 @@ ParticleSystem:
 --- !u!199 &199986099053228698
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4992,7 +4992,7 @@ TrailRenderer:
   m_SortingLayerID: 1995665677
   m_SortingLayer: 12
   m_SortingOrder: 0
-  m_Time: 0.15
+  m_Time: 0.05
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.12
