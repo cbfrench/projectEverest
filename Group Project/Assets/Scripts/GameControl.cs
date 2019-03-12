@@ -40,7 +40,6 @@ public class GameControl : MonoBehaviour
     public Button restartButton;
     public float maxPlayerSpeed;
     public Transform killboxes;
-    public float avalancheDamage = 50f;
     public bool fight = false;
     public Sprite platformSprite;
     public Sprite wallSprite;

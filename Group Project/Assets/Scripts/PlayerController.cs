@@ -53,9 +53,6 @@ public class PlayerController : MonoBehaviour
     private string tAxis;
     private float health;
     private bool damaged = false;
-    private GameObject particleParent;
-    private GameObject weaponFired;
-    private GameObject environmentalDamage;
     private float gameEndDelay = 3f;
     private Animator anim;
     private bool sliding = false;
@@ -297,32 +294,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Weapon"))
         {
             item = null;
-        }
-    }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        /* Author: Connor French
-         * Description: code for determining damage received from the Avalanche on the Mountain stage
-         */
-        damaged = true;
-        if (other.gameObject.name == "Avalanche")
-        {
-            environmentalDamage = other.gameObject;
-            particleParent = environmentalDamage;
-            weaponFired = null;
-        }
-        else
-        {
-            try
-            {
-                particleParent = other.transform.parent.transform.parent.transform.parent.transform.parent.gameObject;
-                weaponFired = other.transform.parent.transform.parent.gameObject;
-            }
-            catch(NullReferenceException e)
-            {
-
-            }
         }
     }
 
