@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class FlashlightController : MonoBehaviour, WeaponScript
 {
+    /* Author: Caleb Biggers
+     * Description: Controller for flashlight
+     */
 
     public GameObject bulb; // Reference to bulb of flashlight
     public Text label;

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
-    /* Author: ?
-     * Description:
+    /* Author: Caleb Biggers
+     * Description: Controller for flamethrower
      * Contributor: Connor French
      */
     public Text label;          // Reference to the text label
@@ -18,7 +18,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     // Start is called before the first frame update
     void Start()
     {
-        /* Author: ?
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -53,7 +53,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
-        /* Author: ?
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -67,7 +67,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     // Shoot flame
     public void shoot()
     {
-        /* Author: ?
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -78,7 +78,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     // Stop shooting flame
     public void stop()
     {
-        /* Author: ?
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
