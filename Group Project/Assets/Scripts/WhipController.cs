@@ -59,6 +59,7 @@ public class WhipController : MonoBehaviour, WeaponScript
         this.player = null;
         label.gameObject.SetActive(true);
         anim.SetTrigger("Drop");
+        StopCoroutine(swingWhip());
         this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         delayTimer = 0;
     }

@@ -59,6 +59,7 @@ public class SwordController : MonoBehaviour, WeaponScript
         label.gameObject.SetActive(true);
         //this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         delayTimer = 0;
+        StopCoroutine(swingWeapon());
     }
 
     // Swing Sword
