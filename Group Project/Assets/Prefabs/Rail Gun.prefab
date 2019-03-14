@@ -212,8 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7f7afa251edc646add44495790604a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeTime: 2
-  fireTime: 0.75
+  chargeTime: 3
+  fireTime: 0.25
   fireRate: 3
   beam: {fileID: 3241992782245310333}
   slider: {fileID: 8226545464476960393}
