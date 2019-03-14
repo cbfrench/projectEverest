@@ -142,6 +142,6 @@ public class GrappleController : MonoBehaviour, WeaponScript
         line.enabled = false;
         hook.transform.parent = this.transform;
         hook.transform.localPosition = hookStart;
-        hook.transform.eulerAngles = new Vector3(0, 0, -90f);
+        hook.transform.eulerAngles = new Vector3(0, 0, Mathf.Sign(player.transform.localScale.x) * -90f);
     }
 }

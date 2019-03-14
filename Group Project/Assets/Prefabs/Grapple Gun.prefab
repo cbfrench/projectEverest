@@ -284,7 +284,7 @@ LineRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c330ca07f49ba95428fe2a1bb3aaeb90, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c330ca07f49ba95428fe2a1bb3aaeb90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -300,10 +300,10 @@ LineRenderer:
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 1995665677
   m_SortingLayer: 12
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Positions:
   - {x: 10, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -314,8 +314,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.004951477
-        value: 0.04158783
+        time: 0
+        value: 0.08870697
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -494,8 +494,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 6820569545843966374}
   maxDistance: 20
-  minDistance: 3
-  step: 10
+  minDistance: 1.5
+  step: 15
   mask:
     serializedVersion: 2
     m_Bits: 5120
