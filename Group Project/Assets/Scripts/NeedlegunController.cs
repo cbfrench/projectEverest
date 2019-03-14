@@ -78,7 +78,10 @@ public class NeedlegunController : MonoBehaviour, WeaponScript
         for(int i = 0; i < needlesToFire ; i++){
             GameObject projectile = Instantiate(needlePrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
             projectile.GetComponent<NeedleBulletController>().player = player;
-            projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, Random.Range(-220.0f, 220.0f)));
+            if (player != null)
+            {
+                projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, Random.Range(-220.0f, 220.0f)));
+            }
             yield return new WaitForSeconds(.14f);
         }
     }

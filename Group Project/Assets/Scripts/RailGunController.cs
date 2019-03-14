@@ -22,6 +22,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     private bool fired;
     private float charge;
     private float fireDelta;
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
 
         // Set slider
         slider.value = 0;
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -114,6 +116,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
         {
             fired = true;
             charging = true;
+            sound.Play();
         }
     }
 
@@ -128,6 +131,10 @@ public class RailGunController : MonoBehaviour, WeaponScript
         charging = false;
         fired = false;
         charge = 0;
+        if (!firing)
+        {
+            sound.Stop();
+        }
     }
 
     public void fire()

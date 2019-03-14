@@ -16,6 +16,7 @@ public class LoadGame : MonoBehaviour
     private Button playButton;
     private Button backButton;
     private Button tutorialButton;
+    private GameObject[] crowns;
 
     public void Awake()
     {
@@ -23,6 +24,14 @@ public class LoadGame : MonoBehaviour
          * Description: sets play button to active at the opening of the game
          */
         playButton = GameObject.Find("Play").transform.GetComponent<Button>();
+    }
+
+    public void Start()
+    {
+        /* Author: Connor French
+         * Description: gets all crowns in menu scene
+         */
+        crowns = GameObject.FindGameObjectsWithTag("Crown");
     }
 
     public void loadLevel()
@@ -77,6 +86,10 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: pulls up level select screen when selected from the main menu
          */
+        for (int i = 0; i < crowns.Length; i++)
+        {
+            crowns[i].GetComponent<SpriteRenderer>().enabled = false;
+        }
         main.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
         tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
@@ -88,6 +101,10 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: goes back to the main menu when selected from either the level select or the controls screens
          */
+        for (int i = 0; i < crowns.Length; i++)
+        {
+            crowns[i].GetComponent<SpriteRenderer>().enabled = true;
+        }
         main.gameObject.SetActive(true);
         controls.gameObject.SetActive(false);
         select.gameObject.SetActive(false);

@@ -71,8 +71,11 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
          * Description:
          * Contributor: Connor French
          */
-        particles.Play();
-        sound.Play();
+        if (!GameControl.instance.paused)
+        {
+            particles.Play();
+            sound.Play();
+        }
     }
 
     // Stop shooting flame

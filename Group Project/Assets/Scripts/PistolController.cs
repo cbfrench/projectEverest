@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PistolController : MonoBehaviour, WeaponScript
 {
+    /* Author: ?
+     * Description:
+     * Contributor: Connor French
+     */
 
     public Text label;          // Reference to the text label
     public GameObject bulletPrefab;
@@ -14,6 +18,7 @@ public class PistolController : MonoBehaviour, WeaponScript
     private float delayTimer = 0;
     private GameObject player;          // Stores reference to the player
     //private Animator anim;
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +30,7 @@ public class PistolController : MonoBehaviour, WeaponScript
         // Set label text
         label.text = "Pistol";
         label.gameObject.SetActive(true);
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -56,6 +62,10 @@ public class PistolController : MonoBehaviour, WeaponScript
     public void shoot()
     {
         if(delayTimer <= 0){
+            if (!GameControl.instance.paused)
+            {
+                sound.Play();
+            }
             GameObject bullet = Instantiate(bulletPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
             bullet.GetComponent<PistolBulletController>().player = player;
             bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(velocity * player.transform.localScale.x, 0));

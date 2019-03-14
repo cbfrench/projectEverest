@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class BladedStaffController : MonoBehaviour, WeaponScript 
 {
+    /* Author: ?
+     * Description: 
+     * Contributor: Connor French
+     */
 
     public Text label;
 
@@ -22,11 +26,13 @@ public class BladedStaffController : MonoBehaviour, WeaponScript
     private GameObject player; 
     private float delayTimer = 0;
     private Animator anim;
+    private AudioSource sound;
 
 
     // Use this for initialization
     void Start () {
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
+        sound = gameObject.GetComponent<AudioSource>();
     }
    
     // Update is called once per frame
@@ -66,6 +72,10 @@ public class BladedStaffController : MonoBehaviour, WeaponScript
     {
         if(delayTimer <= 0){
             anim.SetTrigger("Swing");
+            if (!GameControl.instance.paused)
+            {
+                sound.Play();
+            }
             Collider2D[] peopleHit = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0, otherPlayers); 
             for(int i = 0; i < peopleHit.Length; i++){
                 if(peopleHit[i].gameObject != this.player){

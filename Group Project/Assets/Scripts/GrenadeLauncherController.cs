@@ -24,6 +24,7 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
     private float charge;
     private float fireDelta;
     private bool fired;
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,7 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
 
         fired = false;
         fireDelta = 0;
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -109,6 +111,11 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
             // Reset charging
             charging = false;
             fired = true;
+
+            if (!GameControl.instance.paused)
+            {
+                sound.Play();
+            }
 
             // Spawn grenade
             GameObject grenade = Instantiate(grenadePrefab, new Vector3(grenadeSpawn.position.x, grenadeSpawn.position.y, grenadeSpawn.position.z), Quaternion.Euler(0, 0, 0));

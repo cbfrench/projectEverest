@@ -54,6 +54,7 @@ public class GameControl : MonoBehaviour
     public GameObject crown;
     public string pAxis = "Pause";
     public GameObject topKillBox;
+    public bool speedyMusic = false;
 
     private string previousText;
     private float cameraShaking;
@@ -64,6 +65,7 @@ public class GameControl : MonoBehaviour
     private float climbDelay;
     private Vector3 cameraDir;
     private int tutorialCount = 0;
+    private float lastMusicTime;
     private string[] tutorialText = {"Welcome to the Tutorial Level! Here is where you will learn everything you need to know to become a champion!", "If you want to survive, you're going to have to climb out of here. Press A to jump!" , "You're also going to have to fight, so pick up weapons with B and use them with L or R!", "If you don't like your weapon, you can drop it by pressing B again or throw it by pressing X. Try throwing it at an opponent!", "The camera is about to start moving. Be careful not to fall behind!", "If you fall out of the view of the camera, you will lose a life!", "You only have a limited number of lives, and if they all run out, you lose!", "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the A button!", "When you reach the final platform, all other platforms will drop away and you will duel each other to drain each other's lives!"};
 
     public bool USING_CONTROLLERS = false;
@@ -173,6 +175,14 @@ public class GameControl : MonoBehaviour
         wayfind();
         killboxDespawn();
         pauseGame();
+        if (speedyMusic)
+        {
+            Music.instance.music.pitch = 1.25f;
+        }
+        else
+        {
+            Music.instance.music.pitch = 1;
+        }
     }
 
     private bool cameraAdjust()
@@ -223,6 +233,7 @@ public class GameControl : MonoBehaviour
                 Time.timeScale = 1;
                 statusText.text = previousText;
                 Music.instance.music.volume = 1;
+                Music.instance.music.pitch = lastMusicTime;
             }
             else
             {
@@ -232,6 +243,8 @@ public class GameControl : MonoBehaviour
                     previousText = statusText.text;
                     statusText.text = "PAUSED";
                     Music.instance.music.volume = 0.25f;
+                    lastMusicTime = Music.instance.music.pitch;
+                    Music.instance.music.pitch = 1;
                 }
             }
             paused = !paused;

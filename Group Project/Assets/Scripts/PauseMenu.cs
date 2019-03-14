@@ -42,8 +42,10 @@ public class PauseMenu : MonoBehaviour
         /* Author: Connor French
          * Description: returns to the main menu from the pause menu
          */
+        GameControl.instance.speedyMusic = false;
         Music.instance.music.clip = menuMusic;
         Music.instance.music.volume = 1;
+        Music.instance.music.pitch = 1;
         Music.instance.music.Play();
         SceneManager.LoadScene("Main_Menu");
     }
