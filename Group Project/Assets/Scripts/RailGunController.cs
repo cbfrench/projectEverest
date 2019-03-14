@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class RailGunController : MonoBehaviour, WeaponScript
 {
-    /* Author: ?
-     * Description:
+    /* Author: Caleb Biggers
+     * Description: Controller for the railgun
      * Contributor: Connor French
      */
     public float chargeTime = 3f;
@@ -97,7 +97,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
-        /* Author:
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -123,7 +123,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     // Release to fire
     public void stop()
     {
-        /* Author:
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public interface WeaponScript
 {
+    /* Author: Caleb Biggers & Reynaldo Hermawan
+     * Description: Interface for the Weapon methods
+     */
 
     void initWeaponUnique(GameObject player);
-    //dunno if there is anything unique yet on pickup
 
     void resetWeaponUnique(GameObject player);
 
