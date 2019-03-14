@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class SquirtGunController : MonoBehaviour, WeaponScript
 {
+    /* Author: Caleb Biggers
+     * Description: Controller for the squirt gun
+     */
+
     public Text label;          // Reference to the text label
     public ParticleSystem particles;   // Refernce to the particle system
 

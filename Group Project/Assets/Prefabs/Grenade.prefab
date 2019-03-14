@@ -99,7 +99,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -124,7 +124,7 @@ CircleCollider2D:
 --- !u!199 &8487180032054771397
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4807,3 +4807,5 @@ MonoBehaviour:
   explosion: {fileID: 8602528787307269553, guid: 260eaaf7b00165f4d8b12cf124594602,
     type: 3}
   damage: 30
+  selfDamage: 10
+  player: {fileID: 0}

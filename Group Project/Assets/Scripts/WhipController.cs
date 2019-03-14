@@ -27,11 +27,13 @@ public class WhipController : MonoBehaviour, WeaponScript
     private GameObject player; 
     private float delayTimer = 0;
     private Animator anim;
+    private AudioSource sound;
 
 
     // Use this for initialization
     void Start () {
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
+        sound = gameObject.GetComponent<AudioSource>();
     }
    
     // Update is called once per frame
@@ -59,6 +61,7 @@ public class WhipController : MonoBehaviour, WeaponScript
         this.player = null;
         label.gameObject.SetActive(true);
         anim.SetTrigger("Drop");
+        StopCoroutine(swingWhip());
         this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         delayTimer = 0;
     }
@@ -74,6 +77,10 @@ public class WhipController : MonoBehaviour, WeaponScript
 
     private IEnumerator swingWhip(){
         anim.SetTrigger("Swing");
+        if (!GameControl.instance.paused)
+        {
+            sound.Play();
+        }
         yield return new WaitForSeconds(.28f);
         Collider2D[] peopleTipHit = Physics2D.OverlapBoxAll(attackTipPos.position, new Vector2(attackTipRangeX, attackTipRangeY), 0, otherPlayers);
         if(peopleTipHit.Length > 0){

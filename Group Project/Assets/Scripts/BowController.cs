@@ -92,7 +92,10 @@ public class BowController : MonoBehaviour, WeaponScript
         bowDraw = false;
         drawTime = 0;
         anim.ResetTrigger("FullDraw");
-        sound.Play();
+        if (!GameControl.instance.paused)
+        {
+            sound.Play();
+        }
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
         arrow.GetComponent<BowArrowController>().player = player;

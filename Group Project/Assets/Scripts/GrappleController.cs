@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class GrappleController : MonoBehaviour, WeaponScript
 {
+   /* Author: Caleb Biggers
+   * Description: Controller for grapple launcher
+   */
+
     public Text label;
     public float maxDistance = 10f; // Maximum distance that grapple can reach
     public float minDistance = 5f;  // Minimum distance that grapple can reach
@@ -142,6 +146,6 @@ public class GrappleController : MonoBehaviour, WeaponScript
         line.enabled = false;
         hook.transform.parent = this.transform;
         hook.transform.localPosition = hookStart;
-        hook.transform.eulerAngles = new Vector3(0, 0, -90f);
+        hook.transform.eulerAngles = new Vector3(0, 0, Mathf.Sign(player.transform.localScale.x) * -90f);
     }
 }

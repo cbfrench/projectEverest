@@ -15,6 +15,7 @@ TagManager:
   - Textbox
   - Tutorial
   - Equipment
+  - Crown
   layers:
   - Default
   - TransparentFX

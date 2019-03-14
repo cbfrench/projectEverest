@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class RailGunController : MonoBehaviour, WeaponScript
 {
-    /* Author: ?
-     * Description:
+    /* Author: Caleb Biggers
+     * Description: Controller for the railgun
      * Contributor: Connor French
      */
     public float chargeTime = 3f;
@@ -22,6 +22,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     private bool fired;
     private float charge;
     private float fireDelta;
+    private AudioSource sound;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
 
         // Set slider
         slider.value = 0;
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -95,7 +97,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     // Called when a player drops the weapon
     public void resetWeaponUnique(GameObject player)
     {
-        /* Author:
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -114,13 +116,14 @@ public class RailGunController : MonoBehaviour, WeaponScript
         {
             fired = true;
             charging = true;
+            sound.Play();
         }
     }
 
     // Release to fire
     public void stop()
     {
-        /* Author:
+        /* Author: Caleb Biggers
          * Description:
          * Contributor: Connor French
          */
@@ -128,6 +131,10 @@ public class RailGunController : MonoBehaviour, WeaponScript
         charging = false;
         fired = false;
         charge = 0;
+        if (!firing)
+        {
+            sound.Stop();
+        }
     }
 
     public void fire()

@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     void Start()
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         respawnTimer = initialRespawnTimer;
         health = initialHealth;
         anim = gameObject.GetComponent<Animator>();
-        if(GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
+        if (GameControl.lastWinner != 0 && GameControl.lastWinner == playerNum)
         {
             GameObject crown = Instantiate(GameControl.instance.crown, Vector3.zero, Quaternion.identity);
             crown.transform.parent = head.transform;
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         if (!dead)
         {
             Text t = GameControl.instance.p2Text;
-            if(playerNum == 1)
+            if (playerNum == 1)
             {
                 t = GameControl.instance.p1Text;
             }
@@ -427,6 +427,7 @@ public class PlayerController : MonoBehaviour
         Text t = GameControl.instance.p2Text;
         if (!GameControl.instance.ableToDie && lives > 1)
         {
+            GameObject crown = GameObject.FindGameObjectWithTag("Crown");
             if (dead && !GameControl.instance.paused)
             {
                 string color = getColor();
@@ -438,9 +439,14 @@ public class PlayerController : MonoBehaviour
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                if(crown != null && crown.transform.parent == head.transform)
+                {
+                    crown.GetComponent<SpriteRenderer>().enabled = false;
+                }
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 healthBar.gameObject.SetActive(false);
                 minimapIcon.SetActive(false);
+                trail.SetActive(false);
                 glow.SetActive(false);
                 if(equippedWeapon != null)
                 {
@@ -469,9 +475,12 @@ public class PlayerController : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = false;
                 equip.SetActive(true);
-                trail.SetActive(false);
                 transform.position = new Vector3(platforms[ind].transform.position.x, platforms[ind].transform.position.y + 3, transform.position.z);
                 trail.SetActive(true);
+                if (crown != null && crown.transform.parent == head.transform)
+                {
+                    crown.GetComponent<SpriteRenderer>().enabled = true;
+                }
                 rb2d.velocity = Vector2.zero;
                 respawnTimer = initialRespawnTimer;
                 dead = false;
@@ -485,6 +494,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            GameControl.instance.speedyMusic = true;
             GameControl.instance.fight = true;
         }
     }
@@ -773,6 +783,7 @@ public class PlayerController : MonoBehaviour
         if (dead && lives <= 1)
         {
             GameControl.instance.gameOver = true;
+            GameControl.instance.speedyMusic = false;
             otherPlayer.rb2d.bodyType = RigidbodyType2D.Kinematic;
             otherPlayer.rb2d.velocity = Vector2.zero;
             rb2d.velocity = Vector2.zero;
