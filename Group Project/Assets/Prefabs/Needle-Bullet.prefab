@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   bulletDamage: 10
-  homeSpeed: 15
+  homeSpeed: 5
 --- !u!82 &3620813851499522659
 AudioSource:
   m_ObjectHideFlags: 0
