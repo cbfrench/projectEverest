@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PistolBulletController : MonoBehaviour
 {
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the bullets fired from the Pistol weapon.
+     */
     public GameObject player;
     public float bulletDamage = 15f;
     // Start is called before the first frame update
@@ -24,6 +27,9 @@ public class PistolBulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Damages player on contact based on speed, destroys arrow on contact with anything
+         */
         if(collision.gameObject != player && collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<PlayerController>().receiveDamage(bulletDamage);

@@ -525,7 +525,6 @@ public class PlayerController : MonoBehaviour
             {
                 //pickup
                 item.gameObject.transform.parent = equip.transform;
-                //TODO Flashlight throw damage value need to be put somewheres
 
                 // Find the weapon script attached to the weapon (All weapons must extend WeaponScript)
                 equippedWeapon = item.gameObject;
@@ -537,7 +536,7 @@ public class PlayerController : MonoBehaviour
 
     private void fireWeapon()
     {
-        /* Authors: Reynaldo Hermawan
+        /* Authors: Reynaldo Hermawan & Caleb Biggers
          * Description: checks to see if the player has a weapon equipped and if the player is interacting with the fire button
          * Contributor: Connor French
          */
@@ -586,7 +585,7 @@ public class PlayerController : MonoBehaviour
     {
         /* Author: Connor French
          * Description: checks if the player is holding a weapon and hitting the throw button. If yes, then it drops the object with a velocity.
-         * Contributor: Caleb Biggers
+         * Contributor: Reynaldo Hermawan 
          */
         if (controlsDisabled)
         {
@@ -617,7 +616,7 @@ public class PlayerController : MonoBehaviour
     public float checkWallJump(Rigidbody2D rb2d)
     {
         /* Author: Connor French
-         * Description: checks which wall the player is closest to to the left and right for use in wall-jump calculations
+         * Description: checks which wall the player is closest to the left and right for use in wall-jump calculations
          */
         float h = Input.GetAxis(hAxis);
         int ignore = LayerMask.GetMask("Wall");
@@ -869,6 +868,9 @@ public class PlayerController : MonoBehaviour
 
 
     public void receiveDamage(float dmgTaken){
+        /* Author: Reynaldo Hermawan
+         * Description: allows players to take damage from any weapon source
+         */
         health -= dmgTaken;
         healthBar.value = health;
         if (health <= 0)
@@ -877,40 +879,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-
-/*
-    private void checkDamage()
-    {
-        if(particleParent == null || particleParent.name == gameObject.name)
-        {
-            return;
-        }
-        if (particleParent != environmentalDamage)
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.flamethrowerDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
-        else
-        {
-            if (damaged)
-            {
-                health -= GameControl.instance.avalancheDamage * Time.deltaTime;
-                healthBar.value = health;
-                damaged = false;
-                if (health <= 0)
-                {
-                    dead = true;
-                }
-            }
-        }
-    }
-    public float flamethrowerDamage = 33f;
-*/

@@ -277,8 +277,8 @@ public class GameControl : MonoBehaviour
 
     public void DestroyPlats()
     {
-        /* Author: Connor French
-         * Description: destroys all extraneous platforms when the game reaches the final fight
+        /* Author: Connor French & Reynaldo Hermawan
+         * Description: Destroys all extraneous platforms when the game reaches the final fight also starts weapon spawning
          */
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platforms");
         foreach (GameObject plat in platforms)
@@ -535,6 +535,9 @@ public class GameControl : MonoBehaviour
     }
 
     public GameObject returnRandomWeapon(){
+        /* Author: Reynaldo Hermawan
+         * Description: Returns a random weapon to spawn into the game.
+         */
         return weaponList.transform.GetChild(Random.Range(0,weaponList.transform.childCount)).gameObject;
     }
 }

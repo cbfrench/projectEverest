@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FlamethrowerParticleController : MonoBehaviour
 {
+    /* Author: Reynaldo Hermawan
+     * Description: Class that controls the damage the flamethrower deals to a player
+     */
+
     public GameObject player;
     public float flamethrowerDamage = 33f;
 
@@ -21,6 +25,7 @@ public class FlamethrowerParticleController : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        //Checks if player is a player and is not holding the flamethrower- deals damage to them on particle hit.
         if (other != player && other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().receiveDamage(this.flamethrowerDamage * Time.deltaTime);

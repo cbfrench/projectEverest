@@ -7,7 +7,7 @@ public class BowController : MonoBehaviour, WeaponScript
 {
     /* Author: Reynaldo Hermawan
      * Description: Class controlling the behavior of the Bow weapon.
-     * Contributor: Connor French
+     * Contributor: Connor French & Caleb Biggers
      */
 
     public Text label;          // Reference to the text label
@@ -26,6 +26,9 @@ public class BowController : MonoBehaviour, WeaponScript
     // Start is called before the first frame update
     void Start()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Sets initial variables
+         */
         // Initialize 
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
 
@@ -40,6 +43,10 @@ public class BowController : MonoBehaviour, WeaponScript
     // Update is called once per frame
     void Update()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Sets the animation for drawing the bow as well as a timer to count how long the bow is being drawn
+         * Contributor: Caleb Biggers
+         */
         slider.value = (drawTime / maxDrawtime);
 
         if (bowDraw)
@@ -57,6 +64,9 @@ public class BowController : MonoBehaviour, WeaponScript
     // Called when a player picks up the weapon
     public void initWeaponUnique(GameObject player)
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Resets the weapon to a neutral picked-up state
+         */
         drawTime = 0f;
         bowDraw = false;
         // Set the player reference
@@ -69,7 +79,7 @@ public class BowController : MonoBehaviour, WeaponScript
     public void resetWeaponUnique(GameObject player)
     {
         /* Author: Reynaldo Hermawan
-         * Description: loads resets the bow weapon upon being dropped
+         * Description: Resets the bow weapon appropriately upon being dropped
          * Contributor: Connor French
          */
         // Set the player reference back to null on drop
@@ -81,12 +91,15 @@ public class BowController : MonoBehaviour, WeaponScript
 
     public void shoot()
     {
+        //Checks button held
         bowDraw = true;
-        //player.playerSpeed = playerSpeed / 2; maybe?
     }
 
     public void stop()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Scales velocity of arrow to how long fire button is held and fires it
+         */
         //Scaling value to new ranges
         var arrowVelocity = Mathf.Lerp(10f, maxVelocity, Mathf.InverseLerp (0f, maxDrawtime, drawTime));
         bowDraw = false;

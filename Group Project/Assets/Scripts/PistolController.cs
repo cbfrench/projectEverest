@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PistolController : MonoBehaviour, WeaponScript
 {
-    /* Author: ?
-     * Description:
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the Pistol weapon.
      * Contributor: Connor French
      */
 
@@ -23,6 +23,9 @@ public class PistolController : MonoBehaviour, WeaponScript
     // Start is called before the first frame update
     void Start()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Sets initial variables
+         */
         // Initialize 
         player = null;
         //anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
@@ -36,6 +39,7 @@ public class PistolController : MonoBehaviour, WeaponScript
     // Update is called once per frame
     void Update()
     {
+        //Counts down to make a fire rate for the pistol
         if(delayTimer > 0 ){
             delayTimer -= Time.deltaTime;
         }
@@ -46,8 +50,8 @@ public class PistolController : MonoBehaviour, WeaponScript
     {
         // Set the player reference
         this.player = player;
-        //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
         label.gameObject.SetActive(false);
+        //this.gameObject.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
     }
 
     // Called when a player drops the weapon
@@ -61,6 +65,9 @@ public class PistolController : MonoBehaviour, WeaponScript
 
     public void shoot()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Instantiates and fires a bullet from the pistol on button press
+         */
         if(delayTimer <= 0){
             if (!GameControl.instance.paused)
             {
@@ -75,6 +82,6 @@ public class PistolController : MonoBehaviour, WeaponScript
 
     public void stop()
     {
-        
+        //required for interface
     }
 }

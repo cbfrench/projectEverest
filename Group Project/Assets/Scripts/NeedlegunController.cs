@@ -35,6 +35,9 @@ public class NeedlegunController : MonoBehaviour, WeaponScript
     // Update is called once per frame
     void Update()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Starts corouting on shoot spray as well as a fire delay timer
+         */
         if(firing){
             StartCoroutine(shootSpray());
             delayTimer = fireDelay;
@@ -67,6 +70,7 @@ public class NeedlegunController : MonoBehaviour, WeaponScript
         //this.gameObject.transform.localPosition = new Vector3(0, 0, 0);
     }
 
+    // Checks if in a valid state to fire weapon on button press and shoots
     public void shoot()
     {
         if(!firing && delayTimer <= 0){
@@ -75,6 +79,9 @@ public class NeedlegunController : MonoBehaviour, WeaponScript
     }
 
     private IEnumerator shootSpray(){
+        /* Author: Reynaldo Hermawan
+         * Description: Shoots a spray of needles one after another as a coroutine 
+         */
         for(int i = 0; i < needlesToFire ; i++){
             GameObject projectile = Instantiate(needlePrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
             projectile.GetComponent<NeedleBulletController>().player = player;

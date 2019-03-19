@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class BladedStaffController : MonoBehaviour, WeaponScript 
 {
-    /* Author: ?
-     * Description: 
-     * Contributor: Connor French
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the Bladed Staff weapon.
+     * Contributor: Connor French - Audio
      */
 
     public Text label;
@@ -49,6 +49,7 @@ public class BladedStaffController : MonoBehaviour, WeaponScript
     }
 
     // Called when a player picks up the weapon
+    // Moves staff a little to make it look like player is holding it
     public void initWeaponUnique(GameObject player)
     {
         // Set the player reference
@@ -67,9 +68,12 @@ public class BladedStaffController : MonoBehaviour, WeaponScript
         delayTimer = 0;
     }
 
-    // Swing Sword
+    // Swing Staff when valid
     public void shoot()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Checks if the Bladed Staff hit anything and applies damage based on hit.
+         */
         if(delayTimer <= 0){
             anim.SetTrigger("Swing");
             if (!GameControl.instance.paused)

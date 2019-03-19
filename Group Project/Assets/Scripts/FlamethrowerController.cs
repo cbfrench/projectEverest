@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class FlamethrowerController : MonoBehaviour, WeaponScript
 {
-    /* Author: Caleb Biggers
+    /* Author: Caleb Biggers 
      * Description: Controller for flamethrower
-     * Contributor: Connor French
+     * Contributor: Connor French && Reynaldo Hermawan
      */
     public Text label;          // Reference to the text label
     public ParticleSystem particles;   // Refernce to the particle system
@@ -19,7 +19,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     void Start()
     {
         /* Author: Caleb Biggers
-         * Description:
+         * Description: Sets initial variables
          * Contributor: Connor French
          */
 
@@ -54,7 +54,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public void resetWeaponUnique(GameObject player)
     {
         /* Author: Caleb Biggers
-         * Description:
+         * Description: Resets the bow weapon appropriately upon being dropped
          * Contributor: Connor French
          */
         // Set the player reference back to null on drop
@@ -68,7 +68,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public void shoot()
     {
         /* Author: Caleb Biggers
-         * Description:
+         * Description: Starts the particle system upon button press
          * Contributor: Connor French
          */
         if (!GameControl.instance.paused)
@@ -82,7 +82,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
     public void stop()
     {
         /* Author: Caleb Biggers
-         * Description:
+         * Description: Stops the particle system upon letting go button to fire
          * Contributor: Connor French
          */
         particles.Stop();

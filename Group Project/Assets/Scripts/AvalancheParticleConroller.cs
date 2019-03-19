@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AvalancheParticleConroller : MonoBehaviour
 {
+    /* Author: Reynaldo Hermawan
+     * Description: Class that controls the damage the avalanche deals to a player
+     */
+
     public GameObject player;
     public float avalancheDamage = 50f;
 
@@ -21,6 +25,7 @@ public class AvalancheParticleConroller : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        //Checks if player is a player and deals damage to them on particle hit.
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().receiveDamage(this.avalancheDamage * Time.deltaTime);

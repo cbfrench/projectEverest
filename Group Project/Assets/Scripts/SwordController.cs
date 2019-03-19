@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class SwordController : MonoBehaviour, WeaponScript 
 {
-    /* Author: ?
-     * Description:
-     * Contributor: Connor French
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the Sword weapon.
+     * Contributor: Connor French - Audio
      */
 
     public Text label;
@@ -68,7 +68,7 @@ public class SwordController : MonoBehaviour, WeaponScript
         StopCoroutine(swingWeapon());
     }
 
-    // Swing Sword
+    // Calls coroutine to swing sword when allowed
     public void shoot()
     {
         if(delayTimer <= 0){
@@ -77,6 +77,9 @@ public class SwordController : MonoBehaviour, WeaponScript
     }
 
     private IEnumerator swingWeapon(){
+        /* Author: Reynaldo Hermawan
+         * Description: Checks if the sword hit anything and applies damage based on hit.
+         */
         anim.SetTrigger("Swing");
         if (!GameControl.instance.paused)
         {

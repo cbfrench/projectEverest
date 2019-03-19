@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class WhipController : MonoBehaviour, WeaponScript 
 {
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the Whip weapon.
+     */
 
     public Text label;
 
@@ -66,7 +69,7 @@ public class WhipController : MonoBehaviour, WeaponScript
         delayTimer = 0;
     }
 
-    // Swing Sword
+    // Calls coroutine to swing whip when allowed
     public void shoot()
     {
         if(delayTimer <= 0){
@@ -76,6 +79,9 @@ public class WhipController : MonoBehaviour, WeaponScript
     }
 
     private IEnumerator swingWhip(){
+        /* Author: Reynaldo Hermawan
+         * Description: Checks if the whip hit anything and aapplies damage based on hit. Whip has 2 hitboxes with different damage values.
+         */
         anim.SetTrigger("Swing");
         if (!GameControl.instance.paused)
         {

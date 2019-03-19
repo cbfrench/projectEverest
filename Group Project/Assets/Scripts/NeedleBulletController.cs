@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NeedleBulletController : MonoBehaviour
 {
-    /* Author: ?
-     * Description:
+    /* Author: Reynaldo Hermawan
+     * Description: Class controlling the behavior of the needles fired from the needlegun weapon.
      * Contributor: Connor French
      */
     public GameObject player;
@@ -13,6 +13,7 @@ public class NeedleBulletController : MonoBehaviour
     public float homeSpeed;
 
     private GameObject otherPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class NeedleBulletController : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Bullet tries to home in onto a player.
     void Update()
     {
         float prevX = transform.position.x;
@@ -34,10 +36,12 @@ public class NeedleBulletController : MonoBehaviour
         transform.position = new Vector3(prevX, transform.position.y, transform.position.z);
     }
     
+    // Bullet is destroyed if it goes offscreen
     void OnBecameInvisible(){
         Destroy(gameObject);
     }
 
+    // Damages player on contact, destroys needle on contact with anything
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject != player && collision.gameObject.tag == "Player")

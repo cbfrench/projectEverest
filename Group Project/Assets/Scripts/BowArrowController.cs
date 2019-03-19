@@ -30,6 +30,9 @@ public class BowArrowController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Author: Reynaldo Hermawan
+         * Description: Continuously rotates the bow to face "straight" to its velocity
+         */
         Vector3 dir = GetComponent<Rigidbody2D>().velocity;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
@@ -42,7 +45,7 @@ public class BowArrowController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         /* Author: Reynaldo Hermawan
-         * Description: damages player on contact, destroys arrow otherwise
+         * Description: Damages player on contact based on speed, destroys arrow on contact with anything
          * Contributor: Connor French
          */
         if (collision.gameObject != player && collision.gameObject.tag == "Player")
