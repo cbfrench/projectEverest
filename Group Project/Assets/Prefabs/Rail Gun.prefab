@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7f7afa251edc646add44495790604a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeTime: 3
-  fireTime: 0.25
+  chargeTime: 2
+  fireTime: 0.05
   fireRate: 3
   beam: {fileID: 3241992782245310333}
   slider: {fileID: 8226545464476960393}
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016ab893bfbd60b47adc004fb542031b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 75
+  damage: 55
 --- !u!1 &3241992782424821465
 GameObject:
   m_ObjectHideFlags: 0
