@@ -14,21 +14,25 @@ public class GameControl : MonoBehaviour
     public static GameControl instance;
     public float scaleDelay;
     public Text statusText;
-    public Text p1Text;
+    /*public Text p1Text;
     public Text p2Text;
-    
+    */
     public GameObject fightPlatform;
     public float cameraSpeed;
     public float adjustSpeed;
     public float cameraOffsetX;
     public float cameraOffsetY;
-    public GameObject player1;
-    public GameObject player2;
+    public GameObject player;
+    public GameObject playerText;
+    /*public GameObject player1;
+    public GameObject player2;*/
     public GameObject cam;
+    public GameObject shaker;
     public bool climbing = false;
     public bool reachedTop = false;
     public bool aboveScreen = false;
     public bool controlsDisabled = true;
+    public Canvas screenText;
     public Text bottomText;
     public Text topText;
     public bool paused = false;
@@ -56,6 +60,9 @@ public class GameControl : MonoBehaviour
     public GameObject topKillBox;
     public bool speedyMusic = false;
 
+    private GameObject[] players = new GameObject[4];
+    private int numberOfPlayers;
+    private string[] controllers;
     private string previousText;
     private float cameraShaking;
     private int prevPath = 0;
@@ -67,6 +74,9 @@ public class GameControl : MonoBehaviour
     private int tutorialCount = 0;
     private float lastMusicTime;
     private string[] tutorialText = {"Welcome to the Tutorial Level! Here is where you will learn everything you need to know to become a champion!", "If you want to survive, you're going to have to climb out of here. Press A to jump!" , "You're also going to have to fight, so pick up weapons with B and use them with L or R!", "If you don't like your weapon, you can drop it by pressing B again or throw it by pressing X. Try throwing it at an opponent!", "The camera is about to start moving. Be careful not to fall behind!", "If you fall out of the view of the camera, you will lose a life!", "You only have a limited number of lives, and if they all run out, you lose!", "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the A button!", "When you reach the final platform, all other platforms will drop away and you will duel each other to drain each other's lives!"};
+    private Color32[] playerColors = { new Color32(255, 0, 0, 255), new Color32(0, 245, 255, 255), new Color(0, 255, 0, 255), new Color(255, 255, 0, 255) };
+    private string[] playerColorWords = { "Red", "Blue", "Green", "Yellow" };
+    private float gameEndDelay = 3f;
 
     public bool USING_CONTROLLERS = false;
     public bool USING_GAMECUBE_CONTROLLERS = false;
@@ -90,7 +100,7 @@ public class GameControl : MonoBehaviour
         }
         stopParticles();
         changeSprites();
-        string[] controllers = Input.GetJoystickNames();
+        controllers = Input.GetJoystickNames();
         if(controllers.Length == 0)
         {
             USING_CONTROLLERS = false;
@@ -118,9 +128,8 @@ public class GameControl : MonoBehaviour
         /* Author: Connor French
          * Description: sets all values to initial required values. Gets waypoints for the camera movement, plays the music, and determines if this level has a tutorial in it
          */
+        createPlayers();
         statusText.text = "";
-        p1Text.text = "";
-        p2Text.text = "";
         bottomText.gameObject.SetActive(false);
         topText.gameObject.SetActive(false);
         generateWaypoints();
@@ -166,10 +175,11 @@ public class GameControl : MonoBehaviour
             {
                 topText.gameObject.SetActive(true);
             }
+            /*
             if (player1.gameObject.GetComponent<SpriteRenderer>().enabled && player2.gameObject.GetComponent<SpriteRenderer>().enabled)
             {
                 //ableToDie = true;
-            }
+            }*/
         }
         aboveScreen = cameraAdjust();
         wayfind();
@@ -183,6 +193,31 @@ public class GameControl : MonoBehaviour
         {
             Music.instance.music.pitch = 1;
         }
+        checkGameOver();
+    }
+
+    private void createPlayers()
+    {
+        int i;
+        numberOfPlayers = PlayerNumberSelect.numberOfPlayers;
+        if(numberOfPlayers == 0)
+        {
+            numberOfPlayers = 2;
+        }
+        for (i = 0; i < numberOfPlayers; i++)
+        {
+            GameObject generated = Instantiate(player, new Vector3(i * 2, 0, 0), Quaternion.identity);
+            generated.GetComponent<PlayerController>().playerNum = i + 1;
+            generated.GetComponent<SpriteRenderer>().color = playerColors[i];
+            generated.transform.Find("Glow").GetComponent<Light>().color = playerColors[i];
+            generated.transform.Find("CameraShake").GetComponent<CameraShake>().camTransform = shaker.transform;
+            GameObject pText = Instantiate(playerText, new Vector3(-300 + 200 * i, 0, 0), Quaternion.identity);
+            pText.transform.SetParent(screenText.transform, false);
+            pText.GetComponent<Text>().color = playerColors[i];
+            pText.GetComponent<Text>().text = "";
+            generated.GetComponent<PlayerController>().playerText = pText;
+            players[i] = generated;
+        }
     }
 
     private bool cameraAdjust()
@@ -191,17 +226,24 @@ public class GameControl : MonoBehaviour
          * Description: checks whether or not the camera needs to be adjusted in the direction of the camera's movement
          */
         bool result = false;
-        bool addition;
+        bool addition = false;
+        int i;
         if(cameraDir.x != 0)
         {
             if(cameraDir.x > 0)
             {
-                addition = (player1.transform.position.x > cam.transform.position.x + cameraOffsetX) || (player2.transform.position.x > cam.transform.position.x + cameraOffsetX);
+                for(i = 0; i < numberOfPlayers; i++)
+                {
+                    addition |= (players[i].transform.position.x > cam.transform.position.x + cameraOffsetX);
+                }
                 result = result || addition;
             }
             else
             {
-                addition = (player1.transform.position.x + cameraOffsetX < cam.transform.position.x) || (player2.transform.position.x + cameraOffsetX < cam.transform.position.x);
+                for (i = 0; i < numberOfPlayers; i++)
+                {
+                    addition |= (players[i].transform.position.x + cameraOffsetX < cam.transform.position.x);
+                }
                 result = result || addition;
             }
         }
@@ -209,12 +251,18 @@ public class GameControl : MonoBehaviour
         {
             if (cameraDir.y > 0)
             {
-                addition = (player1.transform.position.y > cam.transform.position.y + cameraOffsetY) || (player2.transform.position.y > cam.transform.position.y + cameraOffsetY);
+                for (i = 0; i < numberOfPlayers; i++)
+                {
+                    addition |= (players[i].transform.position.y > cam.transform.position.y + cameraOffsetY);
+                }
                 result = result || addition;
             }
             else
             {
-                addition = (player1.transform.position.y + cameraOffsetY < cam.transform.position.y) || (player2.transform.position.y + cameraOffsetY < cam.transform.position.y);
+                for (i = 0; i < numberOfPlayers; i++)
+                {
+                    addition |= (players[i].transform.position.y + cameraOffsetY < cam.transform.position.y);
+                }
                 result = result || addition;
             }
         }
@@ -500,11 +548,11 @@ public class GameControl : MonoBehaviour
                 tutorialCount = 6;
                 triggerText = true;
             }
-            if (tutorialCount == 4 && ((player1.GetComponent<PlayerController>().dead && player1.GetComponent<PlayerController>().healthBar.value > 0) || (player2.GetComponent<PlayerController>().dead && player2.GetComponent<PlayerController>().healthBar.value > 0)))
+            /*if (tutorialCount == 4 && ((player1.GetComponent<PlayerController>().dead && player1.GetComponent<PlayerController>().healthBar.value > 0) || (player2.GetComponent<PlayerController>().dead && player2.GetComponent<PlayerController>().healthBar.value > 0)))
             {
                 tutorialCount = 5;
                 triggerText = true;
-            }
+            }*/
             if (textboxDestroyed && tutorialCount == 3)
             {
                 tutorialCount = 4;
@@ -539,5 +587,62 @@ public class GameControl : MonoBehaviour
          * Description: Returns a random weapon to spawn into the game.
          */
         return weaponList.transform.GetChild(Random.Range(0,weaponList.transform.childCount)).gameObject;
+    }
+    private void checkGameOver()
+    {
+        if (!gameOver)
+        {
+            int i;
+            int alive = 0;
+            bool lastLife = false;
+            for (i = 0; i < numberOfPlayers; i++)
+            {
+                PlayerController current = players[i].GetComponent<PlayerController>();
+                if (!current.dead || current.lives >= 1)
+                {
+                    alive++;
+                    if (current.lives == 2)
+                    {
+                        lastLife = true;
+                    }
+                }
+            }
+
+            if (alive == 2)
+            {
+                //only two players remain
+                if (lastLife)
+                {
+                    speedyMusic = true;
+                }
+            }
+            if (alive <= 1)
+            {
+                //game is over
+                gameOver = true;
+                speedyMusic = false;
+                controlsDisabled = false;
+            }
+        }
+    }
+    public void endOfGame(GameObject player)
+    {
+        Debug.Log("GAME OVER");
+        if (gameEndDelay > 0)
+        {
+            statusText.text = "Game!";
+            gameEndDelay -= Time.deltaTime;
+        }
+        else
+        {
+            int num = player.GetComponent<PlayerController>().playerNum-1;
+            string color = playerColorWords[num];
+            statusText.text = color + " wins!";
+            controlsDisabled = true;
+            quitButton.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+            lastWinner = num + 1;
+            restartButton.Select();
+        }
     }
 }

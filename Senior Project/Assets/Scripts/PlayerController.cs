@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public bool wallJumping = false;
     public GameObject shaker;
     public int playerNum;
-    public PlayerController otherPlayer;
+    private PlayerController otherPlayer;
     public float throwSpeed;
     public bool hit = false;
     public int initialHealth = 100;
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public float wallSlideSpeed;
     public int lives = 5;
     public GameObject head;
+    public GameObject playerText;
 
     private bool lastControls;
     private Collider2D item;
@@ -45,7 +46,6 @@ public class PlayerController : MonoBehaviour
     private bool footstool = false;
     private GameObject other;
     private bool singleFire = false;
-    private bool ended = false;
     private string jAxis;
     private string eAxis;
     private string fAxis;
@@ -123,17 +123,14 @@ public class PlayerController : MonoBehaviour
         }
         if (!dead)
         {
-            Text t = GameControl.instance.p2Text;
-            if (playerNum == 1)
-            {
-                t = GameControl.instance.p1Text;
-            }
+            Text t = playerText.GetComponent<Text>();
             t.text = "Lives: " + lives.ToString();
         }
         if (GameControl.instance.fight || lives <= 1)
         {
-            gameEnd();
+            playerDeath();
         }
+        gameEnd();
     }
 
     private void LateUpdate()
@@ -314,24 +311,13 @@ public class PlayerController : MonoBehaviour
         }
         if (GameControl.instance.USING_GAMECUBE_CONTROLLERS)
         {
-            if (playerNum == 1)
-            {
-                hAxis = "Horizontal_P1";
-                jAxis = "Jump_P1";
-                eAxis = "Equip_P1";
-                fAxis = "Fire_P1";
-                vAxis = "Vertical_P1";
-                tAxis = "Throw_P1";
-            }
-            else
-            {
-                hAxis = "Horizontal_P2";
-                jAxis = "Jump_P2";
-                eAxis = "Equip_P2";
-                fAxis = "Fire_P2";
-                vAxis = "Vertical_P2";
-                tAxis = "Throw_P2";
-            }
+            string num = playerNum.ToString();
+            hAxis = "Horizontal_P" + num;
+            jAxis = "Jump_P" + num;
+            eAxis = "Equip_P" + num;
+            fAxis = "Fire_P" + num;
+            vAxis = "Vertical_P" + num;
+            tAxis = "Throw_P" + num;
         }
         if (GameControl.instance.USING_SONY_CONTROLLERS)
         {
@@ -424,17 +410,14 @@ public class PlayerController : MonoBehaviour
         /* Author: Connor French
          * Description: respawns the player upon death and increments the life counter. If the player is out of lives, then it triggers an end of game
          */
-        Text t = GameControl.instance.p2Text;
-        if (!GameControl.instance.ableToDie && lives > 1)
+        Text t = playerText.GetComponent<Text>();
+        if (!GameControl.instance.ableToDie && lives > 1 && !GameControl.instance.gameOver)
         {
             GameObject crown = GameObject.FindGameObjectWithTag("Crown");
             if (dead && !GameControl.instance.paused)
             {
+                Debug.Log("PLAYER " + playerNum.ToString() + " DIED");
                 string color = getColor();
-                if (playerNum == 1)
-                {
-                    t = GameControl.instance.p1Text;
-                }
                 t.text = "Respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
                 rb2d.velocity = Vector2.zero;
@@ -494,8 +477,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GameControl.instance.speedyMusic = true;
-            GameControl.instance.fight = true;
+            /*GameControl.instance.speedyMusic = true;
+            GameControl.instance.fight = true;*/
         }
     }
 
@@ -680,6 +663,7 @@ public class PlayerController : MonoBehaviour
         if(down.collider != null)
         {
             footstool = true;
+            otherPlayer = down.transform.GetComponent<PlayerController>();
         }
         else
         {
@@ -774,11 +758,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void playerDeath()
+    {
+        if(lives <= 1 && dead)
+        {
+            lives = 0;
+            playerText.GetComponent<Text>().text = "You Died!";
+        }
+    }
+
     private void gameEnd()
     {
         /* Author: Connor French
          * Description: checks to see if the game is over and determines who the winner is and displays that information to the screen
          */
+        if (GameControl.instance.gameOver)
+        {
+            if (dead)
+            {
+                rb2d.bodyType = RigidbodyType2D.Kinematic;
+                rb2d.velocity = Vector2.zero;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                healthBar.gameObject.SetActive(false);
+                GameControl.instance.topText.gameObject.SetActive(false);
+                if (equippedWeapon != null)
+                {
+                    dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
+                }
+            }
+            else
+            {
+                playerText.GetComponent<Text>().text = "WINNER";
+                GameControl.instance.endOfGame(gameObject);
+            }
+        }
+        /*
         if (dead && lives <= 1)
         {
             GameControl.instance.gameOver = true;
@@ -790,11 +805,7 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             healthBar.gameObject.SetActive(false);
             GameControl.instance.topText.gameObject.SetActive(false);
-            Text t = GameControl.instance.p2Text;
-            if (playerNum == 1)
-            {
-                t = GameControl.instance.p1Text;
-            }
+            Text t = playerText.GetComponent<Text>();
             t.text = "Lives: 0";
             if (equippedWeapon != null)
             {
@@ -826,7 +837,7 @@ public class PlayerController : MonoBehaviour
                     ended = true;
                 }
             }
-        }
+        }*/
     }
 
     private string getWinner()

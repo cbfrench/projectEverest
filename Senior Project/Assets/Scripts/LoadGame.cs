@@ -12,10 +12,12 @@ public class LoadGame : MonoBehaviour
     public Canvas main;
     public Canvas controls;
     public Canvas select;
+    public Canvas players;
 
     private Button playButton;
     private Button backButton;
     private Button tutorialButton;
+    private Button twoPlayer;
     private GameObject[] crowns;
 
     public void Awake()
@@ -81,16 +83,30 @@ public class LoadGame : MonoBehaviour
         backButton.Select();
     }
 
-    public void levelSelect()
+    public void playerSelect()
     {
-        /* Author: Connor French
-         * Description: pulls up level select screen when selected from the main menu
-         */
         for (int i = 0; i < crowns.Length; i++)
         {
             crowns[i].GetComponent<SpriteRenderer>().enabled = false;
         }
         main.gameObject.SetActive(false);
+        players.gameObject.SetActive(true);
+        twoPlayer = GameObject.Find("2-Player").transform.GetComponent<Button>();
+        twoPlayer.Select();
+    }
+
+    public void selectNumberOfPlayers(int num)
+    {
+        PlayerNumberSelect.numberOfPlayers = num;
+        levelSelect();
+    }
+
+    public void levelSelect()
+    {
+        /* Author: Connor French
+         * Description: pulls up level select screen when selected from the main menu
+         */
+        players.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
         tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
         tutorialButton.Select();
@@ -108,6 +124,7 @@ public class LoadGame : MonoBehaviour
         main.gameObject.SetActive(true);
         controls.gameObject.SetActive(false);
         select.gameObject.SetActive(false);
+        players.gameObject.SetActive(false);
         playButton.Select();
     }
 
