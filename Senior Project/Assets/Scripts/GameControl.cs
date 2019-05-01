@@ -59,6 +59,7 @@ public class GameControl : MonoBehaviour
     public string pAxis = "Pause";
     public GameObject topKillBox;
     public bool speedyMusic = false;
+    public bool lastLife = false;
 
     private GameObject[] players = new GameObject[4];
     private int numberOfPlayers;
@@ -77,6 +78,7 @@ public class GameControl : MonoBehaviour
     private Color32[] playerColors = { new Color32(255, 0, 0, 255), new Color32(0, 245, 255, 255), new Color(0, 255, 0, 255), new Color(255, 255, 0, 255) };
     private string[] playerColorWords = { "Red", "Blue", "Green", "Yellow" };
     private float gameEndDelay = 3f;
+    private bool once = false;
 
     public bool USING_CONTROLLERS = false;
     public bool USING_GAMECUBE_CONTROLLERS = false;
@@ -202,7 +204,7 @@ public class GameControl : MonoBehaviour
         numberOfPlayers = PlayerNumberSelect.numberOfPlayers;
         if(numberOfPlayers == 0)
         {
-            numberOfPlayers = 2;
+            numberOfPlayers = Input.GetJoystickNames().Length;
         }
         for (i = 0; i < numberOfPlayers; i++)
         {
@@ -216,6 +218,11 @@ public class GameControl : MonoBehaviour
             pText.GetComponent<Text>().color = playerColors[i];
             pText.GetComponent<Text>().text = "";
             generated.GetComponent<PlayerController>().playerText = pText;
+            Renderer minimapColor = generated.transform.Find("Minimap Icon").GetComponent<Renderer>();
+            minimapColor.material.shader = Shader.Find("_Color");
+            minimapColor.material.SetColor("_Color", playerColors[i]);
+            minimapColor.material.shader = Shader.Find("Unlit/Color");
+            minimapColor.material.SetColor("_UnlitColor", playerColors[i]);
             players[i] = generated;
         }
     }
@@ -501,6 +508,19 @@ public class GameControl : MonoBehaviour
         }
     }
 
+    public bool anyDead()
+    {
+        int i;
+        for(i = 0; i < numberOfPlayers; i++)
+        {
+            if (players[i].GetComponent<PlayerController>().dead)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setText(string s)
     {
         /* Author: Connor French
@@ -548,11 +568,11 @@ public class GameControl : MonoBehaviour
                 tutorialCount = 6;
                 triggerText = true;
             }
-            /*if (tutorialCount == 4 && ((player1.GetComponent<PlayerController>().dead && player1.GetComponent<PlayerController>().healthBar.value > 0) || (player2.GetComponent<PlayerController>().dead && player2.GetComponent<PlayerController>().healthBar.value > 0)))
+            if (tutorialCount == 4 && anyDead())
             {
                 tutorialCount = 5;
                 triggerText = true;
-            }*/
+            }
             if (textboxDestroyed && tutorialCount == 3)
             {
                 tutorialCount = 4;
@@ -594,20 +614,19 @@ public class GameControl : MonoBehaviour
         {
             int i;
             int alive = 0;
-            bool lastLife = false;
+            //lastLife = false;
             for (i = 0; i < numberOfPlayers; i++)
             {
                 PlayerController current = players[i].GetComponent<PlayerController>();
                 if (!current.dead || current.lives >= 1)
                 {
                     alive++;
-                    if (current.lives == 2)
+                    if (current.lives == 1)
                     {
                         lastLife = true;
                     }
                 }
             }
-
             if (alive == 2)
             {
                 //only two players remain
@@ -627,22 +646,27 @@ public class GameControl : MonoBehaviour
     }
     public void endOfGame(GameObject player)
     {
-        Debug.Log("GAME OVER");
         if (gameEndDelay > 0)
         {
+            once = true;
             statusText.text = "Game!";
             gameEndDelay -= Time.deltaTime;
+            Debug.Log(gameEndDelay + " " + once.ToString());
         }
         else
         {
-            int num = player.GetComponent<PlayerController>().playerNum-1;
-            string color = playerColorWords[num];
-            statusText.text = color + " wins!";
-            controlsDisabled = true;
-            quitButton.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            lastWinner = num + 1;
-            restartButton.Select();
+            if (once)
+            {
+                int num = player.GetComponent<PlayerController>().playerNum - 1;
+                string color = playerColorWords[num];
+                statusText.text = color + " wins!";
+                controlsDisabled = true;
+                quitButton.gameObject.SetActive(true);
+                restartButton.gameObject.SetActive(true);
+                lastWinner = num + 1;
+                restartButton.Select();
+                once = false;
+            }
         }
     }
 }

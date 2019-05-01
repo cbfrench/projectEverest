@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
         /* Author: Connor French
          * Description: runs necessary player logic. Checks if the controls are disabled, then moves/animates the player as necessary
          */
+        gameEnd();
         //checks if controls are enabled or not
         resetControls();
 
@@ -126,11 +127,6 @@ public class PlayerController : MonoBehaviour
             Text t = playerText.GetComponent<Text>();
             t.text = "Lives: " + lives.ToString();
         }
-        if (GameControl.instance.fight || lives <= 1)
-        {
-            playerDeath();
-        }
-        gameEnd();
     }
 
     private void LateUpdate()
@@ -151,7 +147,12 @@ public class PlayerController : MonoBehaviour
         {
             die();
         }
+        if (GameControl.instance.fight || lives <= 1)
+        {
+            playerDeath();
+        }
         respawn();
+        gameEnd();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -416,7 +417,7 @@ public class PlayerController : MonoBehaviour
             GameObject crown = GameObject.FindGameObjectWithTag("Crown");
             if (dead && !GameControl.instance.paused)
             {
-                Debug.Log("PLAYER " + playerNum.ToString() + " DIED");
+                Debug.Log("RESPAWN");
                 string color = getColor();
                 t.text = "Respawning in " + string.Format("{0:N0}", Mathf.Ceil(respawnTimer));
                 respawnTimer -= Time.deltaTime;
@@ -762,8 +763,24 @@ public class PlayerController : MonoBehaviour
     {
         if(lives <= 1 && dead)
         {
+            GameObject crown = GameObject.FindGameObjectWithTag("Crown");
             lives = 0;
             playerText.GetComponent<Text>().text = "You Died!";
+            rb2d.velocity = Vector2.zero;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            if (crown != null && crown.transform.parent == head.transform)
+            {
+                crown.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
+            healthBar.gameObject.SetActive(false);
+            minimapIcon.SetActive(false);
+            trail.SetActive(false);
+            glow.SetActive(false);
+            if (equippedWeapon != null)
+            {
+                dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
+            }
         }
     }
 
@@ -772,6 +789,7 @@ public class PlayerController : MonoBehaviour
         /* Author: Connor French
          * Description: checks to see if the game is over and determines who the winner is and displays that information to the screen
          */
+        Debug.Log("GAME OVER: " + GameControl.instance.gameOver.ToString());
         if (GameControl.instance.gameOver)
         {
             if (dead)
@@ -785,6 +803,11 @@ public class PlayerController : MonoBehaviour
                 if (equippedWeapon != null)
                 {
                     dropObject(new Vector2(UnityEngine.Random.Range(-10f, 10f), 50));
+                }
+                if (GameControl.instance.lastLife && lives > 0)
+                {
+                    playerText.GetComponent<Text>().text = "WINNER";
+                    GameControl.instance.endOfGame(gameObject);
                 }
             }
             else
