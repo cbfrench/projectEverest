@@ -201,11 +201,12 @@ public class GameControl : MonoBehaviour
     private void createPlayers()
     {
         int i;
-        numberOfPlayers = PlayerNumberSelect.numberOfPlayers;
+        numberOfPlayers = Admin.numberOfPlayers;
         if(numberOfPlayers == 0)
         {
             numberOfPlayers = Input.GetJoystickNames().Length;
         }
+        Debug.Log(numberOfPlayers);
         for (i = 0; i < numberOfPlayers; i++)
         {
             GameObject generated = Instantiate(player, new Vector3(i * 2, 0, 0), Quaternion.identity);
@@ -213,7 +214,7 @@ public class GameControl : MonoBehaviour
             generated.GetComponent<SpriteRenderer>().color = playerColors[i];
             generated.transform.Find("Glow").GetComponent<Light>().color = playerColors[i];
             generated.transform.Find("CameraShake").GetComponent<CameraShake>().camTransform = shaker.transform;
-            GameObject pText = Instantiate(playerText, new Vector3(-300 + 200 * i, 0, 0), Quaternion.identity);
+            GameObject pText = Instantiate(playerText, new Vector3(200 * i - 100 * (numberOfPlayers - 1), 0, 0), Quaternion.identity);
             pText.transform.SetParent(screenText.transform, false);
             pText.GetComponent<Text>().color = playerColors[i];
             pText.GetComponent<Text>().text = "";

@@ -45,7 +45,8 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: loads tutorial
          */
-        SceneManager.LoadScene("Tutorial_Level");
+        Admin.sceneToLoad = "Tutorial_Level";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void loadCave()
@@ -53,7 +54,8 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: loads cave level
          */
-        SceneManager.LoadScene("Prototype_Level");
+        Admin.sceneToLoad = "Prototype_Level";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void loadMountain()
@@ -61,7 +63,8 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: loads mountain level
          */
-        SceneManager.LoadScene("Curve_Level");
+        Admin.sceneToLoad = "Curve_Level";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void loadVolcano()
@@ -69,7 +72,8 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: loads volcano level
          */
-        SceneManager.LoadScene("Hardcore_Level");
+        Admin.sceneToLoad = "Hardcore_Level";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void instructions()
@@ -97,7 +101,7 @@ public class LoadGame : MonoBehaviour
 
     public void selectNumberOfPlayers(int num)
     {
-        PlayerNumberSelect.numberOfPlayers = num;
+        Admin.numberOfPlayers = num;
         levelSelect();
     }
 

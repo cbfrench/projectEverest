@@ -47,7 +47,8 @@ public class PauseMenu : MonoBehaviour
         Music.instance.music.volume = 1;
         Music.instance.music.pitch = 1;
         Music.instance.music.Play();
-        SceneManager.LoadScene("Main_Menu");
+        Admin.sceneToLoad = "Main_Menu";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void playAgain()
@@ -55,6 +56,7 @@ public class PauseMenu : MonoBehaviour
         /* Author: Connor French
          * Description: reloads current scene from beginning
          */
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Admin.sceneToLoad = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene("LoadingScreen");
     }
 }
