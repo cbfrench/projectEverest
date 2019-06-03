@@ -42,13 +42,14 @@ public class PauseMenu : MonoBehaviour
         /* Author: Connor French
          * Description: returns to the main menu from the pause menu
          */
+        Time.timeScale = 1;       
         GameControl.instance.speedyMusic = false;
         Music.instance.music.clip = menuMusic;
-        Music.instance.music.volume = 1;
+        Music.instance.music.volume = Admin.musicVolume;
         Music.instance.music.pitch = 1;
         Music.instance.music.Play();
         Admin.sceneToLoad = "Main_Menu";
-        SceneManager.LoadScene("LoadingScreen");
+        SceneManager.LoadScene("Main_Menu");
     }
 
     public void playAgain()

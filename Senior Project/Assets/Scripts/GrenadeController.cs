@@ -60,7 +60,7 @@ public class GrenadeController : MonoBehaviour
     {
         // Play the explosion
         particles.Play();
-        AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position, Admin.soundVolume);
 
         // Set velocity to zero
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;

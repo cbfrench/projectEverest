@@ -83,7 +83,7 @@ public class GameControl : MonoBehaviour
     public bool USING_CONTROLLERS = false;
     public bool USING_GAMECUBE_CONTROLLERS = false;
     public bool USING_SONY_CONTROLLERS = false;
-
+    
     public GameObject spawnLoc;
     public GameObject weaponList;
 
@@ -288,7 +288,7 @@ public class GameControl : MonoBehaviour
             {
                 Time.timeScale = 1;
                 statusText.text = previousText;
-                Music.instance.music.volume = 1;
+                Music.instance.music.volume = Admin.musicVolume;
                 Music.instance.music.pitch = lastMusicTime;
             }
             else
@@ -298,7 +298,7 @@ public class GameControl : MonoBehaviour
                     Time.timeScale = 0;
                     previousText = statusText.text;
                     statusText.text = "PAUSED";
-                    Music.instance.music.volume = 0.25f;
+                    Music.instance.music.volume = Admin.musicVolume / 4;
                     lastMusicTime = Music.instance.music.pitch;
                     Music.instance.music.pitch = 1;
                 }

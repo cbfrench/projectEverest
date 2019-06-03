@@ -14,6 +14,7 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
 
     private GameObject player;          // Stores reference to the player
     private AudioSource sound;
+    private float initialVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +34,13 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
         // Get the particle system for the flame
         particles.Stop();
         sound = particles.gameObject.GetComponent<AudioSource>();
+        initialVolume = sound.volume;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        sound.volume = Admin.soundVolume * initialVolume;
     }
 
     // Called when a player picks up the weapon

@@ -23,6 +23,7 @@ public class RailGunController : MonoBehaviour, WeaponScript
     private float charge;
     private float fireDelta;
     private AudioSource sound;
+    private float initialVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +48,13 @@ public class RailGunController : MonoBehaviour, WeaponScript
         // Set slider
         slider.value = 0;
         sound = gameObject.GetComponent<AudioSource>();
+        initialVolume = sound.volume;
     }
 
     // Update is called once per frame
     void Update()
     {
+        sound.volume = Admin.soundVolume * initialVolume;
         // Update the slider value
         slider.value = (charge / chargeTime);
 

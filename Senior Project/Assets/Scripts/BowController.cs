@@ -22,6 +22,7 @@ public class BowController : MonoBehaviour, WeaponScript
     private bool bowDraw;
     private Animator anim;
     private AudioSource sound;
+    private float initialVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class BowController : MonoBehaviour, WeaponScript
 
         arrowPrefab.GetComponent<BowArrowController>().maxVelocity = maxVelocity;
         sound = gameObject.GetComponent<AudioSource>();
+        initialVolume = sound.volume;
     }
 
     // Update is called once per frame
@@ -47,6 +49,7 @@ public class BowController : MonoBehaviour, WeaponScript
          * Description: Sets the animation for drawing the bow as well as a timer to count how long the bow is being drawn
          * Contributor: Caleb Biggers
          */
+        sound.volume = Admin.soundVolume * initialVolume;
         slider.value = (drawTime / maxDrawtime);
 
         if (bowDraw)

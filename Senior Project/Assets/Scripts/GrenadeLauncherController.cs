@@ -25,6 +25,7 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
     private float fireDelta;
     private bool fired;
     private AudioSource sound;
+    private float initialVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -45,12 +46,13 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
         fired = false;
         fireDelta = 0;
         sound = gameObject.GetComponent<AudioSource>();
+        initialVolume = sound.volume;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        sound.volume = Admin.soundVolume * initialVolume;
         // Update the slider
         slider.value = charge / chargeTime;
 

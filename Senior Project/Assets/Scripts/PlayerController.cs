@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     private GameObject lastWall = null;
 
     private GameObject equippedWeapon = null;
+    private float initialVolume;
 
     private void Awake()
     {
@@ -88,6 +89,7 @@ public class PlayerController : MonoBehaviour
             crown.transform.parent = head.transform;
             crown.transform.localPosition = Vector3.zero;
         }
+        initialVolume = thud.volume;
     }
 
     private void Update()
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
         /* Author: Connor French
          * Description: runs necessary player logic. Checks if the controls are disabled, then moves/animates the player as necessary
          */
+        thud.volume = Admin.soundVolume * initialVolume;
         gameEnd();
         //checks if controls are enabled or not
         resetControls();

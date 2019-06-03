@@ -27,16 +27,18 @@ public class BladedStaffController : MonoBehaviour, WeaponScript
     private float delayTimer = 0;
     private Animator anim;
     private AudioSource sound;
-
+    private float initialVolume;
 
     // Use this for initialization
     void Start () {
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
         sound = gameObject.GetComponent<AudioSource>();
+        initialVolume = sound.volume;
     }
    
     // Update is called once per frame
     void Update () {
+        sound.volume = Admin.soundVolume * initialVolume;
         if(delayTimer > 0 ){
             delayTimer -= Time.deltaTime;
         }

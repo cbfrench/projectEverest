@@ -13,6 +13,8 @@ public class LoadGame : MonoBehaviour
     public Canvas controls;
     public Canvas select;
     public Canvas players;
+    public Canvas options;
+    public GameObject cursor;
 
     private Button playButton;
     private Button backButton;
@@ -34,6 +36,7 @@ public class LoadGame : MonoBehaviour
          * Description: gets all crowns in menu scene
          */
         crowns = GameObject.FindGameObjectsWithTag("Crown");
+        Cursor.visible = false;
     }
 
     public void loadLevel()
@@ -81,22 +84,27 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: pulls up controls screen when selected from the main menu
          */
-        main.gameObject.SetActive(false);
         controls.gameObject.SetActive(true);
-        backButton = GameObject.Find("Back").transform.GetComponent<Button>();
-        backButton.Select();
+        cursor.transform.SetParent(controls.transform, false);     
+        main.gameObject.SetActive(false); 
+    }
+
+    public void optionSelect()
+    {
+        options.gameObject.SetActive(true);
+        cursor.transform.SetParent(options.transform, false);
+        main.gameObject.SetActive(false);
     }
 
     public void playerSelect()
     {
+        players.gameObject.SetActive(true);
+        cursor.transform.SetParent(players.transform, false);
         for (int i = 0; i < crowns.Length; i++)
         {
             crowns[i].GetComponent<SpriteRenderer>().enabled = false;
         }
         main.gameObject.SetActive(false);
-        players.gameObject.SetActive(true);
-        twoPlayer = GameObject.Find("2-Player").transform.GetComponent<Button>();
-        twoPlayer.Select();
     }
 
     public void selectNumberOfPlayers(int num)
@@ -110,10 +118,9 @@ public class LoadGame : MonoBehaviour
         /* Author: Connor French
          * Description: pulls up level select screen when selected from the main menu
          */
-        players.gameObject.SetActive(false);
         select.gameObject.SetActive(true);
-        tutorialButton = GameObject.Find("Tutorial").transform.GetComponent<Button>();
-        tutorialButton.Select();
+        cursor.transform.SetParent(select.transform, false);
+        players.gameObject.SetActive(false);
     }
 
     public void back()
@@ -126,9 +133,11 @@ public class LoadGame : MonoBehaviour
             crowns[i].GetComponent<SpriteRenderer>().enabled = true;
         }
         main.gameObject.SetActive(true);
+        cursor.transform.SetParent(main.transform, false);
         controls.gameObject.SetActive(false);
         select.gameObject.SetActive(false);
         players.gameObject.SetActive(false);
+        options.gameObject.SetActive(false);
         playButton.Select();
     }
 
