@@ -48,13 +48,13 @@ public class RailGunController : MonoBehaviour, WeaponScript
         // Set slider
         slider.value = 0;
         sound = gameObject.GetComponent<AudioSource>();
-        initialVolume = sound.volume;
+        initialVolume = sound.volume * Admin.soundVolume;
     }
 
     // Update is called once per frame
     void Update()
     {
-        sound.volume = Admin.soundVolume * initialVolume;
+        sound.volume = initialVolume;
         // Update the slider value
         slider.value = (charge / chargeTime);
 

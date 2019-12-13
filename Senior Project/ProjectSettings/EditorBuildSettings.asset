@@ -23,7 +23,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadingScreen.unity
     guid: 7531ef8ed63e8cf498a047c2fdce6e97
+  - enabled: 1
+    path: Assets/Scenes/Waterfall_Level.unity
+    guid: e7974490ce3f49c4288aa5beb66e1f7b
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Nuclear_Level.unity
+    guid: 260e6ad7532c734489062b1870f63c27
+  - enabled: 1
+    path: Assets/Scenes/City_Level.unity
+    guid: 56311d0a89379ca428bde210e53d6bba
+  - enabled: 1
+    path: Assets/Scenes/Beach_Level.unity
+    guid: 0a4065135cd827a43892d832fd590c48
+  - enabled: 1
+    path: Assets/Scenes/Tree_Level.unity
+    guid: 712f601fdc838ae4eaf847a5b2ab121a
+  - enabled: 1
+    path: Assets/Scenes/Moon_Level.unity
+    guid: ebba5aa90005afd4186b6d7769814e05
   m_configObjects: {}

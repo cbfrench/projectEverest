@@ -18,7 +18,7 @@ public class NeedleBulletController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initialVolume = gameObject.GetComponent<AudioSource>().volume;
+        initialVolume = Admin.soundVolume * gameObject.GetComponent<AudioSource>().volume;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0; i < players.Length; i++)
         {
@@ -33,7 +33,7 @@ public class NeedleBulletController : MonoBehaviour
     // Bullet tries to home in onto a player.
     void Update()
     {
-        gameObject.GetComponent<AudioSource>().volume = Admin.soundVolume * initialVolume;
+        gameObject.GetComponent<AudioSource>().volume = initialVolume;
         float prevX = transform.position.x;
         transform.position = Vector3.MoveTowards(transform.position, otherPlayer.transform.position, homeSpeed * Time.deltaTime);
         transform.position = new Vector3(prevX, transform.position.y, transform.position.z);

@@ -387,7 +387,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
-                        rb2d.gravityScale = 8;
+                        rb2d.gravityScale = 8 * GameControl.instance.gravityScale;
                     }
                 }
                 if (sliding)
@@ -516,6 +516,25 @@ public class PlayerController : MonoBehaviour
                 // Find the weapon script attached to the weapon (All weapons must extend WeaponScript)
                 equippedWeapon = item.gameObject;
                 equippedWeapon.GetComponent<WeaponScript>().initWeapon(equippedWeapon, this.gameObject);
+            }
+            if (hit)
+            {
+                if (equippedWeapon.name.Contains("Flashlight"))
+                {
+                    receiveDamage(50);
+                }
+                else if (equippedWeapon.name.Contains("Sword"))
+                {
+                    receiveDamage(15);
+                }
+                else if (equippedWeapon.name.Contains("BladedStaff"))
+                {
+                    receiveDamage(12.5f);
+                }
+                else
+                {
+                    receiveDamage(1);
+                }
             }
             hit = false;
         }
@@ -728,7 +747,7 @@ public class PlayerController : MonoBehaviour
         {
             float h = Input.GetAxis(hAxis);
             float scale = 2;
-            rb2d.gravityScale = 8;
+            rb2d.gravityScale = 8 * GameControl.instance.gravityScale;
             if (walls.x < wallDistance)
             {
                 if (leftWall == lastWall)
@@ -908,7 +927,8 @@ public class PlayerController : MonoBehaviour
         /* Author: Reynaldo Hermawan
          * Description: allows players to take damage from any weapon source
          */
-        health -= dmgTaken;
+        float actualDMG = dmgTaken * 2f;
+        health -= actualDMG;
         healthBar.value = health;
         if (health <= 0)
         {

@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quit: {fileID: 2095745042393494785}
-  menuMusic: {fileID: 8300000, guid: 968bdbf2cc2fba14fbb85994beb53253, type: 3}
+  menuMusic: {fileID: 8300000, guid: 8c8a32e672e84e747911068eb5637890, type: 3}
 --- !u!1 &2095745042102883770
 GameObject:
   m_ObjectHideFlags: 0

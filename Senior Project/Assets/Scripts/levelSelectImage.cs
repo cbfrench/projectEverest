@@ -13,11 +13,24 @@ public class levelSelectImage : MonoBehaviour
     public Button caveButton;
     public Button mountainButton;
     public Button volcanoButton;
+    public Button waterfallButton;
+    public Button nuclearButton;
+    public Button beachButton;
+    public Button cityButton;
+    public Button treeButton;
+    public Button moonButton;
+
     public Image levelSelectImg;
     public Sprite tutorialImage;
     public Sprite caveImage;
     public Sprite mountainImage;
     public Sprite volcanoImage;
+    public Sprite waterfallImage;
+    public Sprite nuclearImage;
+    public Sprite beachImage;
+    public Sprite cityImage;
+    public Sprite treeImage;
+    public Sprite moonImage;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +66,36 @@ public class levelSelectImage : MonoBehaviour
             {
                 levelSelectImg.sprite = volcanoImage;
                 Debug.Log("Volcano");
+            }
+            if(selected == waterfallButton.gameObject)
+            {
+                levelSelectImg.sprite = waterfallImage;
+                Debug.Log("Waterfall");
+            }
+            if (selected == nuclearButton.gameObject)
+            {
+                levelSelectImg.sprite = nuclearImage;
+                Debug.Log("Reactor");
+            }
+            if (selected == cityButton.gameObject)
+            {
+                levelSelectImg.sprite = cityImage;
+                Debug.Log("City");
+            }
+            if (selected == beachButton.gameObject)
+            {
+                levelSelectImg.sprite = beachImage;
+                Debug.Log("Beach");
+            }
+            if (selected == treeButton.gameObject)
+            {
+                levelSelectImg.sprite = treeImage;
+                Debug.Log("Tree");
+            }
+            if (selected == moonButton.gameObject)
+            {
+                levelSelectImg.sprite = moonImage;
+                Debug.Log("Moon");
             }
         }
     }

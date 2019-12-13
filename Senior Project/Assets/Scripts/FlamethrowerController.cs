@@ -34,13 +34,13 @@ public class FlamethrowerController : MonoBehaviour, WeaponScript
         // Get the particle system for the flame
         particles.Stop();
         sound = particles.gameObject.GetComponent<AudioSource>();
-        initialVolume = sound.volume;
+        initialVolume = sound.volume * Admin.soundVolume;
     }
 
     // Update is called once per frame
     void Update()
     {
-        sound.volume = Admin.soundVolume * initialVolume;
+        sound.volume = initialVolume;
     }
 
     // Called when a player picks up the weapon

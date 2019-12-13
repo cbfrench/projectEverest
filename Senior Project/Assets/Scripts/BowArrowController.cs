@@ -17,6 +17,7 @@ public class BowArrowController : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = Admin.soundVolume;
         fireArrow = Resources.Load<AudioClip>("Bow");
     }
 

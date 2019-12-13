@@ -79,6 +79,60 @@ public class LoadGame : MonoBehaviour
         SceneManager.LoadScene("LoadingScreen");
     }
 
+    public void loadWaterfall()
+    {
+        /* Author: Connor French
+         * Description: loads waterfall level
+         */
+        Admin.sceneToLoad = "Waterfall_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void loadReactor()
+    {
+        /* Author: Connor French
+         * Description: loads reactor level
+         */
+        Admin.sceneToLoad = "Nuclear_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void loadBeachside()
+    {
+        /* Author: Connor French
+         * Description: loads beach level
+         */
+        Admin.sceneToLoad = "Beach_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void loadSkyline()
+    {
+        /* Author: Connor French
+         * Description: loads city level
+         */
+        Admin.sceneToLoad = "City_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void loadGreatTree()
+    {
+        /* Author: Connor French
+         * Description: loads tree level
+         */
+        Admin.sceneToLoad = "Tree_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void loadMoon()
+    {
+        /* Author: Connor French
+         * Description: loads moon level
+         */
+        Admin.sceneToLoad = "Moon_Level";
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
     public void instructions()
     {
         /* Author: Connor French

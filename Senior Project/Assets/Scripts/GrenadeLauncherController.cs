@@ -46,7 +46,7 @@ public class GrenadeLauncherController : MonoBehaviour, WeaponScript
         fired = false;
         fireDelta = 0;
         sound = gameObject.GetComponent<AudioSource>();
-        initialVolume = sound.volume;
+        initialVolume = sound.volume * Admin.soundVolume;
     }
 
     // Update is called once per frame

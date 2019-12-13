@@ -38,12 +38,12 @@ public class WhipController : MonoBehaviour, WeaponScript
     void Start () {
         anim = gameObject.transform.Find("Sprite").GetComponent<Animator>();
         sound = gameObject.GetComponent<AudioSource>();
-        initialVolume = sound.volume;
+        initialVolume = sound.volume * Admin.soundVolume;
     }
    
     // Update is called once per frame
     void Update () {
-        sound.volume = Admin.soundVolume * initialVolume;
+        sound.volume = initialVolume;
         if(delayTimer > 0 ){
             delayTimer -= Time.deltaTime;
         }

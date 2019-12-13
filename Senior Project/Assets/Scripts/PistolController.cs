@@ -35,13 +35,13 @@ public class PistolController : MonoBehaviour, WeaponScript
         label.text = "Pistol";
         label.gameObject.SetActive(true);
         sound = gameObject.GetComponent<AudioSource>();
-        initialVolume = sound.volume;
+        initialVolume = sound.volume * Admin.soundVolume;
     }
 
     // Update is called once per frame
     void Update()
     {
-        sound.volume = Admin.soundVolume * initialVolume;
+        sound.volume = initialVolume;
         //Counts down to make a fire rate for the pistol
         if(delayTimer > 0 ){
             delayTimer -= Time.deltaTime;

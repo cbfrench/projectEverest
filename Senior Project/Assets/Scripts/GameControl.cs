@@ -60,6 +60,7 @@ public class GameControl : MonoBehaviour
     public GameObject topKillBox;
     public bool speedyMusic = false;
     public bool lastLife = false;
+    public float gravityScale = 1.0f;
 
     private GameObject[] players = new GameObject[4];
     private int numberOfPlayers;
@@ -74,7 +75,7 @@ public class GameControl : MonoBehaviour
     private Vector3 cameraDir;
     private int tutorialCount = 0;
     private float lastMusicTime;
-    private string[] tutorialText = {"Welcome to the Tutorial Level! Here is where you will learn everything you need to know to become a champion!", "If you want to survive, you're going to have to climb out of here. Press A to jump!" , "You're also going to have to fight, so pick up weapons with B and use them with L or R!", "If you don't like your weapon, you can drop it by pressing B again or throw it by pressing X. Try throwing it at an opponent!", "The camera is about to start moving. Be careful not to fall behind!", "If you fall out of the view of the camera, you will lose a life!", "You only have a limited number of lives, and if they all run out, you lose!", "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the A button!", "When you reach the final platform, all other platforms will drop away and you will duel each other to drain each other's lives!"};
+    private string[] tutorialText = {"Welcome to the Tutorial Level! Here is where you will learn everything you need to know to become a champion!", "If you want to survive, you're going to have to climb out of here. Press A to jump!" , "You're also going to have to fight, so pick up weapons with B and use them with L or R!", "If you don't like your weapon, you can drop it by pressing B again or throw it by pressing X. Try throwing it at an opponent to do some damage! I hear some items do more when thrown!", "The camera is about to start moving. Be careful not to fall behind!", "If you fall out of the view of the camera, you will lose a life!", "You only have a limited number of lives, and if they all run out, you lose!", "You may run into an area that has no platforms. You can jump off of the walls by holding towards the wall and pressing the A button!", "When you reach the final platform, all other platforms will drop away and you will duel each other to drain each other's lives!"};
     private Color32[] playerColors = { new Color32(255, 0, 0, 255), new Color32(0, 245, 255, 255), new Color(0, 255, 0, 255), new Color(255, 255, 0, 255) };
     private string[] playerColorWords = { "Red", "Blue", "Green", "Yellow" };
     private float gameEndDelay = 3f;
@@ -153,6 +154,10 @@ public class GameControl : MonoBehaviour
             }
             tutorial = true;
             setText(tutorialText[tutorialCount]);
+        }
+        if (SceneManager.GetActiveScene().name == "Moon_Level")
+        {
+            gravityScale = 0.75f;
         }
         //weaponList = Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g=>g.tag=="Weapon").ToList();
     }
